@@ -1,0 +1,300 @@
+﻿            Gaming = new List<TriviaQuestion> {
+                new TriviaQuestion("Did you know Nintendo's Mario was not always called Mario? What was " +
+                " his deut name in Donkey Kong?",new List<string>{ "jumpman" },"Drake has a song by this name."),
+                new TriviaQuestion("Gamergate was viewed as an alt-right backlash against feminism in the video game industry. " +
+                "One such target of these death threats developed a game known as Depression Quest. What was her name?",new List<string>{
+                "zoe", "zoe quinn", "quinn", "zoë quinn", "zoë" },"Her name starts with a Z!"),
+                new TriviaQuestion("How many Pokemon were released in Gen 1? Just say the number.",new List<string>{ "151" },
+                "They account for just under 19 percent of all Pokemon."),
+                new TriviaQuestion("No Mans Sky was jokingly referred to as the sequel to which 2008 EA game?",new List<string>{ "spore" },
+                "It involved five stages: Cell, Creature, Tribal, Civ, Space."),
+                new TriviaQuestion("What programming language is the original MinecraftS programmed in?",new List<string>{ "java" },
+                "It is seen as a slower, but more modern version of C++."),
+                new TriviaQuestion("Name any main character (assassin) from the Assassin's Creed series (first name only).",
+                new List<string>{ "ezio", "altaïr", "altair", "connor", "aveline", "edward", "adewale", "adéwalé", "shay", "arno",
+                "shao", "arbaaz", "nikolai", "jacob", "evie", "bayek"},"No hints!"),
+                new TriviaQuestion("What is the highest selling video game console of all time? (Specific model)",new List<string>{ "ps2",
+                "play station 2", "playstation 2"},"Sony developed it."),
+                new TriviaQuestion("Where does Lara Croft of Tomb Raider live?",new List<string>{ "croft manor" },"It has her last name in it!"),
+                new TriviaQuestion("Half Life is Valve's oldest game, PC exclusive. What year was it released?",new List<string>{ "1998" },
+                "Windows 95 was the top platform to run it!"),
+				new TriviaQuestion("What was the first video game featured by Nintendo where Luigi was the main protagonist?", 
+                new List<string> { "luigis mansion", "luigi's mansion", "mansion" },""),
+                new TriviaQuestion("SquareEnix was formed by the merger of Square Co. and Enix Ltd. In what year did this merger occur?", 
+                new List<string> { "2003", "april 2003", "2003." },"This was the same year the Human Genome Project was completed, as well as several " +
+                "devestating heat waves across Europe."), 
+				new TriviaQuestion("Tetris was developed in 1984. What waas the nationality of its creator?", new List<string> { "russia", "russian",
+                "ussr"},"The name of the main Tetris song is Korobeiniki. It shares the nationality."),
+				new TriviaQuestion("With regards to Speedruns, what does TAS stand for? (careful: spelling counts)", new List<string> { "tool assisted speedrun",
+                "tool-assisted speedrun", "tool assisted speed run", "tool-assisted speed run", "tool assisted speedruns", "tool-assisted speedruns",
+                "tool assisted speed runs", "tool-assisted speed runs"},"It refers to a method of completing a speedrun that would otherwise be impossible by a human."),
+                new TriviaQuestion("Name any main character (assassin) from the Assassin's Creed series (first name only).",
+                new List<string>{ "ezio", "altaïr", "altair", "connor", "aveline", "edward", "adewale", "adéwalé", "shay", "arno",
+                "shao", "arbaaz", "nikolai", "jacob", "evie", "bayek"},"No hints!"),
+                new TriviaQuestion("How many Pokemon were released in Gen 1? Just say the number.",new List<string>{ "151" },
+                "They account for just under 19 percent of all Pokemon."),
+				new TriviaQuestion("Half Life is Valve's oldest game, PC exclusive. What year was it released?",new List<string>{ "1998" },
+                "Windows 95 was the top platform to run it!"),
+				new TriviaQuestion("In the famous franchise Legends of Zelda, Link uses this weapon to travel through time.", new List<string> 
+                { "ocarina", "okarina", "the ocarina", "ocarinas", "an ocarina" },"It is in the title of one of the Zelda games."),
+                new TriviaQuestion("The language of the Sims is Simlish. Do you know the currency?",new List<string>{ "simoleons" },""),
+                new TriviaQuestion("In what year was the original famous game Doom made?", new List<string>{ "1993" },"It's 2 years older than Prim."),
+                
+
+			};
+
+            Sports = new List<TriviaQuestion> {
+                new TriviaQuestion("There have been 20 World Cups so far. How many were won by the host country?",new List<string>{ "6", "six" },
+                "It's under half!"),
+                new TriviaQuestion("The first two Super Bowls were won by the same team. They beat the Raiders and the Chiefs. Who are they?",
+                new List<string>{ "packers", "green bay packers", "the green bay packers" },"They are the only fan-owned sports team."),
+                new TriviaQuestion("Which of these American cities does not have all four \"pro sports\" teams to their name?\n" +
+                "A) Dallas, Texas\nB) Chicago, Illinois\nC)Phoneix, Arizona\nD) Tampa, Florida",new List<string>{ "tampa", "tampa bay", "tampa, florida", "tampa florida"
+                , "c", "c)"},"No hint!"),
+                new TriviaQuestion("China hosted the Summer Olympics in 2008. Which city?",new List<string>{ "beijing", "beijing china" },"It is the capital. Big hint!"),
+                new TriviaQuestion("What are Olympic Gold medals primarily made out of?",new List<string>{ "silver" },"It is ironic... this material does not typically" +
+                " represent first place!"),
+                new TriviaQuestion("At the 1900 Paris Olympics (just say the letter):\n A) There were more athletes than spectators\nB) Men fought bears\nC) Women were not allowed to compete\n" +
+                "D) It was cut short due to the first terrorist attack of the century.",new List<string>{ "a", "a)"},""),
+                new TriviaQuestion("What is the oldest board game?",new List<string>{ "senet" },"It was played in Egypt around 3100 BCE, and it's certainly not Chess or Go!"),
+                new TriviaQuestion("En Passant in chess involves the capturing of which piece?",new List<string>{ "pawn", "pawns", "the pawn" },"It is the lowest valued piece!"),
+                new TriviaQuestion("American Football is not the only sport with the concept of a Field Goal. Which is the other?",new List<string>{ "basketball" },"It is played on a court."),
+                new TriviaQuestion("In which country did table tennis originate?",new List<string>{ "uk", "united kingdom", "england", "britain", "great britain" },""),
+				new TriviaQuestion("China hosted the Summer Olympics in 2008. Which city?",new List<string>{ "beijing", "beijing china" },"It is the capital. Big hint!"),
+                new TriviaQuestion("What are Olympic Gold medals primarily made out of?",new List<string>{ "silver" },"It is ironic... this material does not typically" +
+                " represent first place!"),
+                new TriviaQuestion("In which country did table tennis originate?",new List<string>{ "uk", "united kingdom", "england", "britain", "great britain" },""),
+                new TriviaQuestion("In 1994, Major League Baseball's World Series was called off, and 948 games were cancelled in all, making it one of the longest stoppages of " +
+                "all time in major sports. Why?", new List<string> { "strike", "player's strike", "players strike" },"Greed was seen as the major reason that caused this embarrassment."),
+                new TriviaQuestion("Most people believe football (soccer) is the most popular sport in virtually every country. However, there are many notable exceptions. One such is " +
+                "by India, Australia, Pakistan and Bangladesh, whose main sport is: ", new List<string> { "cricket" },"An insect also shares this name."),
+				new TriviaQuestion("The first two Super Bowls were won by the same team. They beat the Raiders and the Chiefs. Who are they?",
+                new List<string>{ "packers", "green bay packers", "the green bay packers" },"They are the only fan-owned sports team."),
+                
+                
+
+            };
+
+            Science = new List<TriviaQuestion> {
+                new TriviaQuestion("Do you know how far away our moon is? Name the largest planet in our solar system that can fit between Earth and the moon!",
+                new List<string>{ "jupiter" },"You actually could fit ALL the planets between the Earth and the Moon... so, think largest planet."),
+                new TriviaQuestion("While most of the universe is moving away from us, some of it in the local cluster is moving closer! Which is the closest galaxy?",
+                new List<string>{ "andromeda", "the andromeda galaxy", "andromeda galaxy" },"It begins with AN."),
+                new TriviaQuestion("It's always good when sun screen has a high SPF number. Wait... what does SPF stand for?",new List<string>{ "sun protection factor"},
+                "It's not level, but it does describe how well you are ___ed from the sun."),
+                new TriviaQuestion("Thomas Edison invented the Direct Current. Who invented the Alternating current?",new List<string>{ "nikola tesla", "tesla" },
+                "A car brand is named after him."),
+                new TriviaQuestion("Cognitive Science is widely regarded to be a combination of six fields. Can you name one of them?",new List<string>{ "linguistics",
+                "philosophy", "psychology", "ai", "artificial intelligence", "anthropology", "neuroscience"},"One of them is Prim's minor, and the other is a field in his major."),
+                new TriviaQuestion("Did you know the Mitochondria used to be a sepearte organism that merged with a cell? What type of organism was it?",new List<string>{
+                "prokaryote", "prokaryotes", "aerobic prokaryote" },"It ends with YOTE, and starts with a P."),
+                new TriviaQuestion("If you are laying facing up, what are you? This is the opposite of prone.",new List<string>{ "supine" },
+                "It contains the word UP inside of it!"),
+                new TriviaQuestion("What is the number one cause of death worldwide? Hint: It's not cancer.",new List<string>{ "heart disease",
+                "ischaemic heart disease" },"It pertains to only one part of your body."),
+                new TriviaQuestion("We can think of a flow as something that pushes water. Similarly, we can think of electricity as something that pushes....",new List<string>{
+                "electrons" },"It is a singular part of the atom."),
+				new TriviaQuestion("A type of proof that justifies itself for all N, often used in computer science... not proof by contradiction, but...", new List<string> { "induction",
+                "inductive", "proof by induction" },"Perhaps I can induce you into picking this answer correctly."),
+                new TriviaQuestion("The sky is blue, because the sun's rays collide with...", new List<string> { "gas molecules", "air molecules", "molecules" },
+				new TriviaQuestion("We all know Obsidian from Minecraft. But do you know what KIND of rock it is?", new List<string> { "igneous", "igneous rock" },
+                "It is formed through molten magma."),
+                new TriviaQuestion("The first derivative of a velocity function with respect to time is...", new List<string> { "acceleration" },"Jerk is the second derivative. Think of " +
+                "how fast SPEED (velocity) changes."),
+				new TriviaQuestion("The largest cell in the human body, and the smallest cell in the human body have to do with the reproductive system. Name the largest.",
+                new List<string> { "egg", "female egg", "ovum", "ova", "egg cell" },"Only the female has this."),
+                new TriviaQuestion("Flamingoes are not naturally pink, algae is responsible for this. What color are they naturally?", new List<string> { "white" },"No hint!"),
+                new TriviaQuestion("The most sold model of cell phone was manufactured by which company?", new List<string> { "nokia", "nokia 1100" },"You can't break it!"),
+                new TriviaQuestion("The science of insects is called...", new List<string>{ "entomology" },"It sounds like Etymology!"),
+                new TriviaQuestion("Computer Science time! In C++, Java, C#, and many others, there exist three common types of loops. Name any one of them.",new List<string>{ "for", "while", "do while",
+                "do-while", "for loop", "while loop", "do-while loop", "do while loop"},"When the condition is inside is not met, it stops... keep doing the loop \\_\\_\\_ it is true."),
+                new TriviaQuestion("What does a high-level programming language need to pass through to become machine code?",new List<string>{ "compiler",
+                "compile", "compilation", "interpreter", "interpretation", "interpretor" },"This is the same term as someone who produces a book by assembling lots of information from other sources."),
+                new TriviaQuestion("Water can move opposite gravity, up a narrow tube through a process called...",new List<string>{ "capillary action", "capillary tube", "capillary" },"This term also refers " +
+                "to blood vessels in the human body."),
+                new TriviaQuestion("A YouTube channel brand make Science videos for entertainment. They have three versions of it, the hosts of each are Michael, Jake and Kevin." +
+                " Name one of their channels.",new List<string>{ "vsauce", "vsauce2", "vsauce1", "vsauce3", "v sauce", "vsauce 1", "vsauce 2", "vsauce 3"},"The channel names begin with a V."),
+                new TriviaQuestion("AIDS and HIV are common types of infections. What does HIV stand for?",new List<string>{ "human immunodeficiency virus", "human immuno deficiency virus", },
+                "The middle word is **immunodeficiency**."),
+                new TriviaQuestion("Who was the first person to win TWO Nobel Prizes for Science?",new List<string>{ "marie curie", "maria  curie", "maria sklodowska", "madam curie", "madame curie" },
+                "It was a female scientist, Polish-born, French-raised, most notably recognized for her research in radioactivity."),
+				                new TriviaQuestion("What is the more common name for Acetylsaliylic acid?", new List<string>{ "aspirin", "acetoxybenzoic acid", "2-acetoxybenzoic acid" },
+                "It is a chemical often used as a painkiller."),
+				 new TriviaQuestion("What is the largest mammal on Earth?",new List<string>{ "great blue whale", "blue whale", "balaenoptera musculus", "great northern rorqual" },
+                "It is an acquatic creature. Be specific about the name."),
+				new TriviaQuestion("What is the more common name for the common household product made of sodium bicarbonate?", new List<string>{ "baking soda" },"It is an element often used in pools to effect the pH level."),
+                new TriviaQuestion("Which element has the highest melting point on the periodic table? You can alternatively name second or third place.",
+                new List<string>{ "tungsten", "carbon", "osmium", "rhenium" },"The element with the highest melting point has the atomic symbol W and number of 74."),
+                new TriviaQuestion("In what part of the human body is the femur located?", new List<string>{ "thigh", "leg", "thighs", "legs" },"You seem to be running in circles to find this answer."),
+                new TriviaQuestion("A red color is displayed on the left side of the boat, called the port, and a green color is displayed on the right side of the boat, called the... ",new List<string>{ "starboard" },
+                "It's not a stern! Think of a word like \"cupboard\"."),
+                new TriviaQuestion("An abnormal collection of blood outside of a blood vessel is known as what?", new List<string> { "hematoma" },"It begins with an H, and ends with \"oma\"." ),
+                new TriviaQuestion("While the center of Australia is primarily desert climate, the northern-part is what type of climate?", new List<string> { "rainforest", "tropical", "rain forest"  },"" ),
+            
+            };
+
+            Geography = new List<TriviaQuestion> {
+                new TriviaQuestion("Name any country besides Russia that's considered both part of Europe and Asia.",
+                 new List<string>{ "turkey", "azerbaijan", "cyprus", "kazakhstan" },"The capital of one of the countries " +
+                 "used to be called Constantinople."),
+                new TriviaQuestion("Name the country that shares the most borders with other countries.",
+                 new List<string>{ "china" },""),
+                new TriviaQuestion("Which African nation hosts the most pyramids?",new List<string>{ "sudan" },
+                "This country borders Egypt, and once was ruled by Egypt."),
+                new TriviaQuestion("Which country hosts the largest population of Muslims?",
+                new List<string>{ "indonesia" },"The country is not on the Arabian peninsula, or even the Middle East, " +
+                "but in South-East Asia!"),
+                new TriviaQuestion("Name any landlocked country in either Asia or Europe. (meaning: only coastlines are on closed seas)",
+                new List<string>{ "moldova", "andorra", "belarus", "bhutan", "laos", "luxembourg", "mongolia", "nepal", "san marino", "vatican",
+                "vatican city", "armenia", "azerbaijan", "afghanistan", "kazakhstan", "kyrgyzstan", "tajikistan", "turkmenistan", "uzbekistan",
+                "austria", "czech republic", "czechia", "hungary", "kosovo", "liechtenstein", "serbia", "slovakia", "switzerland"},
+                "One of the countries is known for its cheese, and one for its massive empire."),
+                new TriviaQuestion("How many timezones does Russia span?",new List<string>{ "11", "eleven" },
+                "It's more than six."),
+                new TriviaQuestion("There are only two countries in the world with flags that contain neither red, nor white, " +
+                "nor blue...name one of them.",new List<string>{ "jamaica", "maurtania" },"Both nations have green on their flag, and one is associated" +
+                " with a green drug substance."),
+                new TriviaQuestion("What was the former name of Iran?",new List<string>{ "persia" },"A movie named, Prince of ___."),
+                new TriviaQuestion("There is only ONE country in Africa that was never colonized. Name it.",new List<string>{ "liberia" },
+                "A series by Pleasant Green called By D Grace of God featured a man from this country."),
+				new TriviaQuestion("A very tiny island nation is reknowned to have the lowest land elevation on Earth, and most of it is expected to be submerged in the next " +
+                "half century. What country is this?", new List<string> { "the maldives", "maldives" },"It is below India and Sri Lanka."),
+                new TriviaQuestion("What is the most recycled element in North America?", new List<string> { "steel" },"It is an alloy of iron."),
+                 new TriviaQuestion("Only one country hosts a monarch that goes by the name of \"Emperor\" today. Which country is it?",
+                new List<string>{ "japan" },"This country traded heavily with the Dutch, and had military control of the government through most of its modern history."),
+                new TriviaQuestion("Mexico borders the US to the north, but two countries to the south. Name one of them. (Spelling matters! Use English spellings)", new List<string>
+                { "belize", "guatemala" },"21 Mayan languages are spoken in one of these countries, and their currency is the Quetzal, based off of an Aztec word."),
+                                new TriviaQuestion("Which African nation hosts the most pyramids?",new List<string>{ "sudan" },
+                "This country borders Egypt, and once was ruled by Egypt."),
+                new TriviaQuestion("How many timezones does Russia span?",new List<string>{ "11", "eleven" },
+                "It's more than six."),
+                new TriviaQuestion("Which geographically significant mountain range in Russia is said to artifically split Europe from Asia?",
+                new List<string>{ "ural", "ural mountains" }, "It begins with a U, and almost shares a name with a large sea that was drained by Russia during the Cold War."),
+                new TriviaQuestion("There is only ONE country in Africa that was never colonized. Name it.",new List<string>{ "liberia" },
+                "A series by Pleasant Green called By D Grace of God featured a man from this country."),
+                new TriviaQuestion("What is the name (number) of the parallel that splits North Korea from South Korea?", new List<string>{ "38", "38th", "38th parallel", "38 parallel",
+                "38th parallel north", "38 parallel north", },"It might be useful to note that the parallel is simply an offset of how many degrees a location is from the equator. The equator would be the " +
+                "0th parallel, and the North Pole the 90th parallel north."),
+
+			};
+
+            History = new List<TriviaQuestion> {
+                new TriviaQuestion("Japan was the first Asian country to beat a major Western power. Which country did they beat?",new List<string>{ "russia", "ussr" },
+                "This country is geographically close to them, but is still considered Western."),
+                "The country borders Panama, and is considered South American."),
+                new TriviaQuestion("Pol Pot and the Khmer Rogue! What modern day country did this take place in?",new List<string>{ "cambodia", "kampuchea", "campuchea" },
+                "It borders Vietnam."),
+                new TriviaQuestion("Did you know Ancient Egypt was conquered around 30 B.C.? Which Empire did this?",new List<string>{ "roman", "roman empire" },
+                "This empire oft went to war with Germanic tribes."),
+                new TriviaQuestion("The first atomic bomb dropped on Japan was dropped on the city of Hiroshima. What about the second one?",
+                new List<string>{ "nagasaki", "nagasake" },"When adding sake to your meals, the city might come to mind.... sake.... sake..."),
+                new TriviaQuestion("One of the largest seas in the world was drained by the USSR in an attempt to grow crops for economic bursts. What is the name of this sea?",
+                new List<string>{ "aral", "aral sea" },"It begins with an A."),
+                new TriviaQuestion("Whoa, a thermometer! Who invented this?",new List<string>{ "galileo", "galilei", "galileo galilei" },"He was a famous Italian scientist " +
+                "and astronomer."),
+				new TriviaQuestion("The fortune cookie was developed in which country?", new List<string> { "us", "usa", "united states", "united states of america", "the us", "the usa", "america" },
+                "China may not have developed it, but they can see their neighbor from far across the Pacific."),
+                new TriviaQuestion("One of the largest seas in the world was drained by the USSR in an attempt to grow crops for economic bursts. What is the name of this sea?",
+                new List<string>{ "aral", "aral sea" },"It begins with an A."),
+				                new TriviaQuestion("The US helped Panama gain indepdence from ___ to help them build a canal through Panama.",new List<string>{ "colombia", "columbia" },
+                "The country borders Panama, and is considered South American."),
+                new TriviaQuestion("In what country was the Magna Carta published?",new List<string>{ "england", "uk", "britain", "great britain"},""),
+                new TriviaQuestion("An interesting tactic by the Mongols, Chinese, and Japanese was to fire this over the heads of their enemies, as the high-pitched sound of the weapon confused " +
+                "them.",new List<string>{ "whistling arrows", "kabura-ya", "kaburaya", "whistling bulb arrows", "messenger arrows", "signal arrows" },"It's a specific type of arrow."),
+                new TriviaQuestion("Did you know Adolf Hitler was nominated for the Nobel Peace Prize? Ironic. Can you name another dictator who killed millions and regined during World War 2, nominated" +
+                " for the Nobel Peace Prize?", new List<string> { "mussolini", "stalin", "benito mussolini", "joseph stalin", "josef stalin" },"One was the leader of the USSR, the other of Italy."),
+                new TriviaQuestion("Not every American wished for indepdence from the UK. A certain group actually fought for  the opposite. What were they termed?", new List<string> {
+                "loyalists", "loyalist", "loyalism" },""),
+                new TriviaQuestion("Name a state in New England that was not one of the American original 13 colonies.", new List<string> { "vermont", "maine" },
+                "One of these states is the largest state in New England."),
+                new TriviaQuestion("Papyrus is not only an Undertale character or font, but a writing material, invented in which country?", new List<string> { "egypt", "ancient egypt", "egyptian" },"No hint!"),
+                new TriviaQuestion("In what year was the famous Battle of Hastings fought?", new List<string>{ "1066" },"This was fought between modern day France and England, with a decisive victory for France. " +
+                "The Mongol empire began expanding just over a century after this battle."),
+
+            };
+
+            Language = new List<TriviaQuestion> {
+                new TriviaQuestion("Name a common tonal language (over 50 mil speakers), as in, one that uses pitches to differentiate between words.",
+                new List<string>{ "chinese", "mandarin", "cantonese", "thai", "vietnamese", "burmese", },"Most popular tonal languages are in East Asia!"),
+                new TriviaQuestion("What is the name of the language the Aztecs spoke, in their language?",new List<string>{ "nahuatl" },"It contains that" +
+                " nice /tl/ sound!"),
+                new TriviaQuestion("Subjects are nominative, and direct objects are accusative. But what are indirect objecs?",new List<string>{ "dative" },
+                "The word derives from the Latin word for \"give\"."),
+                new TriviaQuestion("La Gomera is a strange language in Spain. They do use their mouth to speak, but instead of their voice, they use...",
+                new List<string>{ "whistles", "whistle", "whistling" },"This is what you might do to sound out a song going through your head."),
+                new TriviaQuestion("An alphabet is a system where symbols correlate to individual sounds. What system correlates symbols to syllables, instead?",
+                new List<string>{ "syllabary", "syllabaries" },"Japanese has two scripts for this! It has the word syllable in it."),
+                new TriviaQuestion("A common language spoken toda died for nearly 1,700 years, and was only revived in the past two centuries. What is it?",
+                new List<string>{ "hebrew", "isreali" },"It is spoken in a certain region in the Middle East"),
+                new TriviaQuestion("A language that is not inflective, but rather creates new long words by \"gluing\" morphemes together, is called what?",
+                new List<string>{ "agglutinative", "agglutination", },"Finnish is an example! Also, \"glue\" is a big hint. It's in the word."),
+                new TriviaQuestion("Apart from Spanish, what is the most common first language in South America?",new List<string>{ "portuguese" },"Come to Brazil."),
+				new TriviaQuestion("Besides Hindi, what is the most common official language in India?",new List<string>{ "bengali" },"It is the official language " +
+                "of Bangladesh."),
+				new TriviaQuestion("Subjects are nominative, and direct objects are accusative. But what are indirect objecs?",new List<string>{ "dative" },
+                "The word derives from the Latin word for \"give\"."),
+                new TriviaQuestion("La Gomera is a strange language in Spain. They do use their mouth to speak, but instead of their voice, they use...",
+                new List<string>{ "whistles", "whistle", "whistling" },"This is what you might do to sound out a song going through your head."),
+                new TriviaQuestion("While not etymologically justified, it is a common belief that \"sincere\" is a Latin-derived word whose origins come from " +
+                "terms used to describe honest sculptors. What phrase is the word derived from, according to this folk tale?", new List<string> { "without wax", "no wax" },
+                "Sculptors would often use wax to cover their flaws, and fool the viewer. One that didn't do this was perceived as honest, or sincere. Their work was..."),
+                new TriviaQuestion("A special type of sound that occurs in almost every world language features a plosive immediately followed by a fricative. For example, the \"ch\" " +
+                "sound, which is a \"t\" followed by a quick \"sh\". What is the name of a sound like this?", new List<string> { "affricate", "affricates" },"The first letters are AFFR..."),
+                
+            };
+
+            Entertainment = new List<TriviaQuestion> {
+                new TriviaQuestion("From which island nation is Rihanna from?", new List<string>{ "barbados" },
+                "The nation's flag features a trident on it."),
+                new TriviaQuestion("The following popular boy band just reunited in 2019 for their new album and tour.",new List<string>{ "jonas brothers",
+                "the jonas brothers" },"The young males formed their band in Wyckoff, New Jersey in 2005."),
+                new TriviaQuestion("Selena Gomez's best friend just donated her ___ to Selena.",new List<string>{ "kidney", "kidneys" }, "It is a body organ."),
+                new TriviaQuestion("Massive drama emerged that undermined Internet personality James Charles, as his former mother-like figure ____ released a " +
+                "video exposing him.",new List<string>{ "tati", "tati westbrook", "tat" },"No hint!"),
+                new TriviaQuestion("This English singer and songwriter unusually has three nipples on his chest.",new List<string>{ "harry styles", "styles", "harry",
+                "hairy", "hairy styles" },"Think One Direction."),
+                new TriviaQuestion("This hugely famous classical rock band has admitted that not a single one of their members can read sheet music.",
+                new List<string>{ "beetles", "the beetles", "beatles", "the beatles" },"They have sold more albums than any other music artist in the world."),
+                new TriviaQuestion("An automated organ in Germany holds the record for the suspected \"longest concert on Earth\". When it's finished, the concert " +
+                "will have played for __ years.",new List<string>{ "639", "639 years", "over 600", "over 600 years",
+                    "about 600", "about 600 years", "around 600", "around 600 years" },"You can say about or around! It's way longer than you think."),
+                new TriviaQuestion("This popular Japanese \"Kawaii Metal\" band features a song called Megitsune.",new List<string>{ "babymetal", "baby metal" },
+                "The word metal is in their name. All of the band members are female and very young (once holding an average age in the band of 14.7 years!)."),
+                new TriviaQuestion("What was Eminem's latest album called?", new List<string> { "kamikaze", "kamekaze", "kamikazi" },"It refers to an offensive Japanese war" +
+               " tactic primarily utilized during World War 2."),
+			   new TriviaQuestion("From which island nation is Rihanna from?", new List<string>{ "barbados" },
+                "The nation's flag features a trident on it."),
+               new TriviaQuestion("Selena Gomez's best friend just donated her ___ to Selena.",new List<string>{ "kidney", "kidneys" }, "It is a body organ."),
+               new TriviaQuestion("Can you give me the name of ANY of the 15 people who have won EGOT, an Emmy, Grammy, Oscar and Tony?",
+               new List<string>{ "richard rodgers", "helen hayes", "rita moreno", "john gielgud", "audrey hepburn", "marvin hamlisch", "jon tunick", "jonathon tunick",
+               "mel brooks", "melvin brooks", "mike nichols", "whoopi goldberg", "scott rudin", "robert lopez", "john legend", "andrew webber", "andrew lloyd webber",
+               "tim rice"},"One is an American filmmaker, actor, comedian and composer, who produced Spaceballs and Young Frankenstein. His name starts with an M."),
+               new TriviaQuestion("Leonardo DeCaprio recently won his first Oscar, ending an annual streak of dismissal by the Oscar committee. Which movie was he nominated " +
+               "for?", new List<string> { "revenant", "the revenant" },"This movie is RELEVANT."),
+				new TriviaQuestion("What is the full name of the female actress who plays Penny in The Big Bang Theory?",new List<string>{ "kaley cuoco", "kaley cuoco sweeting",
+               "kaley cuoco-sweeting", "kaley christine cuoco" },"Her last name is Italia for cook, and it sounds like that in English as well."),
+               new TriviaQuestion("Which 1998 Disney film is getting a live-action remake next year?",new List<string>{ "mulan" },"It is based on a fictional Chinese hero."),
+               new TriviaQuestion("What is the longest movie ever made?",new List<string>{ "the cure for insomnia"},"It was filmed live in front of an audience in 1987, making up 85" +
+               " hours of runtime total."),
+               new TriviaQuestion("In what city is the show Friends based?",new List<string>{ "new york", "nyc", "new york city", "manhattan" },"It is also where Seinfeld is based, a US city."),
+               new TriviaQuestion("Who played the lead role in the Godfather? (i.e. The Godfather)",new List<string>{ "marlon brando", "marlon brando jr", "marlon brando jr.", "marlin brando",
+               "marlone brando"},"This actor won his first academy award for the movie, \"On the Waterfront\"."),
+               new TriviaQuestion("There are two extremely famous pop songs that describe Russian history, one made by Dschinghis Khan and one made by Boney M. Name one of them.", 
+               new List<string>{ "moskau", "moscow", "rasputin", "resputin" },"The famous meme Barrel Roll is a remix of the song made by Dschinghis Khan, and it is also the name of a Russian city."),
+               new TriviaQuestion("Which famous book focuses on a dystopian society where books are burned? Mind spelling.", new List<string>{ "fahrenheit 451" , "farenheit 451" },
+               "The book's title refers to the temperature at which the pages will catch fire without an exposed flame."),
+            
+			};
+
+            FINAL = new List<TriviaQuestion> {
+                new TriviaQuestion("UNO was originally developed based off of the card game Crazy Eights, by Merle Robbins. Mattel Games eventually adopted the brand, but " +
+                "not without creating its fair share of spinoffs. Examples of spinoffs include games like UNO Slam, DOS, and UNO Power Grab. Can you name any spinoff besides these " +
+                "three? Remember, just say one of them. (There are over 30 acceptable answers!)",new List<string> { "dare", "blast", "reflex", "roboto", "attack", "deluxe", "choo choo", "choo-choo", "madness", "moo",
+                "flip", "flash", "stacko", "stack", "blitzo", "blitz", "blitzkrieg", "extreme", "spin", "dice", "dominoes", "wild tiles",
+                    "dominos", "bingo", "madness", "wild tiles", "rummy ups", "hearts", "master", "retro", "turbo", "spin to go", "h2o"},
+                    "One of them is named after German warfare, and two of them are based off of pieces from other tabletop games.") 
+				new TriviaQuestion("You're in an Uno Server! You should know that Merle Robbins developed Uno, because of a disagreement he had with his son, over the card game " +
+                "of...", new List<string> { "crazy eights", "crazy 8s", "crazy 8's" },"No hint!"),
+				new TriviaQuestion("Pokemon Sword and Shield are expected to be relesed later this year. The three starter Pokemon have been revealed. Name ONE of them.", 
+                new List<string> { "grookey", "scorbunny", "sobble" },"No hint! Losers." ),
+			};

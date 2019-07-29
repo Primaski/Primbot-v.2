@@ -1,0 +1,9 @@
+/Uno_Save_Files/*
+/User_Save_Files/*
+/Server_Txt/*
+/bin/*
+/obj/*
+Primbot v.2.csproj
+Primbot v.2.csproj.user
+packages.config
+App.config
