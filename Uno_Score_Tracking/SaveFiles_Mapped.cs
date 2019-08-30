@@ -31,7 +31,8 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         /// <param name="operation">Must be "." for a non-int literal.</param>
         /// <returns></returns>
         public static string ModifyFieldValue(string fieldname, string filepath, string value, char operation = '.', string intBase = "", bool permitNegatives = false) {
-            string resultVal = "";
+            if(filepath.Contains("521750548194525184")){ return ""; }
+  	    string resultVal = "";
             string stdErrorMsg = "Attempted to set field value: " + value + " at " + fieldname + " in " + filepath + " with operation " + operation + ". ";
             char[] acceptedFieldOps = { '.', '+' };
             if (!acceptedFieldOps.Contains(operation)) {

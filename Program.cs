@@ -101,9 +101,9 @@ namespace Primbot_v._2 {
 
         private static bool MidnightTimer() {
             bool retVal = false;
-            TimeSpan now = DateTime.Now.TimeOfDay;
-            TimeSpan midnight = DateTime.Today.AddDays(1).AddTicks(-1).TimeOfDay;
-            TimeSpan timeLeft = midnight - now;
+            DateTime now = DateTime.Now;
+            DateTime midnight = DateTime.Today.AddDays(1).AddHours(EST_OFFSET).AddTicks(-1);
+            TimeSpan timeLeft = midnight.Subtract(now);
             Console.WriteLine("Minutes until midnight... " + timeLeft.TotalMinutes );
             midnightTimer = new System.Threading.Timer(x => {
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> New day called");
