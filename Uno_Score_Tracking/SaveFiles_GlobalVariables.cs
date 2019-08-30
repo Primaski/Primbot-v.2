@@ -10,10 +10,10 @@ namespace Primbot_v._2.Uno_Score_Tracking {
     public static class SaveFiles_GlobalVariables {
 
         public static readonly DateTime startDate = new DateTime(2019, 1, 1, 0, 0, 0);
-        public static readonly DateTime fnStartDate = new DateTime(2019, 7, 15, 0, 0, 0);
+        public static readonly DateTime fnStartDate = new DateTime(2019, 8, 26, 0, 0, 0);
 	public static readonly int EST_OFFSET = 4; //UTC would fluctuate between 4 and 5 depending on DST, EST would always be 0
 
-        public static byte FORTNIGHT_NUMBER = 22;
+        public static byte FORTNIGHT_NUMBER = 25;
 
         public static readonly byte GAME_TYPE_LENGTH = 2;
         public static readonly byte GAME_ITERATON_LENGTH = 5;

@@ -80,10 +80,10 @@ namespace Primbot_v._2.Modules.Just_For_Fun {
                 "***Bot Creator:*** Primaski#0826\n" +
                 "***Bot Creation Date:*** 2018/09/07\n" +
                 "***Bot Prefix:*** p*\n" +
-                "***Version:*** 2.0, 2019/1/21" +
+                "***Version:*** 2.0, 2019/1/21\n" +
                 "***Written in:*** C#\n" +
                 "***Bot Token:*** u wish\n" +
-                "***Source code:*** https://github.com/Primaski/Primbot_v.2 \n" +
+                "***Source code:*** https://github.com/Primaski/Primbot-v.2 \n" +
                 "***Bot Invite Link:*** No longer publicly invitable \n");
         }
 

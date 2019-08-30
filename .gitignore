@@ -8,3 +8,4 @@ Primbot v.2.csproj
 Primbot v.2.csproj.user
 packages.config
 App.config
+.NETFramework,Version=v4.6.1.AssemblyAttributes
