@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Timers;
 using System.Text;
 using System.Threading.Tasks;
 using Discord;
@@ -21,6 +22,8 @@ namespace Primbot_v._2 {
         private static string AUTH = "";
         private static DiscordSocketClient CLIENT;
         private static CommandService COMMANDS;
+
+        private static System.Threading.Timer midnightTimer;
 
         private static IServiceProvider SERVICES;
         private static readonly ulong UNO_BOT_ID = 403419413904228352;
@@ -94,18 +97,33 @@ namespace Primbot_v._2 {
             } else {
                 GuildCache.IncrementCMD(0);
             }
-            if (File.Exists(POKE)) {
-                using (StreamReader sr = new StreamReader(POKE)) {
-                    string buffer = sr.ReadLine();
-                    if (buffer.Length != 3) {
-                        Console.WriteLine("Buffer too short for Pokecord backup.");
-                        return;
-                    }
-                    if (buffer[0] == 't') { spawntrack = true; } else { spawntrack = false; }
-                    if (buffer[1] == 't') { spawntrackalicia = true; } else { spawntrackalicia = false; }
-                    if (buffer[2] == 't') { spawntrackdom = true; } else { spawntrackdom = false; }
-                }
+        }
+
+        private static bool MidnightTimer() {
+            bool retVal = false;
+            TimeSpan now = DateTime.Now.TimeOfDay;
+            TimeSpan midnight = DateTime.Today.AddDays(1).AddTicks(-1).TimeOfDay;
+            TimeSpan timeLeft = midnight - now;
+            Console.WriteLine("Minutes until midnight... " + timeLeft.TotalMinutes );
+            midnightTimer = new System.Threading.Timer(x => {
+                Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> New day called");
+                NewDay();
+                Thread.Sleep(1000);
+                MidnightTimer();
+                retVal = true;
+            }, null, (int)timeLeft.TotalMilliseconds, Timeout.Infinite);
+            return retVal;
+        }
+
+        private static void NewDay() {
+            SocketTextChannel channel = GuildCache.Uno_Cache?.GetTextChannel(483379609723863051) ?? null;
+            if (channel == null) {
+                Console.WriteLine("Failed to retrieve channel at Midnight.");
+                return;
             }
+            GuildCache.NewDay(channel);
+            midnightTimer.Dispose();
+            return;
         }
 
         private string GetAUTH() {
@@ -138,6 +156,7 @@ namespace Primbot_v._2 {
                         }
                     }
                     updateGuildCache = false;
+                    MidnightTimer();
                 } else if (arg.Id == MAGI_SERVER_ID) {
                     var u = arg.DownloaderPromise;
                     GuildCache.InitializeMyServer(arg);
@@ -177,14 +196,6 @@ namespace Primbot_v._2 {
             if (user.Guild.Id == UNO_SERVER_ID) {
                 GuildCache.InitializeUnoServer(user.Guild);
             }
-            /*if(user.Guild.Id == UNO_SERVER_ID) {
-                if(DateTimeOffset.Now.Subtract(user.CreatedAt).Minutes <= 60) {
-                    user.KickAsync();
-                    user.Guild.GetTextChannel(525850614983426088)
-                        .SendMessageAsync(user.Username + " was under an hour old, " +
-                        "and thus was kicked.");
-                }
-            }*/
             SaveFiles_Mapped.CreateUserSaveFolder(user);
             return Task.CompletedTask;
         }
@@ -238,21 +249,8 @@ namespace Primbot_v._2 {
         }
 
 
-
         private async Task HandleCommandAsync(SocketMessage arg) {
             var message = (SocketUserMessage)arg;
-
-            if (message.Channel.Id == slavechannel) {
-                if (message.Author.Id == 365975655608745985) {
-                    if (message.Content.Contains("Successfully bought")) {
-                        slave += 1;
-                    }
-                }
-            }
-
-            if (message.Author.Id == 365975655608745985 || message.Author.Id == 487718576892018689) {
-                SpawnTrack(message);
-            }
 
             if (message == null || (message.Author.IsBot && (message.Author.Id != UNO_BOT_ID && message.Author.Id != 494274144159006731))) {
                 return;
@@ -269,7 +267,7 @@ namespace Primbot_v._2 {
                     } else if (message.Author.Id == UNO_BOT_ID && message.Embeds.ElementAt(0).Description.Contains("aceknuckles's turn")) {
                         await message.Channel.SendMessageAsync("<@!213468252012150786> it's your turn, dummy");
                     }
-                    } catch {
+                } catch {
 
                 }
             }
@@ -304,6 +302,7 @@ namespace Primbot_v._2 {
             return;
         }
 
+        /*
         private async void LuckySpawn(SocketCommandContext cxt) {
             if (cxt.User.IsBot) {
                 return;
@@ -455,25 +454,27 @@ namespace Primbot_v._2 {
             }
         }
     }
+    */
 
-    /*private void LogUnoGame(IReadOnlyCollection<Attachment> jsonOutput) {
-       IEnumerator<Attachment> outputs = jsonOutput.GetEnumerator();
-       string desiredFileUrl = "";
-        try {
-            while(outputs.MoveNext()) {
-                if (outputs.Current.Url.EndsWith("json")) {
-                    desiredFileUrl = outputs.Current.Url;
+        /*private void LogUnoGame(IReadOnlyCollection<Attachment> jsonOutput) {
+           IEnumerator<Attachment> outputs = jsonOutput.GetEnumerator();
+           string desiredFileUrl = "";
+            try {
+                while(outputs.MoveNext()) {
+                    if (outputs.Current.Url.EndsWith("json")) {
+                        desiredFileUrl = outputs.Current.Url;
+                    }
+                }
+            }catch(Exception e) {
+                throw e;
+            }
+            if(desiredFileUrl != "") {
+                using(WebClient wc = new WebClient()) {
+                    wc.DownloadFile(desiredFileUrl, JSON_OUTPUT_PATH);
                 }
             }
-        }catch(Exception e) {
-            throw e;
-        }
-        if(desiredFileUrl != "") {
-            using(WebClient wc = new WebClient()) {
-                wc.DownloadFile(desiredFileUrl, JSON_OUTPUT_PATH);
-            }
-        }
-        Games_Multiplayer.UnoLog(JSON_OUTPUT_PATH);
-        return;
-    }*/
+            Games_Multiplayer.UnoLog(JSON_OUTPUT_PATH);
+            return;
+        }*/
+    }
 }

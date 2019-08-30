@@ -760,25 +760,7 @@ namespace Primbot_v._2.Modules.Scoring {
             if (!first) {
                 await ReplyAsync("`In progress...`");
             }
-            await ReplyAsync("`Resetting user daily limits...`");
-            List<string> PLAYSTODAY_TYPES = new List<string>();
-            foreach (var keyValue in UnoSaveFields) {
-                if (keyValue.Key.StartsWith("PLAYSTODAY")) {
-                    PLAYSTODAY_TYPES.Add(keyValue.Key);
-                }
-            }
-            var directories = Directory.EnumerateDirectories(USER_SAVE_DIRECTORY);
-            foreach (var user in directories) {
-                //Console.WriteLine("Performing on " + user);
-                foreach (var playsToday in PLAYSTODAY_TYPES) {
-                    try {
-                        SaveFiles_Mapped.ModifyFieldValue(playsToday, user + "\\" + UNO_SAVE_FILE_NAME, "0");
-                    } catch { }
-                }
-            }
-            await ReplyAsync("`Storing metadata statistics...`");
-            GuildCache.LogCMD();
-            await ReplyAsync("`Complete.`");
+            GuildCache.NewDay((SocketTextChannel)Context.Channel);
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Started a new Uno day for " + Context.User.Username);
             return;
         }

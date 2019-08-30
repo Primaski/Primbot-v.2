@@ -213,6 +213,29 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             cmdEx = 0;
             GuildCache.IncrementCMD(0);
         }
+
+        public static bool NewDay(SocketTextChannel channel) {
+            channel.SendMessageAsync("`Resetting user daily limits...`");
+            List<string> PLAYSTODAY_TYPES = new List<string>();
+            foreach (var keyValue in UnoSaveFields) {
+                if (keyValue.Key.StartsWith("PLAYSTODAY")) {
+                    PLAYSTODAY_TYPES.Add(keyValue.Key);
+                }
+            }
+            var directories = Directory.EnumerateDirectories(USER_SAVE_DIRECTORY);
+            foreach (var user in directories) {
+                foreach (var playsToday in PLAYSTODAY_TYPES) {
+                    try {
+                        SaveFiles_Mapped.ModifyFieldValue(playsToday, user + "\\" + UNO_SAVE_FILE_NAME, "0");
+                    }catch{ /*file did not exist, move on*/ }
+                }
+            }
+            channel.SendMessageAsync("`Storing metadata statistics...`");
+            GuildCache.LogCMD();
+            channel.SendMessageAsync("`Complete.`");
+            return true;
+        }
+
         public static void IncrementCMD(int x = -1) {
             cmdEx++;
             if (File.Exists(COMMANDS_TODAY_BACKUP_DIRECTORY)) {
