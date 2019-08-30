@@ -22,7 +22,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly byte USER_ID_LENGTH = 16;
         public static readonly byte SCORE_LENGTH = 2;
         public static readonly byte SEQUENCE_LENGTH = (byte)(GAME_ID_LENGTH + DATE_LENGTH + USER_ID_LENGTH
-            + SCORE_LENGTH + 3);
+            + SCORE_LENGTH + 3); //-
 
         public static readonly byte MINESWEEPER_POINT_VALUE = 15 ;
         public static readonly byte CHESS_POINT_VALUE = 30 ;
