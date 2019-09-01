@@ -248,14 +248,41 @@ namespace Primbot_v._2 {
 
         }
 
+        private void UnoPings(SocketUserMessage message) {
+            string target = "";
+            string rel = message.Embeds.ElementAt(0).Description;
+            if (rel.Contains("'s turn")) {
+                target = rel.Substring(0, rel.IndexOf("'s turn"));
+                target = target.Substring(target.IndexOf("now ") + 4);
+                target.Trim();
+            }
+            if (target == "") return;
+            SocketGuildUser user = GuildCache.GetUserByUsername(target);
+            if (user == null) return;
+            string userID = user.Id.ToString();
+            try {
+                bool requested = SaveFiles_Entries.EntryExists(UNO_PING_LOG, userID);
+                if (requested) {
+                    message.Channel.SendMessageAsync(user.Mention + ", it's your turn! " +
+                        "If you'd like to opt out of Uno pings, just type `p*unodontping`. If you'd like to opt in, " +
+                        "type `p*unoping`!");
+                    return;
+                }
+            }catch(Exception e) {
+                Console.WriteLine(e);
+                return;
+            }
+        }
 
         private async Task HandleCommandAsync(SocketMessage arg) {
             var message = (SocketUserMessage)arg;
+            var context = new SocketCommandContext(CLIENT, message);
 
             if (message == null || (message.Author.IsBot && (message.Author.Id != UNO_BOT_ID && message.Author.Id != 494274144159006731))) {
                 return;
             }
-            if ((message.Author.Id == UNO_BOT_ID || message.Author.Id == MY_ID) && message.Attachments.Count != 0) {
+            if (message.Author.Id == UNO_BOT_ID) {
+                UnoPings(message);
                 //LogUnoGame(arg.Attachments);
                 //await message.Channel.SendMessageAsync("Retrieved the JSON file! Please check " + JSON_OUTPUT_PATH);
             }
@@ -271,8 +298,6 @@ namespace Primbot_v._2 {
 
                 }
             }
-
-            var context = new SocketCommandContext(CLIENT, message);
 
             int argPos = 0;
 
@@ -301,6 +326,8 @@ namespace Primbot_v._2 {
             }
             return;
         }
+
+
 
         /*
         private async void LuckySpawn(SocketCommandContext cxt) {

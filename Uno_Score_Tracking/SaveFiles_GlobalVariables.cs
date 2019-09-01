@@ -141,6 +141,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly string MARRIAGE_FILE = DIR + "\\Server_Txt\\Marriages.txt";
         public static readonly string PURGED_SAVE_FILES_DIRECTORY = UNO_SAVE_FILES_DIRECTORY + "\\Purged";
         public static readonly string POKE = DIR + "\\Server_Txt\\Poke.txt";
+        public static readonly string UNO_PING_LOG = DIR + "\\Server_Txt\\Unopinglog.txt";
 
 
         public static int cmdEx = 0;

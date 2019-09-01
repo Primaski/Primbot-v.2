@@ -993,15 +993,6 @@ namespace Primbot_v._2.Modules.Scoring {
             return;
         }
 
-        [Command("pingme")]
-        public async Task Pingme([Remainder] string args = null) {
-            if(Context.User.Id == MY_ID) {
-                pingme = !pingme;
-                await ReplyAsync("Uno ping: `" + pingme + "`");
-                return;
-            }
-        }
-
 
         [Command("embed")]
         public async Task Embed([Remainder] string args = null) {
