@@ -301,7 +301,7 @@ namespace Primbot_v._2 {
                 }
             }
 
-            if (message == null || message.Author.IsBot) {
+            if (message == null || (message.Author.IsBot && message.Author.Id != 494274144159006731)) {
                 return;
             }
 
