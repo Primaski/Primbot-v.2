@@ -30,9 +30,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 case "non-standard": res = NonStandardSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "minesweeper": res = MinesweeperSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "tetris": res = TetrisSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
-                case "pokeduel": res = PokeduelSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
-                case "idlerpg": res = IdleSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
-                case "chess": res = ChessSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "bumps": res = BumpsSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "event": res = EventSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "casino": res = CasinoSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
