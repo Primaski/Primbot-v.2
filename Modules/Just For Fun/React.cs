@@ -17,8 +17,8 @@ namespace Primbot_v._2.Modules.Copypastas {
                 await ReplyAsync("Tell me who you want to marry, then!");
                 return;
             }
-            string val = Uno_Score_Tracking.SaveFiles_Mapped.SearchMappedSaveFile(
-                Uno_Score_Tracking.SaveFiles_GlobalVariables.MARRIAGE_FILE, Context.User.Id.ToString());
+            string val = Uno_Score_Tracking.SaveFiles_Mapped.SearchValue(
+                Uno_Score_Tracking.Defs.MARRIAGE_FILE, Context.User.Id.ToString());
             if (val != null) {
                 await ReplyAsync("Aren't you already married to <@" + val + ">? Don't make me tell them you're " +
                     "trying to have an affair! Divorce if you're not happy!");
@@ -36,8 +36,8 @@ namespace Primbot_v._2.Modules.Copypastas {
                     await ReplyAsync("S-Sorry, I'm flattered, but I think you can find someone better than me.");
                     return;
                 }
-                string w = Uno_Score_Tracking.SaveFiles_Mapped.SearchMappedSaveFile(
-                Uno_Score_Tracking.SaveFiles_GlobalVariables.MARRIAGE_FILE, theMarried.Id.ToString());
+                string w = Uno_Score_Tracking.SaveFiles_Mapped.SearchValue(
+                Uno_Score_Tracking.Defs.MARRIAGE_FILE, theMarried.Id.ToString());
                 if (w != null) {
                     await ReplyAsync(theMarried.Username + " is already married!!");
                     return;
@@ -62,9 +62,9 @@ namespace Primbot_v._2.Modules.Copypastas {
                 }
                 await ReplyAsync("https://media.giphy.com/media/3QAUnTsafSMQE/giphy.gif");
                 await ReplyAsync("They've accepted! Let it be known that " + Context.User.Username + " and " + theMarried.Username + " are married!\nType `p*mylove` to show off your love to everyone else!");
-                Uno_Score_Tracking.SaveFiles_Mapped.NewLineMappedSaveFile(Uno_Score_Tracking.SaveFiles_GlobalVariables.MARRIAGE_FILE,
+                Uno_Score_Tracking.SaveFiles_Mapped.AddLine(Uno_Score_Tracking.Defs.MARRIAGE_FILE,
                     Context.User.Id.ToString(), theMarried.Id.ToString());
-                Uno_Score_Tracking.SaveFiles_Mapped.NewLineMappedSaveFile(Uno_Score_Tracking.SaveFiles_GlobalVariables.MARRIAGE_FILE, theMarried.Id.ToString(),
+                Uno_Score_Tracking.SaveFiles_Mapped.AddLine(Uno_Score_Tracking.Defs.MARRIAGE_FILE, theMarried.Id.ToString(),
                     Context.User.Id.ToString());
             }
             return;
@@ -72,8 +72,8 @@ namespace Primbot_v._2.Modules.Copypastas {
 
         [Command("mylove")]
         public async Task Spouse([Remainder] string args = null) {
-            string w = Uno_Score_Tracking.SaveFiles_Mapped.SearchMappedSaveFile(
-                Uno_Score_Tracking.SaveFiles_GlobalVariables.MARRIAGE_FILE, Context.User.Id.ToString());
+            string w = Uno_Score_Tracking.SaveFiles_Mapped.SearchValue(
+                Uno_Score_Tracking.Defs.MARRIAGE_FILE, Context.User.Id.ToString());
             if (w == null) {
                 await ReplyAsync("Sorry! You're forever alone!"); return;
             }
@@ -82,8 +82,8 @@ namespace Primbot_v._2.Modules.Copypastas {
 
         [Command("divorce")]
         public async Task Divorce([Remainder] string args = null) {
-            string w = Uno_Score_Tracking.SaveFiles_Mapped.SearchMappedSaveFile(
-                Uno_Score_Tracking.SaveFiles_GlobalVariables.MARRIAGE_FILE, Context.User.Id.ToString());
+            string w = Uno_Score_Tracking.SaveFiles_Mapped.SearchValue(
+                Uno_Score_Tracking.Defs.MARRIAGE_FILE, Context.User.Id.ToString());
             if (w == null) {
                 await ReplyAsync("You can't divorce if you're not married! Or... can you?");
             } else {
@@ -145,7 +145,7 @@ namespace Primbot_v._2.Modules.Copypastas {
             } else if ((args.ToLower()).Contains("primaski bot")) {
                 await ReplyAsync("You... want me to hug myself...?");
                 return;
-            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.SaveFiles_GlobalVariables.MY_ID.ToString())) {
+            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.Defs.MY_ID.ToString())) {
                 await ReplyAsync("Prim likes hugs >w< uwu");
             } else {
                 await ReplyAsync("Aw! Here's a hug, " + args + "!");
@@ -171,7 +171,7 @@ namespace Primbot_v._2.Modules.Copypastas {
             string randomHandshakeEmotes = handshakeEmotes[rand.Next(0, handshakeEmotes.Length)];
             if (args == null) {
                 await ReplyAsync("You want me to shake your hand? You got it, chief, " + Context.User.Username + ".");
-            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.SaveFiles_GlobalVariables.MY_ID.ToString())) {
+            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.Defs.MY_ID.ToString())) {
                 await ReplyAsync("Prim gives you a FIRM handshake.");
             } else {
                 await ReplyAsync(args + " has received a firm handshake from " + Context.User.Username);
@@ -201,7 +201,7 @@ namespace Primbot_v._2.Modules.Copypastas {
             } else if ((args.ToLower()).Contains((Context.User.Username).ToLower()) || args.Contains(Context.User.Mention) || args.Contains(Context.User.Id.ToString())) {
                 await ReplyAsync("Why would you want me to slap you...? \n https://orig00.deviantart.net/cf61/f/2017/121/a/7/__litten_frightened___by_screinja_x-db7t8ml.gif");
                 return;
-            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.SaveFiles_GlobalVariables.MY_ID.ToString())) {
+            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.Defs.MY_ID.ToString())) {
                 await ReplyAsync("I refuse to slap Primaski. Nerd.");
                 return;
             } else {
@@ -231,7 +231,7 @@ namespace Primbot_v._2.Modules.Copypastas {
             } else if ((args.ToLower()).Contains((Context.User.Username).ToLower()) || args.Contains(Context.User.Mention) || args.Contains(Context.User.Id.ToString())) {
                 await ReplyAsync("Why would you want me to punch you...? \n https://orig00.deviantart.net/cf61/f/2017/121/a/7/__litten_frightened___by_screinja_x-db7t8ml.gif");
                 return;
-            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.SaveFiles_GlobalVariables.MY_ID.ToString())) {
+            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.Defs.MY_ID.ToString())) {
                 await ReplyAsync("I refuse to punch Primaski. Nerd.");
                 return;
             } else {
@@ -260,7 +260,7 @@ namespace Primbot_v._2.Modules.Copypastas {
             string randomHeadpatEmote = headpatEmotes[rand.Next(0, headpatEmotes.Length)];
             if (args == null) {
                 await ReplyAsync("Aw, need a headpat? Here's a headpat, " + Context.User.Username + " ^w^");
-            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.SaveFiles_GlobalVariables.MY_ID.ToString())) {
+            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.Defs.MY_ID.ToString())) {
                 await ReplyAsync("Prim likes headpats >w< uwu");
             } else {
                 await ReplyAsync(args + " has received a headpat from " + Context.User.Username);
@@ -289,7 +289,7 @@ namespace Primbot_v._2.Modules.Copypastas {
                 await ReplyAsync("I think I'd prefer to keep this at a friendship level..."); return;
             } else if (args.Contains("487718576892018689") || args.Contains("bot")) {
                 await ReplyAsync("I think I'd prefer to keep this at a friendship level..."); return;
-            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.SaveFiles_GlobalVariables.MY_ID.ToString())) {
+            } else if ((args.ToLower()).Contains("prim") || args.ToLower().Contains(Uno_Score_Tracking.Defs.MY_ID.ToString())) {
                 await ReplyAsync("Y-you want to kiss Prim? >///<");
             } else if (args.Contains(Context.User.Id.ToString()) || Context.User.Username.ToLower().Contains(args)) {
                 await ReplyAsync("Are you feeling lonely..?"); return;

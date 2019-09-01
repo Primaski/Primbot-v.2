@@ -7,7 +7,7 @@ using Discord.WebSocket;
 using Discord;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
-    public static class SaveFiles_GlobalVariables {
+    public static class Defs {
 
         public static readonly DateTime startDate = new DateTime(2019, 1, 1, 0, 0, 0);
         public static readonly DateTime fnStartDate = new DateTime(2019, 8, 26, 0, 0, 0);
@@ -42,6 +42,9 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly byte CHESS_DAILY_LIMIT = 2;
 
         public static readonly ulong MY_ID = 263733973711192064;
+        public static readonly ulong UNO_BOT_ID = 403419413904228352;
+        public static readonly ulong CAH_BOT_ID = 204255221017214977;
+
 
         public static readonly string[] GameIden = new string[] {
             "non-standard", "uno", "cah", "minesweeper", "tetris", "pokeduel", "idlerpg",

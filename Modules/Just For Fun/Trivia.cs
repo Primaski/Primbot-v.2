@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Discord.Commands;
 using Discord;
 using Discord.WebSocket;
-using  static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using  static Primbot_v._2.Uno_Score_Tracking.Defs;
 
 namespace Primbot_v._2.Modules.Just_For_Fun {
     public class Trivia : ModuleBase<SocketCommandContext> {

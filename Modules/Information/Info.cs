@@ -196,7 +196,7 @@ namespace Primbot_v._2.Modules.Just_For_Fun {
             emb.WithCurrentTimestamp();
             Embed final = emb.Build();
             try {
-                await channel.SendMessageAsync("<@!" + Uno_Score_Tracking.SaveFiles_GlobalVariables.MY_ID + ">", false, final);
+                await channel.SendMessageAsync("<@!" + Uno_Score_Tracking.Defs.MY_ID + ">", false, final);
             } catch (Exception e) {
                 await ReplyAsync("Error posting: " + e.Message);
             }
@@ -287,7 +287,7 @@ namespace Primbot_v._2.Modules.Just_For_Fun {
 
         [Command("fnend")]
         public async Task FNEnd() {
-            var fnend = Uno_Score_Tracking.SaveFiles_GlobalVariables.fnStartDate.AddDays(14);
+            var fnend = Uno_Score_Tracking.Defs.fnStartDate.AddDays(14);
             TimeSpan timesp = fnend.Subtract(DateTime.Now);
             if (timesp.Ticks < 0) {
                 await ReplyAsync("Error retrieving. Fortnight end date has already passed."); return;
@@ -296,7 +296,7 @@ namespace Primbot_v._2.Modules.Just_For_Fun {
             } else if (timesp.TotalDays < 2) {
                 await ReplyAsync("The fortnight ends tomorrow. (GMT -4)"); return;
             }
-            await ReplyAsync("Fortnight " + Uno_Score_Tracking.SaveFiles_GlobalVariables.FORTNIGHT_NUMBER
+            await ReplyAsync("Fortnight " + Uno_Score_Tracking.Defs.FORTNIGHT_NUMBER
                 + " ends in " + ((int)timesp.TotalDays / 7) + " week and " +
                 (int)(timesp.TotalDays % 7) + " days.");
             return;

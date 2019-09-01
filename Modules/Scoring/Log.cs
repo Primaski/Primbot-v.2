@@ -7,7 +7,7 @@ using Discord.Commands;
 using Discord;
 using Discord.WebSocket;
 using System.Globalization;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using Primbot_v._2.Uno_Score_Tracking;
 using System.Threading;
 
@@ -39,8 +39,8 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             List<Tuple<ulong, byte>> scorer;
             foreach (SocketUser user in users) {
-                string playsTodayStr = SaveFiles_Mapped.SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-MS") ?? "";
-                string playsTodayStrKnigh = SaveFiles_Mapped.SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-KNIGHTS") ?? "";
+                string playsTodayStr = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-MS") ?? "";
+                string playsTodayStrKnigh = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-KNIGHTS") ?? "";
                 if (!Int32.TryParse(playsTodayStr, out int ignore) && !Int32.TryParse(playsTodayStrKnigh, out int ignore2)) {
                     await ReplyAsync("Unknown error in determining how many games were played today.");
                     continue;
@@ -109,7 +109,7 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             List<Tuple<ulong, byte>> scorer;
             var user = users[0];
-            string playsTodayStr = SaveFiles_Mapped.SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-TETRIS") ?? "";
+            string playsTodayStr = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-TETRIS") ?? "";
             if (!Int32.TryParse(playsTodayStr, out int ignoreme)) {
                 await ReplyAsync("Unknown error in determining how many games were played today.");
                 return;
@@ -180,10 +180,10 @@ namespace Primbot_v._2.Modules.Scoring {
                             "\\" + UNO_SAVE_FILE_NAME;
                         string FNsaveDir = USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() +
                             "\\" + "FN" + FORTNIGHT_NUMBER + "_" + UNO_SAVE_FILE_NAME;
-                        if (Int32.Parse(SaveFiles_Mapped.SearchMappedSaveFile(saveDir, "HIGH-TETRIS")) < tetrisScore) {
+                        if (Int32.Parse(SaveFiles_Mapped.SearchValue(saveDir, "HIGH-TETRIS")) < tetrisScore) {
                             SaveFiles_Mapped.SetFieldValue("HIGH-TETRIS", saveDir, tetrisScore.ToString());
                             SaveFiles_Mapped.SetFieldValue("HIGH-TETRIS", FNsaveDir, tetrisScore.ToString());
-                        }else if(Int32.Parse(SaveFiles_Mapped.SearchMappedSaveFile(FNsaveDir, "HIGH-TETRIS")) < tetrisScore) {
+                        }else if(Int32.Parse(SaveFiles_Mapped.SearchValue(FNsaveDir, "HIGH-TETRIS")) < tetrisScore) {
                             SaveFiles_Mapped.SetFieldValue("HIGH-TETRIS", FNsaveDir, tetrisScore.ToString());
                         }
                         if(tetrisScore >= 10000) {
@@ -220,7 +220,7 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             List<Tuple<ulong, byte>> scorer;
             foreach (SocketUser user in users) {
-                string playsTodayStr = SaveFiles_Mapped.SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-POKEDUEL") ?? "";
+                string playsTodayStr = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-POKEDUEL") ?? "";
                 if (!Int32.TryParse(playsTodayStr, out int ignore)) {
                     await ReplyAsync("Unknown error in determining how many games were played today.");
                     continue;
@@ -268,7 +268,7 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             List<Tuple<ulong, byte>> scorer;
             foreach (SocketUser user in users) {
-                string playsTodayStr = SaveFiles_Mapped.SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-IDLERPG") ?? "";
+                string playsTodayStr = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-IDLERPG") ?? "";
                 if (!Int32.TryParse(playsTodayStr, out int ignore)) {
                     await ReplyAsync("Unknown error in determining how many games were played today.");
                     continue;
@@ -316,7 +316,7 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             List<Tuple<ulong, byte>> scorer;
             foreach (SocketUser user in users) {
-                string playsTodayStr = SaveFiles_Mapped.SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-CHESS") ?? "";
+                string playsTodayStr = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-CHESS") ?? "";
                 if (!Int32.TryParse(playsTodayStr, out int ignore)) {
                     await ReplyAsync("Unknown error in determining how many games were played today.");
                     continue;
@@ -408,8 +408,8 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             List<Tuple<ulong, byte>> scorer;
             foreach (SocketUser user in users) {
-                string playsTodayStr = SaveFiles_Mapped.SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-MS") ?? "";
-                string playsTodayStrKnigh = SaveFiles_Mapped.SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-KNIGHTS") ?? "";
+                string playsTodayStr = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-MS") ?? "";
+                string playsTodayStrKnigh = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-KNIGHTS") ?? "";
                 if (!Int32.TryParse(playsTodayStr, out int ignore) && !Int32.TryParse(playsTodayStrKnigh, out int ignore2)) {
                     await ReplyAsync("Unknown error in determining how many games were played today.");
                     continue;

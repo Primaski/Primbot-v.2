@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Globalization;
 using Discord.WebSocket;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
     public static class SaveFiles_Mapped {
@@ -102,6 +102,26 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             throw new FileNotFoundException();
         }
 
+        public static bool DeleteLine(string fieldname, string filepath, string value) {
+            if (!File.Exists(filepath)) {
+                throw new FileNotFoundException();
+            }
+            List<string> fileReturnLines = new List<string>();
+            bool found = false;
+            string line = "";
+            using (StreamReader sr = new StreamReader(filepath)) {
+                while ((line = sr.ReadLine()) != null) {
+                    if (line.StartsWith(value + ":")) {
+                        found = true;
+                        continue;
+                    }
+                    fileReturnLines.Add(line);
+                }
+            }
+            File.WriteAllLines(filepath, fileReturnLines.ToArray());
+            return found;
+        }
+
         /// <summary>
         /// If file doesn't exist, will generate one
         /// </summary>
@@ -185,10 +205,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         }
 
         public static string SearchCachedTeam(ulong ID) {
-            if(ID == 299578425390268416) {
-                Console.WriteLine("here");
-            }
-            string res = SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + ID.ToString() + "\\" + UNO_SAVE_FILE_NAME, "LIT-TEAM") ?? "-";
+            string res = SearchValue(USER_SAVE_DIRECTORY + "\\" + ID.ToString() + "\\" + UNO_SAVE_FILE_NAME, "LIT-TEAM") ?? "-";
             if(res == "-") {
                 return null;
             }
@@ -196,7 +213,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         }
 
         public static string SearchCachedUsername(ulong ID) {
-            string res = SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + ID.ToString() + "\\" + DEFAULT_SAVE_FILE_NAME, "LIT-CachedUsername") ?? "-";
+            string res = SearchValue(USER_SAVE_DIRECTORY + "\\" + ID.ToString() + "\\" + DEFAULT_SAVE_FILE_NAME, "LIT-CachedUsername") ?? "-";
             if (res == "-") {
                 return null;
             }
@@ -206,7 +223,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         /// <summary>
         /// Returns value for a key.
         /// </summary>
-        public static string SearchMappedSaveFile(string path, string key) {
+        public static string SearchValue(string path, string key) {
             if (!File.Exists(path)) {
                 throw new FileNotFoundException();
             }
@@ -214,6 +231,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 string line;
                 while ((line = sr.ReadLine()) != null) {
                     if (line.StartsWith(key + ":")) {
+                        if(line.IndexOf(":") == line.Length - 1) { return ""; }
                         return line.Substring(line.IndexOf(":") + 1);
                     }
                 }
@@ -221,12 +239,16 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             return null;
         }
 
-        public static void NewLineMappedSaveFile(string path, string key, string val) {
+        public static void AddLine(string path, string key, string val) {
             using (StreamWriter sw = File.AppendText(path)) {
                 sw.WriteLine(key + ":" + val);
                 sw.Close();
             }
             return;
+        }
+
+        public static void AddLineToUserSaveFiles(string path, string key, string val) {
+
         }
 
         public static SavedProfile CreateSavedProfileObject(ulong ID) {
@@ -331,7 +353,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                     string res = ModifyFieldValue(val.Key, fullPath, val.Value); //update the score of each user specified - expected to derive from their save file
                     if (res == "") {
                         //user not found, attempt to search save file
-                        string originVal = SearchMappedSaveFile(USER_SAVE_DIRECTORY + "\\" + val.Key + "\\" + UNO_SAVE_FILE_NAME, key) ?? "";
+                        string originVal = SearchValue(USER_SAVE_DIRECTORY + "\\" + val.Key + "\\" + UNO_SAVE_FILE_NAME, key) ?? "";
                         if (originVal == "")
                             continue; //file or field does not exist
                         string desiredLine = CreateLeaderboardLine(val.Key, val.Value);
@@ -368,7 +390,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             if(FNno < 13 || FNno > FORTNIGHT_NUMBER+1) {
                 throw new Exception("Fortnight does not exist yet.");
             }
-            string key = SearchMappedSaveFile(SAVEFILE_FORTNIGHTDATES, FNno.ToString("X2"));
+            string key = SearchValue(SAVEFILE_FORTNIGHTDATES, FNno.ToString("X2"));
             try {
                 return Int32.Parse(key, NumberStyles.HexNumber);
             }catch {
@@ -380,7 +402,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             if (FNno < 13 || FNno > FORTNIGHT_NUMBER) {
                 throw new Exception("Fortnight does not exist yet.");
             }
-            string stringRep = SearchMappedSaveFile(SAVEFILE_FORTNIGHTDATES, FNno.ToString("X2"));
+            string stringRep = SearchValue(SAVEFILE_FORTNIGHTDATES, FNno.ToString("X2"));
             try {
                 int dateHex = Int32.Parse(stringRep, NumberStyles.HexNumber);
                 return SaveFiles_Sequences.TranslateDateHex(dateHex);
@@ -431,13 +453,13 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 string res;
                 if (fortnightNo == -1) {
                     if (File.Exists(userSaveFilePath + "\\" + UNO_SAVE_FILE_NAME)) {
-                        res = SearchMappedSaveFile(userSaveFilePath + "\\" + UNO_SAVE_FILE_NAME, key) ?? null;
+                        res = SearchValue(userSaveFilePath + "\\" + UNO_SAVE_FILE_NAME, key) ?? null;
                     } else {
                         continue;
                     }
                 } else {
                     if (File.Exists(userSaveFilePath + "\\FN" + fortnightNo + "_" + UNO_SAVE_FILE_NAME)) {
-                        res = SearchMappedSaveFile(userSaveFilePath + "\\FN" + fortnightNo + "_" + UNO_SAVE_FILE_NAME, key) ?? null;
+                        res = SearchValue(userSaveFilePath + "\\FN" + fortnightNo + "_" + UNO_SAVE_FILE_NAME, key) ?? null;
                     } else {
                         continue;
                     }

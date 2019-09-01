@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Discord.WebSocket;
 using System.Globalization;
 using Discord.Commands;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using Discord;
 using System.Text.RegularExpressions;
 using System.Net;

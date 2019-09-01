@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Globalization;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using System.Text;
 
 namespace Primbot_v._2.Uno_Score_Tracking {

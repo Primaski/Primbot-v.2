@@ -12,6 +12,11 @@ using Primbot_v._2.Uno_Score_Tracking;
 namespace Primbot_v._2.Modules {
     public class Zeastereggs : ModuleBase<SocketCommandContext> {
 
+        [Command("cah")]
+        public async Task CAH([Remainder] string args = null) {
+            await ReplyAsync("Calling `p*cah` isn't necessary anymore! It will do the tracking on its own.");
+        }
+
         [Command("pickrandom", RunMode = RunMode.Async)]
         public async Task PickRandom([Remainder] string args = null) {
             var users = Context.Guild.Users;
@@ -78,7 +83,7 @@ namespace Primbot_v._2.Modules {
 
         [Command("nickname")]
         public async Task Q([Remainder] string args = null) {
-            if(Context.User.Id != SaveFiles_GlobalVariables.MY_ID) {
+            if(Context.User.Id != Defs.MY_ID) {
                 return;
             }
             args = args ?? "";
@@ -212,17 +217,17 @@ namespace Primbot_v._2.Modules {
 
         [Command("bananaboy", RunMode = RunMode.Async)]
         public async Task Bananaboy([Remainder] string args = null) {
-            if(args == "disable" && Context.User.Id == SaveFiles_GlobalVariables.MY_ID) {
+            if(args == "disable" && Context.User.Id == Defs.MY_ID) {
                 await ReplyAsync("Disabled.");
-                SaveFiles_GlobalVariables.disableBananaBoy = true;
+                Defs.disableBananaBoy = true;
                 return;
             }
-            if (args == "enable" && Context.User.Id == SaveFiles_GlobalVariables.MY_ID) {
+            if (args == "enable" && Context.User.Id == Defs.MY_ID) {
                 await ReplyAsync("Enabled.");
-                SaveFiles_GlobalVariables.disableBananaBoy = false;
+                Defs.disableBananaBoy = false;
                 return;
             }
-            if (SaveFiles_GlobalVariables.disableBananaBoy) {
+            if (Defs.disableBananaBoy) {
                 await ReplyAsync(Context.User.Username + ", NO");
                 return;
             }

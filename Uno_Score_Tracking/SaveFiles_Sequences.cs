@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Globalization;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using System.Threading.Tasks;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
@@ -76,7 +76,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         }
 
         public static string GenerateDateHex() {
-            double differential = (DateTime.Now - SaveFiles_GlobalVariables.startDate).TotalDays;
+            double differential = (DateTime.Now - Defs.startDate).TotalDays;
             int diffInt = (int)differential;
             if(diffInt > 0xFFF || diffInt < 0x0) {
                 throw new Exception(":exclamation: Error: Date Hex must be of format 0x000 between 000 and FFF, but instead was: " + diffInt.ToString());

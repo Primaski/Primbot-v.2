@@ -7,7 +7,7 @@ using Discord.Commands;
 using Discord;
 using Discord.WebSocket;
 using static Primbot_v._2.Uno_Score_Tracking.Bridge;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using System.Text.RegularExpressions;
 using Primbot_v._2.Uno_Score_Tracking;
 using System.Globalization;
@@ -30,7 +30,7 @@ namespace Primbot_v._2.Modules.Scoring {
                      if(File.Exists(subdir + "\\Unoprofile.txt") && 
                         File.Exists(subdir + "\\FN0_Unoprofile.txt")) {
                         try {
-                            int pointsEarned = Int32.Parse(SaveFiles_Mapped.SearchMappedSaveFile(
+                            int pointsEarned = Int32.Parse(SaveFiles_Mapped.SearchValue(
                                 subdir + "\\FN0_Unoprofile.txt",
                                 "POINTS-SERVER"
                                 ));
@@ -38,14 +38,14 @@ namespace Primbot_v._2.Modules.Scoring {
                                 /*Console.WriteLine((GuildCache.GetUserByID(
                                     UInt64.Parse(new DirectoryInfo(subdir).Name))?.Username ?? "idk") +
                                     "===> " + pointsEarned.ToString());
-                                int pointssincev2 = Int32.Parse(SaveFiles_Mapped.SearchMappedSaveFile(
+                                int pointssincev2 = Int32.Parse(SaveFiles_Mapped.SearchValue(
                                     subdir + "\\Unoprofile.txt",
                                     "POINTS-SERVER"
                                     ));
                                 int newValue;
                                 newValue = pointsEarned + pointssincev2;
                                 SaveFiles_Mapped.SetFieldValue("POINTS-SERVER", subdir + "\\Unoprofile.txt", newValue.ToString());
-                                string newVal = SaveFiles_Mapped.SearchMappedSaveFile(
+                                string newVal = SaveFiles_Mapped.SearchValue(
                                     subdir + "\\Unoprofile.txt",
                                     "POINTS-SERVER"
                                     );
@@ -425,7 +425,7 @@ namespace Primbot_v._2.Modules.Scoring {
                             //if file doesn't exist, then they're not in uno server -> keep
                             string fullDirName = subdir + "\\" + UNO_SAVE_FILE_NAME;
                             if (File.Exists(fullDirName)) {
-                                int val = Int32.Parse(SaveFiles_Mapped.SearchMappedSaveFile
+                                int val = Int32.Parse(SaveFiles_Mapped.SearchValue
                                     (fullDirName, "POINTS-UNO"));
                                 //if they have ever earned points -> keep
                                 if(val == 0) {
@@ -477,7 +477,7 @@ namespace Primbot_v._2.Modules.Scoring {
                 if (argos[0] != "local") {
                     ID = UInt64.Parse(argos[0]);
                 } else {
-                    ID = Uno_Score_Tracking.SaveFiles_GlobalVariables.MY_ID;
+                    ID = Uno_Score_Tracking.Defs.MY_ID;
                 }
                 rolename = args.Substring(args.IndexOf(" ") + 1);
             } catch (Exception e) {
@@ -516,7 +516,7 @@ namespace Primbot_v._2.Modules.Scoring {
                                     return;
                                 case "count":
                                     try {
-                                        SaveFiles_GlobalVariables.slave = Int32.Parse(argssplits[2]);
+                                        Defs.slave = Int32.Parse(argssplits[2]);
                                     } catch (Exception e) {
                                         await ReplyAsync(e.Message);
                                     }
@@ -524,7 +524,7 @@ namespace Primbot_v._2.Modules.Scoring {
                                     return;
                                 case "value":
                                     try {
-                                        SaveFiles_GlobalVariables.slavevalue = Int32.Parse(argssplits[2]);
+                                        Defs.slavevalue = Int32.Parse(argssplits[2]);
                                     } catch (Exception e) {
                                         await ReplyAsync(e.Message);
                                     }
@@ -532,7 +532,7 @@ namespace Primbot_v._2.Modules.Scoring {
                                     return;
                                 case "threshold":
                                     try {
-                                        SaveFiles_GlobalVariables.slavethreshold = Int32.Parse(argssplits[2]);
+                                        Defs.slavethreshold = Int32.Parse(argssplits[2]);
                                     } catch (Exception e) {
                                         await ReplyAsync(e.Message);
                                     }
@@ -548,8 +548,8 @@ namespace Primbot_v._2.Modules.Scoring {
                 return;
             }
             await ReplyAsync(":dollar: **" + 
-                String.Format("{0:n0}",(SaveFiles_GlobalVariables.slave * slavevalue)) + "** earned so far.\n**" +
-                (slavethreshold-(SaveFiles_GlobalVariables.slave%slavethreshold)) + "** until claim is available.");
+                String.Format("{0:n0}",(Defs.slave * slavevalue)) + "** earned so far.\n**" +
+                (slavethreshold-(Defs.slave%slavethreshold)) + "** until claim is available.");
         }
 
         [Command("remover", RunMode = RunMode.Async)]
@@ -697,12 +697,12 @@ namespace Primbot_v._2.Modules.Scoring {
                 string fullpath = USER_SAVE_DIRECTORY + "\\" + path + "\\FN13_Unoprofile.txt";
                 string shortpath = USER_SAVE_DIRECTORY + "\\" + path;
                 if (File.Exists(fullpath)) {
-                    string val1 = SaveFiles_Mapped.SearchMappedSaveFile(fullpath, "ITER-MS");
+                    string val1 = SaveFiles_Mapped.SearchValue(fullpath, "ITER-MS");
                     if (val1 != "0") {
                         Console.WriteLine("ok this has something");
-                        Console.WriteLine(SaveFiles_Mapped.SearchMappedSaveFile(shortpath + "\\UnoProfile.txt", "ITER-MS"));
+                        Console.WriteLine(SaveFiles_Mapped.SearchValue(shortpath + "\\UnoProfile.txt", "ITER-MS"));
                     }
-                    string val2 = SaveFiles_Mapped.SearchMappedSaveFile(fullpath, "POINTS-MS");
+                    string val2 = SaveFiles_Mapped.SearchValue(fullpath, "POINTS-MS");
                     SaveFiles_Mapped.AddFieldValue("ITER-MS", shortpath + "\\UnoProfile.txt", val1);
                     SaveFiles_Mapped.AddFieldValue("POINTS-MS", shortpath + "\\UnoProfile.txt", val1);
                 }
@@ -863,7 +863,7 @@ namespace Primbot_v._2.Modules.Scoring {
             string dir = DIR + "\\" + argsSplits[0];
             string key = argsSplits[1];
             try {
-                string res = SaveFiles_Mapped.SearchMappedSaveFile(dir, key) ?? "";
+                string res = SaveFiles_Mapped.SearchValue(dir, key) ?? "";
                 await ReplyAsync("Path: `" + dir + "`\n\nKey: `" + key + "`\nValue: `" + res + "`");
             } catch (Exception e) {
                 await ReplyAsync(e.Message + "\n" + e.StackTrace); return;
@@ -882,7 +882,7 @@ namespace Primbot_v._2.Modules.Scoring {
             string dir = DIR + "\\" + argsSplits[0];
             string key = argsSplits[1];
             string value = argsSplits[2];
-            string oldVal = SaveFiles_Mapped.SearchMappedSaveFile(dir, key) ?? "";
+            string oldVal = SaveFiles_Mapped.SearchValue(dir, key) ?? "";
             await ReplyAsync("Path: `" + dir + "`\n\nKey: `" + key + "`\nOld Value: `" + oldVal + "`\nNew Value: `" +
                 SaveFiles_Mapped.SetFieldValue(key, dir, value) + "`");
         }
@@ -951,48 +951,6 @@ namespace Primbot_v._2.Modules.Scoring {
             await Context.Channel.SendMessageAsync("", false, embed);
             return;
         }
-
-        [Command("cah", RunMode = RunMode.Async)]
-        public async Task CahPings([Remainder] string args = null) {
-            ISocketMessageChannel channel = Context.Channel;
-            if (channel.Id != 474410621144793088 && channel.Id != 567459967691522059 && args == null) {
-                await ReplyAsync("Not a CAH channel."); return;
-            }
-
-            if(args != null) {
-                if(args == "www") {
-                    channel = (ISocketMessageChannel)GuildCache.Uno_Cache.GetChannel(474410621144793088);
-                }
-            }
-
-            await ReplyAsync("Started tracking pings!");
-            cahtrack = true;
-            ulong prevMsg = 0;
-            while (cahtrack) {
-                IEnumerable<IMessage> w = channel.GetMessagesAsync(2).FlattenAsync().Result;
-                for (int i = 0; i < w.Count(); ++i) {
-                    if (w.ElementAt(i).Author.Id == 204255221017214977 && w.ElementAt(i).Id != prevMsg) {
-                        try {
-                            var u = w.ElementAt(i).Embeds.ElementAt(0);
-                            string v = u.Description.ToString();
-                            if (v.Contains(">!")) {
-                                prevMsg = w.ElementAt(i).Id;
-                                await channel.SendMessageAsync(v + "");
-                            }
-                        } catch {
-                        }
-                    }
-                }
-            }
-        }
-
-            [Command("cahend", RunMode = RunMode.Async)]
-        public async Task CahPingers([Remainder] string args = null) {
-            cahtrack = false;
-            await ReplyAsync("Stopped tracking pings!");
-            return;
-        }
-
 
         [Command("embed")]
         public async Task Embed([Remainder] string args = null) {

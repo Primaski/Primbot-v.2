@@ -13,14 +13,14 @@ namespace Primbot_v._2.Modules.Just_For_Fun {
 
         [Command("cahtrack")]
         public async Task CT([Remainder] string args = null) {
-            Uno_Score_Tracking.SaveFiles_GlobalVariables.cahtrack = !Uno_Score_Tracking.SaveFiles_GlobalVariables.cahtrack;
+            Uno_Score_Tracking.Defs.cahtrack = !Uno_Score_Tracking.Defs.cahtrack;
         }
 
         /*[Command("kni")]
         public async Task Solver([Remainder] string args = null) {
             var channel = (SocketTextChannel)Uno_Score_Tracking.GuildCache.Uno_Cache.GetChannel(499765861146689552);
 
-            while (Uno_Score_Tracking.SaveFiles_GlobalVariables.cahtrack) {
+            while (Uno_Score_Tracking.Defs.cahtrack) {
                 ulong prevMsg = 0;
                 IEnumerable<IMessage> w = channel.GetMessagesAsync(2).FlattenAsync().Result;
                 for (int i = 0; i < w.Count(); ++i) {

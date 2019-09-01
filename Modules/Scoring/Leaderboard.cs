@@ -7,7 +7,7 @@ using Discord.Commands;
 using Discord;
 using Discord.WebSocket;
 using static Primbot_v._2.Uno_Score_Tracking.Bridge;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using System.Text.RegularExpressions;
 using Primbot_v._2.Uno_Score_Tracking;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿/*
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using Discord.Commands;
 using Discord;
 using Discord.WebSocket;
 using System.Globalization;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using Primbot_v._2.Uno_Score_Tracking;
 using System.IO;
 
@@ -109,10 +110,10 @@ namespace Primbot_v._2.Modules.Information {
                 foreach (var fieldname in FIELD_VALUES) {
                     if (fieldname.StartsWith("POINTS")) {
                         SaveFiles_Mapped.ModifyFieldValue(fieldname, fullPath, (score[j] * pointValForThisGame).ToString());
-                        Console.WriteLine("Changed " + user + "'s field value to " + SaveFiles_Mapped.SearchMappedSaveFile(fullPath, fieldname));
+                        Console.WriteLine("Changed " + user + "'s field value to " + SaveFiles_Mapped.SearchValue(fullPath, fieldname));
                     } else {
                         SaveFiles_Mapped.ModifyFieldValue(fieldname, fullPath, score[j].ToString());
-                        Console.WriteLine("Changed " + user + "'s field value to " + SaveFiles_Mapped.SearchMappedSaveFile(fullPath, fieldname));
+                        Console.WriteLine("Changed " + user + "'s field value to " + SaveFiles_Mapped.SearchValue(fullPath, fieldname));
                     }
                 }
             }
@@ -120,7 +121,7 @@ namespace Primbot_v._2.Modules.Information {
         /*
         [Command("erbherherhresher", RunMode = RunMode.Async)]
         public async Task GameIterFiles() {
-            SaveFiles_Mapped.CreateNewGameIterationSaveLog(SaveFiles_GlobalVariables.SAVEFILE_GAMEITERATIONS);
+            SaveFiles_Mapped.CreateNewGameIterationSaveLog(Defs.SAVEFILE_GAMEITERATIONS);
             await ReplyAsync("Game_iteration file created.");
         }
 
@@ -226,6 +227,7 @@ namespace Primbot_v._2.Modules.Information {
             await Context.Channel.SendMessageAsync("", false, embed);
             return;
         }
-        */
+        
     }
 }
+*/

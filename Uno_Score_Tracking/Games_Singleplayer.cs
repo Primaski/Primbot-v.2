@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_Mapped;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
     public static class Games_Singleplayer {

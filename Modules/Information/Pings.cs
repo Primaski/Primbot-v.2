@@ -8,7 +8,7 @@ using Discord;
 using System.IO;
 using Discord.WebSocket;
 using System.Threading;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 
 namespace Primbot_v._2.Modules.Information {
     public class Pings : ModuleBase<SocketCommandContext> {

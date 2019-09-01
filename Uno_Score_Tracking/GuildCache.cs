@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 using System.Text.RegularExpressions;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using System.IO;
 using System.Globalization;
 
@@ -209,7 +209,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             } else {
                 date = (Int32.Parse(SaveFiles_Sequences.GenerateDateHex().Substring(0, 3), NumberStyles.HexNumber) - 0x1).ToString();
             }
-            SaveFiles_Mapped.NewLineMappedSaveFile(COMMANDS_BY_DATE_DIRECTORY, date, cmdEx.ToString());
+            SaveFiles_Mapped.AddLine(COMMANDS_BY_DATE_DIRECTORY, date, cmdEx.ToString());
             cmdEx = 0;
             GuildCache.IncrementCMD(0);
         }

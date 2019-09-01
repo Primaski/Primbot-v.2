@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_Mapped;
 using Discord.WebSocket;
 
@@ -222,10 +222,10 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                         "\\" + "FN" + FORTNIGHT_NUMBER + "_" + UNO_SAVE_FILE_NAME;
                     AddFieldValue("FIRST-UNO", saveDir, "1");
                     AddFieldValue("FIRST-UNO", FNsaveDir, "1");
-                    if (Int32.Parse(SearchMappedSaveFile(saveDir, "HIGH-UNO")) < players[0].pointsEarned) {
+                    if (Int32.Parse(SearchValue(saveDir, "HIGH-UNO")) < players[0].pointsEarned) {
                         SetFieldValue("HIGH-UNO", saveDir, players[0].pointsEarned.ToString());
                     }
-                    if (Int32.Parse(SearchMappedSaveFile(FNsaveDir, "HIGH-UNO")) < players[0].pointsEarned) {
+                    if (Int32.Parse(SearchValue(FNsaveDir, "HIGH-UNO")) < players[0].pointsEarned) {
                         SetFieldValue("HIGH-UNO", FNsaveDir, players[0].pointsEarned.ToString());
                     }
                 }

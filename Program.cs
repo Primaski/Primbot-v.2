@@ -9,7 +9,7 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
-using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_GlobalVariables;
+using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using System.IO;
 using System.Net;
 using Discord.Rest;
@@ -26,7 +26,6 @@ namespace Primbot_v._2 {
         private static System.Threading.Timer midnightTimer;
 
         private static IServiceProvider SERVICES;
-        private static readonly ulong UNO_BOT_ID = 403419413904228352;
         //private static readonly ulong UNO_SERVER_ID = 506267529036169257; //test server
         public static Program self;
         private static readonly string JSON_OUTPUT_PATH =
@@ -218,8 +217,8 @@ namespace Primbot_v._2 {
             }
             bool newAccount = SaveFiles_Mapped.CreateUserSaveFolder(y);
             if (!newAccount && newTeam != "") {
-                string saveFileDirectory = SaveFiles_GlobalVariables.USER_SAVE_DIRECTORY + "\\" +
-                    y.Id.ToString() + "\\" + SaveFiles_GlobalVariables.DEFAULT_SAVE_FILE_NAME;
+                string saveFileDirectory = Defs.USER_SAVE_DIRECTORY + "\\" +
+                    y.Id.ToString() + "\\" + Defs.DEFAULT_SAVE_FILE_NAME;
                 SaveFiles_Mapped.ModifyFieldValue("UNOTeam", saveFileDirectory, newTeam);
             }
             return Task.CompletedTask;
@@ -235,7 +234,7 @@ namespace Primbot_v._2 {
             }
 
             //exception unhandled string to int
-            if (!SaveFiles_GlobalVariables.UNO_SERVER_TEAMS.Contains(UInt64.Parse(teamAfter))) {
+            if (!Defs.UNO_SERVER_TEAMS.Contains(UInt64.Parse(teamAfter))) {
                 return "";
             }
             return teamAfter;*/
@@ -248,7 +247,7 @@ namespace Primbot_v._2 {
 
         }
 
-        private void UnoPings(SocketUserMessage message) {
+        private async Task UnoPings(SocketUserMessage message) {
             string target = "";
             string rel = message.Embeds.ElementAt(0).Description;
             if (rel.Contains("'s turn")) {
@@ -263,7 +262,7 @@ namespace Primbot_v._2 {
             try {
                 bool requested = SaveFiles_Entries.EntryExists(UNO_PING_LOG, userID);
                 if (requested) {
-                    message.Channel.SendMessageAsync(user.Mention + ", it's your turn! " +
+                    await message.Channel.SendMessageAsync(user.Mention + ", it's your turn! " +
                         "If you'd like to opt out of Uno pings, just type `p*unodontping`. If you'd like to opt in, " +
                         "type `p*unoping`!");
                     return;
@@ -274,29 +273,36 @@ namespace Primbot_v._2 {
             }
         }
 
+
+        private async Task CahPings(SocketUserMessage message) {
+            Console.WriteLine("cah bot");
+            var channel = (SocketTextChannel)message.Channel;
+            string v = message.Embeds.FirstOrDefault().Description.ToString();
+            if (v.Contains(">!")) {
+                await channel.SendMessageAsync("local: " + v);
+                Console.WriteLine("called");
+            }
+        }
+
+
         private async Task HandleCommandAsync(SocketMessage arg) {
             var message = (SocketUserMessage)arg;
             var context = new SocketCommandContext(CLIENT, message);
 
-            if (message == null || (message.Author.IsBot && (message.Author.Id != UNO_BOT_ID && message.Author.Id != 494274144159006731))) {
-                return;
-            }
-            if (message.Author.Id == UNO_BOT_ID) {
-                UnoPings(message);
-                //LogUnoGame(arg.Attachments);
-                //await message.Channel.SendMessageAsync("Retrieved the JSON file! Please check " + JSON_OUTPUT_PATH);
-            }
-
-            if (pingme) {
-                try {
-                    if (message.Author.Id == UNO_BOT_ID && message.Embeds.ElementAt(0).Description.Contains("Primaski's turn")) {
-                        await message.Channel.SendMessageAsync("<@!263733973711192064> it's your turn, dummy");
-                    } else if (message.Author.Id == UNO_BOT_ID && message.Embeds.ElementAt(0).Description.Contains("aceknuckles's turn")) {
-                        await message.Channel.SendMessageAsync("<@!213468252012150786> it's your turn, dummy");
-                    }
-                } catch {
-
+            if (context.Guild.Id == UNO_SERVER_ID) {
+                if (message.Author.Id == UNO_BOT_ID) {
+                    await UnoPings(message);
+                    //LogUnoGame(arg.Attachments);
+                    //await message.Channel.SendMessageAsync("Retrieved the JSON file! Please check " + JSON_OUTPUT_PATH);
                 }
+
+                if (message.Author.Id == CAH_BOT_ID) {
+                    await CahPings(message);
+                }
+            }
+
+            if (message == null || message.Author.IsBot) {
+                return;
             }
 
             int argPos = 0;
@@ -326,7 +332,6 @@ namespace Primbot_v._2 {
             }
             return;
         }
-
 
 
         /*
