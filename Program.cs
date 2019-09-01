@@ -279,7 +279,7 @@ namespace Primbot_v._2 {
             var channel = (SocketTextChannel)message.Channel;
             string v = message.Embeds.FirstOrDefault().Description.ToString();
             if (v.Contains(">!")) {
-                await channel.SendMessageAsync("local: " + v);
+                await channel.SendMessageAsync(v);
                 Console.WriteLine("called");
             }
         }
