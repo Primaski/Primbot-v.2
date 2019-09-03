@@ -494,64 +494,6 @@ namespace Primbot_v._2.Modules.Scoring {
             return;
         }
 
-        [Command("slave")]
-        public async Task slave([Remainder] string args = null) {
-            if(Context.User.Id != MY_ID) {
-                return;
-            }
-            if(args != null) {
-                var argssplits = args.Split(' ');
-                switch (argssplits[0]) {
-                    case "set":
-                        
-                        if(argssplits.Count() > 2) {
-                            switch (argssplits[1]) {
-                                case "channel":
-                                    try {
-                                        slavechannel = UInt64.Parse(argssplits[2]);
-                                    }catch(Exception e) {
-                                        await ReplyAsync(e.Message);
-                                    }
-                                    await ReplyAsync("Success.");
-                                    return;
-                                case "count":
-                                    try {
-                                        Defs.slave = Int32.Parse(argssplits[2]);
-                                    } catch (Exception e) {
-                                        await ReplyAsync(e.Message);
-                                    }
-                                    await ReplyAsync("Success.");
-                                    return;
-                                case "value":
-                                    try {
-                                        Defs.slavevalue = Int32.Parse(argssplits[2]);
-                                    } catch (Exception e) {
-                                        await ReplyAsync(e.Message);
-                                    }
-                                    await ReplyAsync("Success.");
-                                    return;
-                                case "threshold":
-                                    try {
-                                        Defs.slavethreshold = Int32.Parse(argssplits[2]);
-                                    } catch (Exception e) {
-                                        await ReplyAsync(e.Message);
-                                    }
-                                    await ReplyAsync("Success.");
-                                    return;
-                            }
-                            break;
-                        }
-                        await ReplyAsync("Format: `p*slave set [channel,count,value,threshold] [value]`");
-                        break;
-                    default: return;
-                }
-                return;
-            }
-            await ReplyAsync(":dollar: **" + 
-                String.Format("{0:n0}",(Defs.slave * slavevalue)) + "** earned so far.\n**" +
-                (slavethreshold-(Defs.slave%slavethreshold)) + "** until claim is available.");
-        }
-
         [Command("remover", RunMode = RunMode.Async)]
         public async Task removerole([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();

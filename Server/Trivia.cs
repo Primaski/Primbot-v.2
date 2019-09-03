@@ -184,7 +184,7 @@ namespace Primbot_v._2.Server {
         public static void End() {
             HINT_DELAY *= 2;
             POST_HINT_DELAY *= 2;
-            TRIVIA_POINT_VALUE *= 2;
+            //TRIVIA_POINT_VALUE *= 2;
             Say("Well, " + number + " questions later, and we seem to be at the end here.");
             Thread.Sleep(SHORT_PAUSE_DELAY);
             Say("Our final question will be an UNO related one, worth double standard points. You will also have twice as much time to answer");
