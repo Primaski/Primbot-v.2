@@ -92,6 +92,12 @@ namespace Primbot_v._2.Modules.Just_For_Fun {
             await GetInfo();
         }
 
+        [Command("code", RunMode = RunMode.Async)]
+        public async Task Code([Remainder] string args = null) { await GetInfo(); }
+
+        [Command("github", RunMode = RunMode.Async)]
+        public async Task Coder([Remainder] string args = null) { await GetInfo(); }
+
         [Command("categories", RunMode = RunMode.Async)]
         public async Task Categories([Remainder] string args = null) {
             await ReplyAsync("**Gaming,\nSports,\nScience,\nGeography,\nHistory,\nLanguage,\nEntertainment**");

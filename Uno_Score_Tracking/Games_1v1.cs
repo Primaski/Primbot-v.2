@@ -41,7 +41,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         }
 
         private static bool PokeduelSaveFileUpdates(string[] overallPaths, string[] fortnightPaths, int[] pointVals, int[] iterations) {
-            if(!(overallPaths.Length == fortnightPaths.Length && 
+            if (!(overallPaths.Length == fortnightPaths.Length &&
                 overallPaths.Length == pointVals.Length &&
                 overallPaths.Length == iterations.Length)) {
                 throw new Exception("In 1v1 Savefile updates, inconsistent array lengths, no operation was perfomed.");

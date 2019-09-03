@@ -171,6 +171,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server\ReportToChannel.cs" />
     <Compile Include="Uno_Score_Tracking\Bridge.cs" />
+    <Compile Include="Uno_Score_Tracking\Games_1v1.cs" />
     <Compile Include="Uno_Score_Tracking\Games_Multiplayer.cs" />
     <Compile Include="Uno_Score_Tracking\Games_Singleplayer.cs" />
     <Compile Include="Uno_Score_Tracking\GuildCache.cs" />
