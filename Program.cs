@@ -100,9 +100,7 @@ namespace Primbot_v._2 {
 
         private static bool MidnightTimer() {
             bool retVal = false;
-            DateTime now = DateTime.Now;
-            DateTime midnight = DateTime.Today.AddDays(1).AddHours(EST_OFFSET).AddTicks(-1);
-            TimeSpan timeLeft = midnight.Subtract(now);
+            TimeSpan timeLeft = TimeUntilMidnight();
             Console.WriteLine("Minutes until midnight... " + timeLeft.TotalMinutes );
             midnightTimer = new System.Threading.Timer(x => {
                 Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> New day called");
@@ -321,7 +319,7 @@ namespace Primbot_v._2 {
 
             //if (GuildCache.SearchAwaitedMessage(context.Guild.Id, context.Channel.Id, context.User.Id, context.Message.Content) != -1) {}
 
-            if ((message.HasStringPrefix("P*", ref argPos)) || (message.HasStringPrefix("p*", ref argPos)) ||
+            if ((message.HasStringPrefix("p*", ref argPos)) || (message.HasStringPrefix("P*", ref argPos)) ||
                 message.HasMentionPrefix(CLIENT.CurrentUser, ref argPos)) {
                 var result = await COMMANDS.ExecuteAsync(context, argPos, SERVICES);
 

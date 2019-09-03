@@ -100,5 +100,23 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Retrieved a profile for " + Context.User.Username);
         }
+
+        [Command("dl", RunMode = RunMode.Async)]
+        public async Task Daily([Remainder] string args = "") {
+            await DailyLimits(args);
+        }
+        [Command("limits", RunMode = RunMode.Async)]
+        public async Task Limits([Remainder] string args = "") {
+            await DailyLimits(args);
+        }
+        [Command("daily", RunMode = RunMode.Async)]
+        public async Task DailyLimits([Remainder] string args = "") {
+            try {
+                var res = Bridge.GetDailyLimitEmbed(Context.User.Id);
+                await ReplyAsync("", false, res);
+            }catch(Exception e) {
+                await ReplyAsync(e.Message);
+            }
+        }
     }
 }

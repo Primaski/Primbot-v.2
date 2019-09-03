@@ -50,6 +50,10 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             "non-standard", "uno", "cah", "minesweeper", "tetris", "pokeduel", "idlerpg",
             "bingo", "chess", "bumps", "event", "casino", "tourney", "knights", "trivia"
         };
+        public static readonly string[] GameShort = new string[] {
+            "ns", "uno", "cah", "ms", "tet", "poke", "idle",
+            "bing", "chs", "bump", "ven", "cas", "tour", "kn", "triv"
+        };
 
         //METADATA
         public static readonly Dictionary<string, string> DefaultSaveFields = new Dictionary<string, string> {
@@ -156,37 +160,36 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static bool spawntrackdom = true;
         public static bool pingme = true;
 
+        public static int GetDailyLimit(string gameName) {
+            switch (gameName) {
+                case "ms":
+                case "minesweeper":
+                    return MINESWEEPER_DAILY_LIMIT;
+                case "kn":
+                case "knights":
+                    return KNIGHTS_DAILY_LIMIT;
+                case "tet":
+                case "tetris":
+                    return TETRIS_DAILY_LIMIT;
+                case "chs":
+                case "chess":
+                    return CHESS_DAILY_LIMIT;
+                case "idle":
+                case "idlerpg":
+                    return IDLERPG_DAILY_LIMIT;
+                case "poke":
+                case "pokeduel":
+                    return POKEDUEL_DAILY_LIMIT;
+                default:
+                    return 0;
+            }
+        }
 
-        public static int slave = 0;
-        public static ulong slavechannel = 0;
-        public static int slavethreshold = 0;
-        public static int slavevalue = 0;
-
-        //---------------->COMMENT OUT BELOW WHEN UTILIZING UNO SERVER
-        /*
-        public static readonly ulong UNO_SERVER_ID = 506267529036169257;
-        
-        public static readonly ulong REPORT_CHANNEL_ID = 526077006270431233;
-        public static List<ulong> UNO_SERVER_TEAMS = new List<ulong> {
-            531667886062829579, 531667905079672852
-        };
-
-        public static readonly ulong TEAM_ONE_ID = 531667886062829579;
-        public static readonly ulong TEAM_TWO_ID = 531667905079672852;
-        public static readonly string RED_CARD_EMOJI = "<:unored:530193401925074944>";
-        public static readonly string GREEN_CARD_EMOJI = "<:unogreen:530193380626530335>";
-        public static readonly string BLACK_CARD_EMOJI = "<:unoblack:530193428919877653>";
-
-        public static readonly string PASTEL_CARD_EMOJI = "<:unored:530193401925074944>";
-        public static readonly string NEON_CARD_EMOJI = "<:unogreen:530193380626530335>";
-        public static readonly string PASTEL_HEART = ":heart:";
-        public static readonly string NEON_HEART = ":green_heart:";
-        
-        public static readonly string LEADERBOARD_DIRECTORY = "C:\\Users\\tombo\\source\\repos\\Primbot v.2\\Primbot v.2\\Uno_Save_Files_Test_Server\\Leaderboards";
-        public static readonly string SAVEFILE_GAMEITERATIONS = "C:\\Users\\tombo\\source\\repos\\Primbot v.2\\Primbot v.2\\Uno_Save_Files_Test_Server\\Game_Iterations.txt";
-        public static readonly string SAVEFILE_GAMELOGS = "C:\\Users\\tombo\\source\\repos\\Primbot v.2\\Primbot v.2\\Uno_Save_Files_Test_Server\\GameLogs.txt";
-        public static readonly string SAVEFILE_FORTNIGHTDATES = "C:\\Users\\tombo\\source\\repos\\Primbot v.2\\Primbot v.2\\Uno_Save_Files_Test_Server\\Fortnight_Start_Dates.txt";
-        public static readonly string USER_SAVE_DIRECTORY = "C:\\Users\\tombo\\source\\repos\\Primbot v.2\\Primbot v.2\\User_Save_Files_Test_Server"; 
-         */
+        internal static TimeSpan TimeUntilMidnight() {
+            DateTime now = DateTime.Now;
+            DateTime midnight = DateTime.Today.AddDays(1).AddHours(EST_OFFSET).AddTicks(-1);
+            TimeSpan timeLeft = midnight.Subtract(now);
+            return timeLeft;
+        }
     }
 }

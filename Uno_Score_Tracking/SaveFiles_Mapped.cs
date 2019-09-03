@@ -221,6 +221,31 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         }
 
         /// <summary>
+        /// By key substring, return all key-value pairs
+        /// </summary>
+        public static List<Tuple<string,string>> GetAllValues(string path, string subkey, bool subkeyprefix = false) {
+            int start = (subkeyprefix) ? 0 : subkey.Length;
+            if (!File.Exists(path)) {
+                throw new FileNotFoundException();
+            }
+            List<Tuple<string,string>> res = new List<Tuple<string, string>>();
+            using (StreamReader sr = new StreamReader(path)) {
+                string line;
+                while ((line = sr.ReadLine()) != null) {
+                    if (line.StartsWith(subkey)) {
+                        if (line.IndexOf(":") == line.Length - 1) { continue; }
+                        int split = line.IndexOf(":");
+                        var b = line.Substring(start, split-start);
+                        var e = line.Substring(split + 1);
+                        res.Add(new Tuple<string, string>(b, e));
+                    }
+                }
+            }
+            return res;
+        }
+
+
+        /// <summary>
         /// Returns value for a key.
         /// </summary>
         public static string SearchValue(string path, string key) {

@@ -26,6 +26,7 @@ namespace Primbot_v._2.Modules.Just_For_Fun {
             .AddField("p*badges (USER)", "Lists out badges that you have on your profile by default (under construction)")
             .AddField("p*cah", "Pings users during their turn. Should be called before the start of a CAH game. p\\*cahend to terminate.")
             .AddField("p*fnend", "How long until the end of the FN?")
+            .AddField("p*daily", "How many more games can you play before hitting the daily limit?")
             .Build();
 
         Embed unoadmin = new EmbedBuilder().WithColor(Color.Blue).WithAuthor("Administrative Uno Commands - Point Managers and Above")

@@ -10,6 +10,7 @@ using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using Discord;
 using System.Text.RegularExpressions;
 using System.Net;
+using System.IO;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
     /// <summary>
@@ -347,6 +348,35 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 return e.Message + "\n" + e.StackTrace;
             }
             return lb;
+        }
+
+        public static Embed GetDailyLimitEmbed(ulong ID) {
+            EmbedBuilder emb = new EmbedBuilder();
+            try {
+                string filePath = USER_SAVE_DIRECTORY + "\\" + ID + "\\Unoprofile.txt";
+                var limitPairs = SaveFiles_Mapped.GetAllValues(filePath, "PLAYSTODAY-");
+                if(limitPairs == null || limitPairs.Count() == 0) {
+                    return emb.Build();
+                }
+                int alreadyPlayed, maxDaily, playsLeft;
+                alreadyPlayed = maxDaily = playsLeft = 0;
+                foreach(var tuple in limitPairs) {
+                    alreadyPlayed = Int32.Parse(tuple.Item2);
+                    maxDaily = Defs.GetDailyLimit(tuple.Item1.ToLower());
+                    playsLeft = maxDaily - alreadyPlayed;
+                    emb.AddField(tuple.Item1[0] + tuple.Item1.Substring(1).ToLower(), playsLeft.ToString() + " more game(s)", true);
+                }
+                emb.WithTitle("Your remaining games available today:");
+                emb.WithColor(Color.Purple);
+                TimeSpan beforeReset = Defs.TimeUntilMidnight();
+                emb.WithFooter("Your daily limits reset in " + beforeReset.Hours + " hours and " + beforeReset.Minutes + " minutes");
+                emb.WithCurrentTimestamp();
+                return emb.Build();
+            } catch (FileNotFoundException) {
+                return emb.WithTitle("You don't have an Uno account!").Build();
+            } catch (Exception e) {
+                throw e;
+            }
         }
     }
 }
