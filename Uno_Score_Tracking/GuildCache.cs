@@ -127,6 +127,15 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             return result;
         }
 
+
+        public static bool HasRole(SocketGuildUser x, string roleName, bool byID = false) {
+            List<string> roles = ExtractRoleSubsetFromUser(x, new List<string> { roleName }, byID);
+            if (roles.Count() == 0) {
+                return false;
+            }
+            return true;
+        }
+
         public static List<string> ExtractRoleSubsetFromUser(ulong UserID, List<string> soughtRoles, bool byID = false) {
             var userRoles = Uno_Cache.GetUser(UserID)?.Roles;
             List<string> result = new List<string>();

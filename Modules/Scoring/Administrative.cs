@@ -466,11 +466,11 @@ namespace Primbot_v._2.Modules.Scoring {
         public async Task addrole([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
             if (args == null || Context.User.Id != MY_ID) {
-                await ReplyAsync("failed"); return;
+                //await ReplyAsync("failed"); return;
             }
             string[] argos = args.Split();
             if (argos.Count() <= 1) {
-                await ReplyAsync("failed"); return;
+                //await ReplyAsync("failed"); return;
             }
             ulong ID; string rolename;
             try {
@@ -487,10 +487,10 @@ namespace Primbot_v._2.Modules.Scoring {
             IGuildUser user = Context.Guild.GetUser(ID);
             var role = Context.Guild.Roles.FirstOrDefault(x => x.Name == rolename);
             if (user == null || role == null) {
-                await ReplyAsync("returned null"); return;
+                //await ReplyAsync("returned null"); return;
             }
             await user.AddRoleAsync(role);
-            await ReplyAsync("success");
+            //await ReplyAsync("success");
             return;
         }
 
@@ -498,11 +498,11 @@ namespace Primbot_v._2.Modules.Scoring {
         public async Task removerole([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
             if (args == null || Context.User.Id != MY_ID) {
-                await ReplyAsync("failed"); return;
+                ///await ReplyAsync("failed"); return;
             }
             string[] argos = args.Split();
             if (argos.Count() <= 1) {
-                await ReplyAsync("failed"); return;
+                //await ReplyAsync("failed"); return;
             }
             ulong ID; string rolename;
             try {
@@ -522,7 +522,7 @@ namespace Primbot_v._2.Modules.Scoring {
                 await ReplyAsync("returned null"); return;
             }
             await user.RemoveRoleAsync(role);
-            await ReplyAsync("success");
+            //await ReplyAsync("success");
             return;
         }
 
@@ -554,6 +554,36 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             await ReplyAsync("Kicked " + user.Username + ".");
             return;
+        }
+
+        [Command("mute")]
+        public async Task Mute([Remainder] string args = null) {
+            if(args == null) {
+                await ReplyAsync("Parameter cannot be null. Mention or provide ID of user.");
+            }
+            if(Context.Guild.Id != UNO_SERVER_ID) {
+                return;
+            }
+            if(!GuildCache.HasRole((SocketGuildUser)Context.User,"Human Resources") &&
+                !GuildCache.HasRole((SocketGuildUser)Context.User,"Team Leaders")) {
+                await ReplyAsync("Not meant for you.");
+            }
+            if (args == null) {
+                await ReplyAsync("Who should I mute?");
+            }
+
+            SocketGuildUser user = GuildCache.InterpretUserInput(args.Trim())?[0] ?? null;
+            if(user == null) {
+                await ReplyAsync("Not sure who you're referring to.");
+            }
+
+            await removerole(user.Id + " " + "Green Team");
+            await removerole(user.Id + " " + "Yellow Team");
+            await removerole(user.Id + " " + "Red Team");
+            await removerole(user.Id + " " + "Blue Team");
+            await addrole(user.Id + " " + "Skipped");
+
+            await ReplyAsync("Muted " + user.Mention);
         }
 
         [Command("killswitch")]
