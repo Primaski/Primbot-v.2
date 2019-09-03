@@ -358,14 +358,17 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 if(limitPairs == null || limitPairs.Count() == 0) {
                     return emb.Build();
                 }
-                int alreadyPlayed, maxDaily, playsLeft;
+                int alreadyPlayed, maxDaily, playsLeft, msknights;
                 alreadyPlayed = maxDaily = playsLeft = 0;
+                msknights = MINESWEEPER_DAILY_LIMIT;
                 foreach(var tuple in limitPairs) {
                     alreadyPlayed = Int32.Parse(tuple.Item2);
                     maxDaily = Defs.GetDailyLimit(tuple.Item1.ToLower());
                     playsLeft = maxDaily - alreadyPlayed;
+                    if (tuple.Item1 == "MS" || tuple.Item1 == "KNIGHTS") { msknights -= alreadyPlayed; continue; }
                     emb.AddField(tuple.Item1[0] + tuple.Item1.Substring(1).ToLower(), playsLeft.ToString() + " more game(s)", true);
                 }
+                emb.AddField("MS/Knights", msknights.ToString() + " more game(s)", true);
                 emb.WithTitle("Your remaining games available today:");
                 emb.WithColor(Color.Purple);
                 TimeSpan beforeReset = Defs.TimeUntilMidnight();
