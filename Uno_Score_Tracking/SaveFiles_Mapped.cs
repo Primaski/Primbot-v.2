@@ -240,10 +240,10 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         }
 
         public static void AddLine(string path, string key, string val) {
-            using (StreamWriter sw = File.AppendText(path)) {
-                sw.WriteLine(key + ":" + val);
-                sw.Close();
+            if(SaveFiles_Mapped.SearchValue(path,key) != null) {
+                return;
             }
+            File.AppendAllLines(path, new string[] { key + ":" + val });
             return;
         }
 

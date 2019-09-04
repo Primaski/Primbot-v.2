@@ -200,7 +200,7 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Logged Tetris for " + Context.User.Username);
         }
-
+        /*
         [Command("logpoke", RunMode = RunMode.Async)]
         public async Task LogPokeduel([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
@@ -309,7 +309,7 @@ namespace Primbot_v._2.Modules.Scoring {
                 await ReplyAsync(":exclamation: Missing required field: `user(s)`.");
                 return;
             }
-            List<SocketGuildUser> users = Uno_Score_Tracking.GuildCache.InterpretUserInput(args);
+            List<SocketGuildUser> users = GuildCache.InterpretUserInput(args);
             if (GuildCache.IsWellFormattedListOfUsers(users) != "") {
                 await ReplyAsync(GuildCache.IsWellFormattedListOfUsers(users));
                 return;
@@ -344,7 +344,7 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Logged chess for " + Context.User.Username);
         }
-
+        */
         [Command("logbump", RunMode = RunMode.Async)]
         public async Task LogBump([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
@@ -553,10 +553,12 @@ namespace Primbot_v._2.Modules.Scoring {
                     //List<string> seqs = SaveFiles_Sequences.SearchSaveFileForID(ID);
                     string gameName = GameIden[Byte.Parse(IDString.Substring(0, GAME_TYPE_LENGTH), NumberStyles.HexNumber)];
                     int i = 0;
+                    int date;
+                    List<Tuple<ulong, byte>> affected = new List<Tuple<ulong, byte>>();
                     foreach (var rev in reversions) {
                         ulong userID = UInt64.Parse(rev.Substring(rev.IndexOf("-") + 1, USER_ID_LENGTH), NumberStyles.HexNumber);
                         byte pointVal = Byte.Parse(rev.Substring(rev.IndexOf("_") + 1, SCORE_LENGTH), NumberStyles.HexNumber);
-                        int date = Int32.Parse(rev.Substring(rev.IndexOf(":") + 1, 6), NumberStyles.HexNumber);
+                        date = Int32.Parse(rev.Substring(rev.IndexOf(":") + 1, 6), NumberStyles.HexNumber);
                         bool multi = Games_Multiplayer.SaveFileUpdate(new Tuple<ulong, byte>(userID, pointVal), gameName, true, date);
                         if (gameName == "uno" && i == 0 && multi) {
                             SaveFiles_Mapped.AddFieldValue("FIRST-UNO", USER_SAVE_DIRECTORY + "\\" + userID.ToString() +
@@ -565,13 +567,20 @@ namespace Primbot_v._2.Modules.Scoring {
                         "\\" + UNO_SAVE_FILE_NAME, "-1");
                         }
                         Games_Singleplayer.SaveFileUpdate(new Tuple<ulong, byte>(userID, pointVal), gameName, true, date);
+                        affected.Add(new Tuple<ulong, byte>(userID, pointVal));
                         i++;
                     }
+                    date = Int32.Parse(reversions[0].Substring(reversions[0].IndexOf(":") + 1, 6), NumberStyles.HexNumber);
+                    Games_1v1.SaveFileUpdate(affected, gameName, true, date);
+
+
                     var channel = GuildCache.GetChannel(REPORT_CHANNEL_ID);
                     var embed = Bridge.ReportLoggedGame(IDString, true);
 
                     await channel.SendMessageAsync("", false, embed);
                     await ReplyAsync("Reversion of Game " + args.Trim() + " successful.");
+                } else {
+                    await ReplyAsync("Critical failure in reversion of game."); return;
                 }
             } catch (Exception e) {
                 await ReplyAsync(e.Message);

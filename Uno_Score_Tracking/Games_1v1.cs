@@ -24,16 +24,13 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             string[] overallPath = new string[earners.Count()];
             string[] fortnightPath = new string[earners.Count()];
             int[] pointVal = new int[earners.Count()];
-            int iter = 1;
+            int iter = (revert) ? -1 : 1;
             for(int i = 0; i < earners.Count(); i++) {
                 var earner = earners[i];
                 overallPath[i] = USER_SAVE_DIRECTORY + "\\" + earner.Item1.ToString() + "\\" + UNO_SAVE_FILE_NAME;
                 fortnightPath[i] = USER_SAVE_DIRECTORY + "\\" + earner.Item1.ToString() + "\\" + "FN" + FORTNIGHT_NUMBER + "_" + UNO_SAVE_FILE_NAME;
                 int relPointVal = earner.Item2;
-                if (revert) {
-                    iter = -1;
-                    relPointVal *= -1;
-                }
+                relPointVal = (revert) ? -relPointVal : relPointVal;
                 pointVal[i] = relPointVal;
             }
 
@@ -49,8 +46,8 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 return false;
             }
             for (int i = 0; i < overallPath.Length; i++) {
-                AddFieldValue("POINTS-SERVER", fortnightPath[i], pointVal.ToString());
-                AddFieldValue("POINTS-SERVER", overallPath[i], pointVal.ToString());
+                AddFieldValue("POINTS-SERVER", fortnightPath[i], pointVal[i].ToString());
+                AddFieldValue("POINTS-SERVER", overallPath[i], pointVal[i].ToString());
             }
             return true;
         }
@@ -60,17 +57,17 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 overallPaths.Length == pointVals.Length)) {
                 throw new Exception("In 1v1 Savefile updates, inconsistent array lengths, no operation was perfomed.");
             }
-            for (int i = 0; i < overallPaths.Length; i++) {
-                string overallPath = overallPaths[i];
-                string fortnightPath = fortnightPaths[i];
-                string points = pointVals[i].ToString();
-                string iter = iterations.ToString();
-                AddFieldValue("ITER-1V1", overallPath, iter);
-                AddFieldValue("ITER-1V1", fortnightPath, iter);
-                AddFieldValue("POINTS-1V1", overallPath, points);
-                AddFieldValue("POINTS-1V1", fortnightPath, points);
-                AddFieldValue("PLAYSTODAY-1V1", overallPath, iter);
-            }
+            string pathWinner = overallPaths[0];
+            string fnPathWinner = fortnightPaths[0];
+            string pointsWinner = pointVals[0].ToString();
+            string iter = iterations.ToString();
+            AddFieldValue("ITER-UNO1V1", pathWinner, iter);
+            AddFieldValue("ITER-UNO1V1", fnPathWinner, iter);
+            AddFieldValue("POINTS-UNO1V1", pathWinner, pointsWinner);
+            AddFieldValue("POINTS-UNO1V1", fnPathWinner, pointsWinner);
+            AddFieldValue("FIRST-UNO1V1", fnPathWinner, iter);
+            AddFieldValue("PLAYSTODAY-UNO1V1", pathWinner, iter);
+            AddFieldValue("PLAYSTODAY-UNO1V1", overallPaths[1], iter);
             return true;
         }
 
@@ -79,17 +76,16 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 overallPaths.Length == pointVals.Length)) {
                 throw new Exception("In 1v1 Savefile updates, inconsistent array lengths, no operation was perfomed.");
             }
-            for (int i = 0; i < overallPaths.Length; i++) {
-                string overallPath = overallPaths[i];
-                string fortnightPath = fortnightPaths[i];
-                string points = pointVals[i].ToString();
-                string iter = iterations.ToString();
-                AddFieldValue("ITER-POKEDUEL", overallPath, iter);
-                AddFieldValue("ITER-POKEDUEL", fortnightPath, iter);
-                AddFieldValue("POINTS-POKEDUEL", overallPath, points);
-                AddFieldValue("POINTS-POKEDUEL", fortnightPath, points);
-                AddFieldValue("PLAYSTODAY-POKEDUEL", overallPath, iter);
-            }
+            string pathWinner = overallPaths[0];
+            string fnPathWinner = fortnightPaths[0];
+            string pointsWinner = pointVals[0].ToString();
+            string iter = iterations.ToString();
+            AddFieldValue("ITER-POKEDUEL", pathWinner, iter);
+            AddFieldValue("ITER-POKEDUEL", fnPathWinner, iter);
+            AddFieldValue("POINTS-POKEDUEL", pathWinner, pointsWinner);
+            AddFieldValue("POINTS-POKEDUEL", fnPathWinner, pointsWinner);
+            AddFieldValue("PLAYSTODAY-POKEDUEL", pathWinner, iter);
+            AddFieldValue("PLAYSTODAY-POKEDUEL", overallPaths[1], iter);
             return true;
         }
 
@@ -98,17 +94,16 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 overallPaths.Length == pointVals.Length)) {
                 throw new Exception("In 1v1 Savefile updates, inconsistent array lengths, no operation was perfomed.");
             }
-            for (int i = 0; i < overallPaths.Length; i++) {
-                string overallPath = overallPaths[i];
-                string fortnightPath = fortnightPaths[i];
-                string points = pointVals[i].ToString();
-                string iter = iterations.ToString();
-                AddFieldValue("ITER-IDLERPG", overallPath, iter);
-                AddFieldValue("ITER-IDLERPG", fortnightPath, iter);
-                AddFieldValue("POINTS-IDLERPG", overallPath, points);
-                AddFieldValue("POINTS-IDLERPG", fortnightPath, points);
-                AddFieldValue("PLAYSTODAY-IDLERPG", overallPath, iter);
-            }
+            string pathWinner = overallPaths[0];
+            string fnPathWinner = fortnightPaths[0];
+            string pointsWinner = pointVals[0].ToString();
+            string iter = iterations.ToString();
+            AddFieldValue("ITER-IDLERPG", pathWinner, iter);
+            AddFieldValue("ITER-IDLERPG", fnPathWinner, iter);
+            AddFieldValue("POINTS-IDLERPG", pathWinner, pointsWinner);
+            AddFieldValue("POINTS-IDLERPG", fnPathWinner, pointsWinner);
+            AddFieldValue("PLAYSTODAY-IDLERPG", pathWinner, iter);
+            AddFieldValue("PLAYSTODAY-IDLERPG", overallPaths[1], iter);
             return true;
         }
 
@@ -117,19 +112,37 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 overallPaths.Length == pointVals.Length)) {
                 throw new Exception("In 1v1 Savefile updates, inconsistent array lengths, no operation was perfomed.");
             }
-            for (int i = 0; i < overallPaths.Length; i++) {
-                string overallPath = overallPaths[i];
-                string fortnightPath = fortnightPaths[i];
-                string points = pointVals[i].ToString();
-                string iter = iterations.ToString();
-                AddFieldValue("ITER-CHESS", overallPath, iter);
-                AddFieldValue("ITER-CHESS", fortnightPath, iter);
-                AddFieldValue("POINTS-CHESS", overallPath, points);
-                AddFieldValue("POINTS-CHESS", fortnightPath, points);
-                AddFieldValue("PLAYSTODAY-CHESS", overallPath, iter);
-            }
+            string pathWinner = overallPaths[0];
+            string fnPathWinner = fortnightPaths[0];
+            string pointsWinner = pointVals[0].ToString();
+            string iter = iterations.ToString();
+            AddFieldValue("ITER-CHESS", pathWinner, iter);
+            AddFieldValue("ITER-CHESS", fnPathWinner, iter);
+            AddFieldValue("POINTS-CHESS", pathWinner, pointsWinner);
+            AddFieldValue("POINTS-CHESS", fnPathWinner, pointsWinner);
+            AddFieldValue("PLAYSTODAY-CHESS", pathWinner, iter);
+            AddFieldValue("PLAYSTODAY-CHESS", overallPaths[1], iter);
             return true;
         }
 
+        internal static void Uno1v1Log(List<ulong> list) {
+            if(list.Count() != 2) { throw new Exception("Exactly 2 players required for a 1v1 Uno log."); }
+            List<Tuple<ulong, byte>> playersAndPoints = new List<Tuple<ulong, byte>>();
+            playersAndPoints.Add(Tuple.Create(list[0],UNO1V1_WINNER_POINT_VALUE));
+            playersAndPoints.Add(Tuple.Create(list[1],UNO1V1_LOSER_POINT_VALUE));
+            try {
+                Bridge.LogGame("uno1v1", playersAndPoints);
+            }catch(Exception e) {
+                throw e;
+            }
+            try {
+                bool success = SaveFileUpdate(playersAndPoints, "uno1v1");
+                if (!success) {
+                    throw new Exception("Unsuccessful Save File update.");
+                }
+            }catch(Exception e) {
+                throw e;
+            }
+        }
     }
 }
