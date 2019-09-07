@@ -10,6 +10,7 @@ using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using Discord;
 using System.Text.RegularExpressions;
 using System.Net;
+using System.IO;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
     /// <summary>
@@ -45,7 +46,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                     throw e;
                 }
             }
-            Embed em = ReportLoggedGame(GameID);
+            Embed em = ReportLoggedGame(GameID); 
             reportingChannel.SendMessageAsync("", false, em);
             return Task.CompletedTask;
         }
@@ -347,6 +348,39 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 return e.Message + "\n" + e.StackTrace;
             }
             return lb;
+        }
+
+        public static Embed GetDailyLimitEmbed(ulong ID) {
+            EmbedBuilder emb = new EmbedBuilder();
+            try {
+                string filePath = USER_SAVE_DIRECTORY + "\\" + ID + "\\Unoprofile.txt";
+                var limitPairs = SaveFiles_Mapped.GetAllValues(filePath, "PLAYSTODAY-");
+                if (limitPairs == null || limitPairs.Count() == 0) {
+                    return emb.Build();
+                }
+                int alreadyPlayed, maxDaily, playsLeft, msknights;
+                alreadyPlayed = maxDaily = playsLeft = 0;
+                msknights = MINESWEEPER_DAILY_LIMIT;
+                foreach (var tuple in limitPairs) {
+                    alreadyPlayed = Int32.Parse(tuple.Item2);
+                    maxDaily = Defs.GetDailyLimit(tuple.Item1.ToLower());
+                    playsLeft = maxDaily - alreadyPlayed;
+                    playsLeft = (playsLeft < 0) ? 0 : playsLeft;
+                    if (tuple.Item1 == "MS" || tuple.Item1 == "KNIGHTS") { msknights -= alreadyPlayed; continue; }
+                    emb.AddField(tuple.Item1[0] + tuple.Item1.Substring(1).ToLower(), playsLeft.ToString() + " more game(s)", true);
+                }
+                emb.AddField("MS/Knights", ((msknights < 0) ? "0" : msknights.ToString()) + " more game(s)", true);
+                emb.WithTitle("Your remaining games available today:");
+                emb.WithColor(Color.Purple);
+                TimeSpan beforeReset = Defs.TimeUntilMidnight();
+                emb.WithFooter("Your daily limits reset in " + beforeReset.Hours + " hours and " + beforeReset.Minutes + " minutes");
+                emb.WithCurrentTimestamp();
+                return emb.Build();
+            } catch (FileNotFoundException) {
+                return emb.WithTitle("You don't have an Uno account!").Build();
+            } catch (Exception e) {
+                throw e;
+            }
         }
     }
 }

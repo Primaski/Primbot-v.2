@@ -19,7 +19,7 @@ using System.Reflection;
 using System.Net;
 
 namespace Primbot_v._2.Modules.Scoring {
-    //commands of this class should not be ASYNC
+    //commands of this class should not be ASYNC.
     public class Administrative : ModuleBase<SocketCommandContext> {
 
         /*[Command("neb")]
@@ -404,7 +404,15 @@ namespace Primbot_v._2.Modules.Scoring {
             return;
         }
 
-
+        [Command("exit")]
+        public async Task Exit() {
+            if (Context.User.Id != MY_ID) {
+                return;
+            }
+            // Closes the current process
+            Environment.Exit(0);
+            return;
+        }
 
         [Command("res")]
         public async Task Restart() {

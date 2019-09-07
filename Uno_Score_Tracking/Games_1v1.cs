@@ -65,6 +65,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             AddFieldValue("ITER-UNO1V1", fnPathWinner, iter);
             AddFieldValue("POINTS-UNO1V1", pathWinner, pointsWinner);
             AddFieldValue("POINTS-UNO1V1", fnPathWinner, pointsWinner);
+            AddFieldValue("FIRST-UNO1V1", pathWinner, iter);
             AddFieldValue("FIRST-UNO1V1", fnPathWinner, iter);
             AddFieldValue("PLAYSTODAY-UNO1V1", pathWinner, iter);
             AddFieldValue("PLAYSTODAY-UNO1V1", overallPaths[1], iter);
@@ -130,6 +131,18 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             List<Tuple<ulong, byte>> playersAndPoints = new List<Tuple<ulong, byte>>();
             playersAndPoints.Add(Tuple.Create(list[0],UNO1V1_WINNER_POINT_VALUE));
             playersAndPoints.Add(Tuple.Create(list[1],UNO1V1_LOSER_POINT_VALUE));
+
+            try {
+                for (int player = 0; player <= 1; player++) {
+                    int noOfPlays = Int16.Parse(SearchValue(USER_SAVE_DIRECTORY + "\\" + playersAndPoints[player].Item1 + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-UNO1V1"));
+                    if(noOfPlays >= UNO1V1_DAILY_LIMIT) {
+                        playersAndPoints[player] = new Tuple<ulong, byte>(playersAndPoints[player].Item1, 0);
+                    }
+                }
+            } catch (Exception e) {
+                throw e;
+            }
+
             try {
                 Bridge.LogGame("uno1v1", playersAndPoints);
             }catch(Exception e) {

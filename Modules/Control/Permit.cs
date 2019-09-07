@@ -24,8 +24,5 @@ namespace Primbot_v._2.Modules.Control {
             { "8ball","everyone" }
         };
 
-
-
-
     }
 }
