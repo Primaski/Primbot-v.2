@@ -8,6 +8,7 @@ using Discord;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
     public static class Defs {
+	//change from MASTER to test merge
         /*** LOCAL SETTINGS - SHOULD BE LOCALLY MODIFIED ***/
         public static readonly int EST_OFFSET = 4; //UTC would fluctuate between 4 and 5 depending on DST, EST would always be 0
         public static readonly string DIR = "..\\..";
