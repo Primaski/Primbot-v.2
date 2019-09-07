@@ -60,15 +60,26 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             string pathWinner = overallPaths[0];
             string fnPathWinner = fortnightPaths[0];
             string pointsWinner = pointVals[0].ToString();
+	    string pathLoser = overallPaths[1];
+	    string fnPathLoser = fortnightPaths[1];
+	    string pointsLoser = pointVals[1].ToString();
             string iter = iterations.ToString();
+
             AddFieldValue("ITER-UNO1V1", pathWinner, iter);
             AddFieldValue("ITER-UNO1V1", fnPathWinner, iter);
+            AddFieldValue("ITER-UNO1V1", pathLoser, iter);
+            AddFieldValue("ITER-UNO1V1", fnPathLoser, iter);
+
             AddFieldValue("POINTS-UNO1V1", pathWinner, pointsWinner);
             AddFieldValue("POINTS-UNO1V1", fnPathWinner, pointsWinner);
+            AddFieldValue("POINTS-UNO1V1", pathLoser, pointsLoser);
+            AddFieldValue("POINTS-UNO1V1", fnPathLoser, pointsLoser);
+
             AddFieldValue("FIRST-UNO1V1", pathWinner, iter);
             AddFieldValue("FIRST-UNO1V1", fnPathWinner, iter);
+
             AddFieldValue("PLAYSTODAY-UNO1V1", pathWinner, iter);
-            AddFieldValue("PLAYSTODAY-UNO1V1", overallPaths[1], iter);
+            AddFieldValue("PLAYSTODAY-UNO1V1", pathLoser, iter);
             return true;
         }
 
@@ -80,13 +91,23 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             string pathWinner = overallPaths[0];
             string fnPathWinner = fortnightPaths[0];
             string pointsWinner = pointVals[0].ToString();
+	    string pathLoser = overallPaths[1];
+	    string fnPathLoser = fortnightPaths[1];
+	    string pointsLoser = pointVals[1].ToString();
             string iter = iterations.ToString();
+
             AddFieldValue("ITER-POKEDUEL", pathWinner, iter);
             AddFieldValue("ITER-POKEDUEL", fnPathWinner, iter);
+            AddFieldValue("ITER-POKEDUEL", pathLoser, iter);
+            AddFieldValue("ITER-POKEDUEL", fnPathLoser, iter);
+
             AddFieldValue("POINTS-POKEDUEL", pathWinner, pointsWinner);
             AddFieldValue("POINTS-POKEDUEL", fnPathWinner, pointsWinner);
+            AddFieldValue("POINTS-POKEDUEL", pathLoser, pointsLoser);
+            AddFieldValue("POINTS-POKEDUEL", fnPathLoser, pointsLoser);
+
             AddFieldValue("PLAYSTODAY-POKEDUEL", pathWinner, iter);
-            AddFieldValue("PLAYSTODAY-POKEDUEL", overallPaths[1], iter);
+            AddFieldValue("PLAYSTODAY-POKEDUEL", pathLoser, iter);
             return true;
         }
 
@@ -98,13 +119,24 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             string pathWinner = overallPaths[0];
             string fnPathWinner = fortnightPaths[0];
             string pointsWinner = pointVals[0].ToString();
+	    string pathLoser = overallPaths[1];
+	    string fnPathLoser = fortnightPaths[1];
+	    string pointsLoser = pointVals[1].ToString();
             string iter = iterations.ToString();
+
             AddFieldValue("ITER-IDLERPG", pathWinner, iter);
             AddFieldValue("ITER-IDLERPG", fnPathWinner, iter);
+            AddFieldValue("ITER-IDLERPG", pathLoser, iter);
+            AddFieldValue("ITER-IDLERPG", fnPathLoser, iter);
+
             AddFieldValue("POINTS-IDLERPG", pathWinner, pointsWinner);
             AddFieldValue("POINTS-IDLERPG", fnPathWinner, pointsWinner);
+            AddFieldValue("POINTS-IDLERPG", pathLoser, pointsLoser);
+            AddFieldValue("POINTS-IDLERPG", fnPathLoser, pointsLoser);
+
             AddFieldValue("PLAYSTODAY-IDLERPG", pathWinner, iter);
-            AddFieldValue("PLAYSTODAY-IDLERPG", overallPaths[1], iter);
+            AddFieldValue("PLAYSTODAY-IDLERPG", pathLoser, iter);
+
             return true;
         }
 
@@ -116,13 +148,23 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             string pathWinner = overallPaths[0];
             string fnPathWinner = fortnightPaths[0];
             string pointsWinner = pointVals[0].ToString();
+	    string pathLoser = overallPaths[1];
+	    string fnPathLoser = fortnightPaths[1];
+	    string pointsLoser = pointVals[1].ToString();
             string iter = iterations.ToString();
+
             AddFieldValue("ITER-CHESS", pathWinner, iter);
             AddFieldValue("ITER-CHESS", fnPathWinner, iter);
+            AddFieldValue("ITER-CHESS", pathLoser, iter);
+            AddFieldValue("ITER-CHESS", fnPathLoser, iter);
+
             AddFieldValue("POINTS-CHESS", pathWinner, pointsWinner);
             AddFieldValue("POINTS-CHESS", fnPathWinner, pointsWinner);
+            AddFieldValue("POINTS-CHESS", pathLoser, pointsLoser);
+            AddFieldValue("POINTS-CHESS", fnPathLoser, pointsLoser);
+
             AddFieldValue("PLAYSTODAY-CHESS", pathWinner, iter);
-            AddFieldValue("PLAYSTODAY-CHESS", overallPaths[1], iter);
+            AddFieldValue("PLAYSTODAY-CHESS", pathLoser, iter);
             return true;
         }
 
