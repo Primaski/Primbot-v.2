@@ -1,8 +1,0 @@
-LIT-CachedUsername:Tent
-LIT-JoinedGuild:465189103219113984
-LIT-Profilesymbol:-
-LIT-Profilecolor:-
-Balance:0
-LIT-Occupation:-
-LIT-AbstractCareerpath:-
-LIT-Randomevents:-

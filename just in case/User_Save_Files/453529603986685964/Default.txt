@@ -1,8 +1,0 @@
-LIT-CachedUsername:Positen
-LIT-JoinedGuild:468376436009598977
-LIT-Profilesymbol:-
-LIT-Profilecolor:-
-Balance:0
-LIT-Occupation:-
-LIT-AbstractCareerpath:-
-LIT-Randomevents:-

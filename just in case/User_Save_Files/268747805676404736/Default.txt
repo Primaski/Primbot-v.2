@@ -1,8 +1,0 @@
-LIT-CachedUsername:Selverna
-LIT-JoinedGuild:571333030158008320
-LIT-Profilesymbol:-
-LIT-Profilecolor:-
-Balance:0
-LIT-Occupation:-
-LIT-AbstractCareerpath:-
-LIT-Randomevents:-

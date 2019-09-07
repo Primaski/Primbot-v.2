@@ -1,8 +1,0 @@
-LIT-CachedUsername:Duckie
-LIT-JoinedGuild:530027114586570752
-LIT-Profilesymbol:-
-LIT-Profilecolor:-
-Balance:0
-LIT-Occupation:-
-LIT-AbstractCareerpath:-
-LIT-Randomevents:-

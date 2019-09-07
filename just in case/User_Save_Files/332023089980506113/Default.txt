@@ -1,8 +1,0 @@
-LIT-CachedUsername:GrumpyPants
-LIT-JoinedGuild:469335072034652199
-LIT-Profilesymbol:-
-LIT-Profilecolor:-
-Balance:0
-LIT-Occupation:-
-LIT-AbstractCareerpath:-
-LIT-Randomevents:-
