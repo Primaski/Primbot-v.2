@@ -321,7 +321,7 @@ namespace Primbot_v._2 {
 
             //if (GuildCache.SearchAwaitedMessage(context.Guild.Id, context.Channel.Id, context.User.Id, context.Message.Content) != -1) {}
 
-            if ((message.HasStringPrefix("p*", ref argPos)) || (message.HasStringPrefix("P*", ref argPos)) ||
+            if ((message.HasStringPrefix("<<*", ref argPos)) || (message.HasStringPrefix("<<*", ref argPos)) ||
                 message.HasMentionPrefix(CLIENT.CurrentUser, ref argPos)) {
                 var result = await COMMANDS.ExecuteAsync(context, argPos, SERVICES);
 
