@@ -46,7 +46,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                     throw e;
                 }
             }
-            Embed em = ReportLoggedGame(GameID);
+            Embed em = ReportLoggedGame(GameID); 
             reportingChannel.SendMessageAsync("", false, em);
             return Task.CompletedTask;
         }
@@ -355,12 +355,17 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             try {
                 string filePath = USER_SAVE_DIRECTORY + "\\" + ID + "\\Unoprofile.txt";
                 var limitPairs = SaveFiles_Mapped.GetAllValues(filePath, "PLAYSTODAY-");
+<<<<<<< HEAD
                 if(limitPairs == null || limitPairs.Count() == 0) {
+=======
+                if (limitPairs == null || limitPairs.Count() == 0) {
+>>>>>>> games1v1
                     return emb.Build();
                 }
                 int alreadyPlayed, maxDaily, playsLeft, msknights;
                 alreadyPlayed = maxDaily = playsLeft = 0;
                 msknights = MINESWEEPER_DAILY_LIMIT;
+<<<<<<< HEAD
                 foreach(var tuple in limitPairs) {
                     alreadyPlayed = Int32.Parse(tuple.Item2);
                     maxDaily = Defs.GetDailyLimit(tuple.Item1.ToLower());
@@ -369,6 +374,17 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                     emb.AddField(tuple.Item1[0] + tuple.Item1.Substring(1).ToLower(), playsLeft.ToString() + " more game(s)", true);
                 }
                 emb.AddField("MS/Knights", msknights.ToString() + " more game(s)", true);
+=======
+                foreach (var tuple in limitPairs) {
+                    alreadyPlayed = Int32.Parse(tuple.Item2);
+                    maxDaily = Defs.GetDailyLimit(tuple.Item1.ToLower());
+                    playsLeft = maxDaily - alreadyPlayed;
+                    playsLeft = (playsLeft < 0) ? 0 : playsLeft;
+                    if (tuple.Item1 == "MS" || tuple.Item1 == "KNIGHTS") { msknights -= alreadyPlayed; continue; }
+                    emb.AddField(tuple.Item1[0] + tuple.Item1.Substring(1).ToLower(), playsLeft.ToString() + " more game(s)", true);
+                }
+                emb.AddField("MS/Knights", ((msknights < 0) ? "0" : msknights.ToString()) + " more game(s)", true);
+>>>>>>> games1v1
                 emb.WithTitle("Your remaining games available today:");
                 emb.WithColor(Color.Purple);
                 TimeSpan beforeReset = Defs.TimeUntilMidnight();

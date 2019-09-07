@@ -30,9 +30,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 case "non-standard": res = NonStandardSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "minesweeper": res = MinesweeperSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "tetris": res = TetrisSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
-                case "pokeduel": res = PokeduelSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
-                case "idlerpg": res = IdleSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
-                case "chess": res = ChessSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "bumps": res = BumpsSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "event": res = EventSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "casino": res = CasinoSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
@@ -83,38 +80,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             return true;
         }
 
-        private static bool PokeduelSaveFileUpdates(string overallPath, string fortnightPath, int pointValue = 0, int iteration = 1) {
-            string iter = iteration.ToString();
-            string points = pointValue.ToString();
-            AddFieldValue("ITER-POKEDUEL", overallPath, iter);
-            AddFieldValue("ITER-POKEDUEL", fortnightPath, iter);
-            AddFieldValue("POINTS-POKEDUEL", overallPath, points);
-            AddFieldValue("POINTS-POKEDUEL", fortnightPath, points);
-            AddFieldValue("PLAYSTODAY-POKEDUEL", overallPath, iter);
-            return true;
-        }
-
-        private static bool IdleSaveFileUpdates(string overallPath, string fortnightPath, int pointValue = 0, int iteration = 1) {
-            string iter = iteration.ToString();
-            string points = pointValue.ToString();
-            AddFieldValue("ITER-IDLERPG", overallPath, iter);
-            AddFieldValue("ITER-IDLERPG", fortnightPath, iter);
-            AddFieldValue("POINTS-IDLERPG", overallPath, points);
-            AddFieldValue("POINTS-IDLERPG", fortnightPath, points);
-            AddFieldValue("PLAYSTODAY-IDLERPG", overallPath, iter);
-            return true;
-        }
-
-        private static bool ChessSaveFileUpdates(string overallPath, string fortnightPath, int pointValue = 0, int iteration = 1) {
-            string iter = iteration.ToString();
-            string points = pointValue.ToString();
-            AddFieldValue("ITER-CHESS", overallPath, iter);
-            AddFieldValue("ITER-CHESS", fortnightPath, iter);
-            AddFieldValue("POINTS-CHESS", overallPath, points);
-            AddFieldValue("POINTS-CHESS", fortnightPath, points);
-            AddFieldValue("PLAYSTODAY-CHESS", overallPath, iter);
-            return true;
-        }
 
         private static bool BumpsSaveFileUpdates(string overallPath, string fortnightPath, int pointValue = 0, int iteration = 1) {
             string iter = iteration.ToString();

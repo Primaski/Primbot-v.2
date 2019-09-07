@@ -139,6 +139,7 @@ namespace Primbot_v._2 {
         }
 
         private Task UpdateServerCache(SocketGuild arg) {
+
             GuildCache.connectedGuilds.Add(arg);
             //Console.WriteLine(arg.Name);
             if (updateGuildCache) {
@@ -241,6 +242,7 @@ namespace Primbot_v._2 {
 
         public async Task RegisterCommandsAsync() {
             CLIENT.MessageReceived += HandleCommandAsync;
+            
             await COMMANDS.AddModulesAsync(Assembly.GetEntryAssembly());
 
         }

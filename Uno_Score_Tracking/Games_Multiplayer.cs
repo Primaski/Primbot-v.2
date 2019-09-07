@@ -140,7 +140,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         }
 
         public static Task ManualUnoLog(string message, bool force = false, bool manual = false, byte manualnoofplayers = 3) { 
-
             string playerStrArr = message;
             byte noOfPlayers = manualnoofplayers;
             if (!manual) {
@@ -199,13 +198,18 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             }
             if (noOfPlayers == 0) {
                 noOfPlayers = (byte)players.Count();
-                string x = "hi";
             }
             players = DeterminePointDistribution(players, noOfPlayers);
             if (!force) {
                 if (!IsGameQualifable(players)) {
                     throw new Exception("Each player was of the same team, rendering the game unqualifiable.");
                 }
+            }
+            if(noOfPlayers == 2) {
+                try {
+                    Games_1v1.Uno1v1Log(players.Select(x => UInt64.Parse(x.ID)).ToList());
+                    return Task.CompletedTask;
+                }catch(Exception e) { throw e; }
             }
             List<Tuple<ulong, byte>> orderedPairs = new List<Tuple<ulong, byte>>();
             foreach (Player p in players) {

@@ -19,7 +19,7 @@ using System.Reflection;
 using System.Net;
 
 namespace Primbot_v._2.Modules.Scoring {
-    //commands of this class should not be ASYNC
+    //commands of this class should not be ASYNC.
     public class Administrative : ModuleBase<SocketCommandContext> {
 
         /*[Command("neb")]
@@ -77,6 +77,76 @@ namespace Primbot_v._2.Modules.Scoring {
             }
         }*/
 
+        [Command("addkeyvalue")]
+        public async Task AddKeyVal([Remainder] string args = null) {
+            if(Context.User.Id != MY_ID) {
+                await ReplyAsync("Inappropriate perms");
+                return;
+            }
+            if(args == null) {
+                await ReplyAsync("Format: `[userID/'all'] ['fn'/'def'/'all'] [FIELD] [DEFAULT VALUE]`");
+                return;
+            }
+            string[] argsSplits = args.Split(' ');
+            if(argsSplits.Count() != 4) {
+                await ReplyAsync("Format: `[userID/\"all\"] ['fn'/'def'/'all'] [FIELD] [DEFAULT VALUE]`");
+                return;
+            }
+            if(argsSplits[0] != "all") {
+                string pathExceptFile = USER_SAVE_DIRECTORY + "\\" + argsSplits[0] + "\\";
+                if (!File.Exists(pathExceptFile + UNO_SAVE_FILE_NAME)) {
+                    await ReplyAsync("File does not exist.");
+                    return;
+                }
+                switch (argsSplits[1]) {
+                    case "fn":
+                        await ReplyAsync("`In progress...`");
+                        SaveFiles_Mapped.AddLine(pathExceptFile + "FN" + FORTNIGHT_NUMBER + "_Unoprofile.txt", argsSplits[2], argsSplits[3]);
+                        await ReplyAsync("`Complete.`");
+                        return;
+                    case "def":
+                        await ReplyAsync("`In progress...`");
+                        SaveFiles_Mapped.AddLine(pathExceptFile + UNO_SAVE_FILE_NAME, argsSplits[2], argsSplits[3]);
+                        await ReplyAsync("`Complete.`");
+                        return;
+                    case "all":
+                        await ReplyAsync("All wasn't programmed in");
+                        return;
+                    default:
+                        await ReplyAsync("Format: `[userID/\"all\"] ['fn'/'def'/'all'] [FIELD] [DEFAULT VALUE]`");
+                        return;
+                }
+            } else {
+                string[] allPaths = Directory.GetDirectories(USER_SAVE_DIRECTORY);
+                int i = 0;
+                switch (argsSplits[1]) {
+                    case "fn":
+                        await ReplyAsync("`In progress...`");
+                        for (i = 0; i < allPaths.Count(); i++) {
+                            try {
+                                SaveFiles_Mapped.AddLine(allPaths[i] + "\\FN" + FORTNIGHT_NUMBER + "_Unoprofile.txt", argsSplits[2], argsSplits[3]);
+                            }catch {}
+                        }
+                        await ReplyAsync("`Complete.`");
+                        return;
+                    case "def":
+                        await ReplyAsync("`In progress...`");
+                        for (i = 0; i < allPaths.Count(); i++) {
+                            try { 
+                            SaveFiles_Mapped.AddLine(allPaths[i] + "\\" + UNO_SAVE_FILE_NAME, argsSplits[2], argsSplits[3]);
+                            } catch {}
+                        }
+                        await ReplyAsync("`Complete.`");
+                        return;
+                    case "all":
+                        await ReplyAsync("All wasn't programmed in");
+                        return;
+                    default:
+                        await ReplyAsync("Format: `[userID/\"all\"] ['fn'/'def'/'all'] [FIELD] [DEFAULT VALUE]`");
+                        return;
+                }
+            }
+        }
         //cache
         [Command("c")]
         public async Task Cache([Remainder] string args = null) {
@@ -334,7 +404,15 @@ namespace Primbot_v._2.Modules.Scoring {
             return;
         }
 
-
+        [Command("exit")]
+        public async Task Exit() {
+            if (Context.User.Id != MY_ID) {
+                return;
+            }
+            // Closes the current process
+            Environment.Exit(0);
+            return;
+        }
 
         [Command("res")]
         public async Task Restart() {
@@ -770,7 +848,7 @@ namespace Primbot_v._2.Modules.Scoring {
                         UnoSaveFields);
                 }
             }
-            await NewDay(true);
+            //await NewDay(true);
             await ReplyAsync("`Complete.`");
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Started new FN for " + Context.User.Username);
         }
