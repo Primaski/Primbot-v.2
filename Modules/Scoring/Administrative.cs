@@ -404,7 +404,15 @@ namespace Primbot_v._2.Modules.Scoring {
             return;
         }
 
-
+        [Command("exit")]
+        public async Task Exit() {
+            if (Context.User.Id != MY_ID) {
+                return;
+            }
+            // Closes the current process
+            Environment.Exit(0);
+            return;
+        }
 
         [Command("res")]
         public async Task Restart() {

@@ -84,9 +84,9 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly byte CHESS_WINNER_POINT_VALUE = 30;
         public static readonly byte CHESS_LOSER_POINT_VALUE = 10;
         public static readonly byte IDLERPG_WINNER_POINT_VALUE = 5;
-        public static readonly byte IDLERPG_LOSER_POINT_VALUE = 5;
+        public static readonly byte IDLERPG_LOSER_POINT_VALUE = 1;
         public static readonly byte POKEDUEL_WINNER_POINT_VALUE = 5;
-        public static readonly byte POKEDUEL_LOSER_POINT_VALUE = 5;
+        public static readonly byte POKEDUEL_LOSER_POINT_VALUE = 1;
         public static readonly byte UNO1V1_WINNER_POINT_VALUE = 5;
         public static readonly byte UNO1V1_LOSER_POINT_VALUE = 1;
 
@@ -103,6 +103,32 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             "bingo", "chess", "bumps", "event", "casino", "tourney", "knights", "trivia",
             "uno1v1"
         };
+        public static int GetDailyLimit(string gameName) {
+            switch (gameName) {
+                case "ms":
+                case "minesweeper":
+                    return MINESWEEPER_DAILY_LIMIT;
+                case "kn":
+                case "knights":
+                    return KNIGHTS_DAILY_LIMIT;
+                case "tet":
+                case "tetris":
+                    return TETRIS_DAILY_LIMIT;
+                case "chs":
+                case "chess":
+                    return CHESS_DAILY_LIMIT;
+                case "idle":
+                case "idlerpg":
+                    return IDLERPG_DAILY_LIMIT;
+                case "poke":
+                case "pokeduel":
+                    return POKEDUEL_DAILY_LIMIT;
+                case "uno1v1":
+                    return UNO1V1_DAILY_LIMIT;
+                default:
+                    return 0;
+            }
+        }
         //METADATA
         public static readonly Dictionary<string, string> DefaultSaveFields = new Dictionary<string, string> {
             {"LIT-CachedUsername","-"},
@@ -156,5 +182,27 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static bool spawntrackalicia = true;
         public static bool spawntrackdom = true;
         public static bool pingme = true;
+
+        internal static TimeSpan TimeUntilMidnight() {
+            DateTime now = DateTime.Now;
+            DateTime midnight = DateTime.Today.AddDays(1).AddHours(EST_OFFSET).AddTicks(-1);
+            TimeSpan timeLeft = midnight.Subtract(now);
+            return timeLeft;
+        }
+
+        internal static bool HasUserHitDailyLimit(ulong id, string gameName) {
+            int limit = GetDailyLimit(gameName);
+            if(limit == 0) { throw new Exception("Non-existing game sought for in Daily Limit search."); }
+
+            gameName = gameName.ToUpper().Trim();
+            string playsTodayStr = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + id + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-" + gameName) ?? "";
+            if (!Int32.TryParse(playsTodayStr, out int ignore)) { throw new Exception("Daily limiit string was not a number"); }
+
+            int playsToday = Int32.Parse(playsTodayStr);
+            if (playsToday >= limit) {
+                return true;
+            }
+            return false;
+        }
     }
 }

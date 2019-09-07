@@ -345,6 +345,144 @@ namespace Primbot_v._2.Modules.Scoring {
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Logged chess for " + Context.User.Username);
         }
         */
+
+        [Command("logpoke", RunMode = RunMode.Async)]
+        public async Task LogPokeduel([Remainder] string args = null) {
+            GuildCache.IncrementCMD();
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+                await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
+                    "as it was designated for Point Managers in the Uno Server.");
+                return;
+            }
+            if (args == null) {
+                await ReplyAsync(":exclamation: Missing required field: `user(s)`.");
+                return;
+            }
+            List<SocketGuildUser> users = GuildCache.InterpretUserInput(args);
+            if (GuildCache.IsWellFormattedListOfUsers(users) != "") {
+                await ReplyAsync(GuildCache.IsWellFormattedListOfUsers(users));
+                return;
+            }
+            if(users.Count() != 2) {
+                await ReplyAsync("Format: `p*logpoke [winner], [loser]`");
+                return;
+            }
+
+
+            List<Tuple<ulong, byte>> scorers = new List<Tuple<ulong, byte>>();
+            try {
+                scorers.Add(Tuple.Create(users[0].Id,
+                    Defs.HasUserHitDailyLimit(users[0].Id, "pokeduel") ? (byte)0 : POKEDUEL_WINNER_POINT_VALUE));
+                scorers.Add(Tuple.Create(users[1].Id,
+                    Defs.HasUserHitDailyLimit(users[1].Id, "pokeduel") ? (byte)0 : POKEDUEL_LOSER_POINT_VALUE));
+            } catch(Exception e) { throw e; }
+
+            try {
+                Task result = Bridge.LogGame("pokeduel", scorers, Context);
+                if (result.IsCompleted) {
+                    if (Games_1v1.SaveFileUpdate(scorers,"pokeduel")) {
+                        await ReplyAsync("Successfully logged the Pokeduel! <#537104363127046145>");
+                    } else {
+                        await ReplyAsync(":exlamation: Error in updating save files.");
+                    }
+                }
+            } catch(Exception e) {
+                await ReplyAsync(e.Message + "\n" + e.StackTrace);
+            }
+            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Logged Pokeduel for " + Context.User.Username);
+        }
+
+        [Command("logidle", RunMode = RunMode.Async)]
+        public async Task LogIdleduel([Remainder] string args = null) {
+            GuildCache.IncrementCMD();
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+                await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
+                    "as it was designated for Point Managers in the Uno Server.");
+                return;
+            }
+            if (args == null) {
+                await ReplyAsync(":exclamation: Missing required field: `user(s)`.");
+                return;
+            }
+            List<SocketGuildUser> users = GuildCache.InterpretUserInput(args);
+            if (GuildCache.IsWellFormattedListOfUsers(users) != "") {
+                await ReplyAsync(GuildCache.IsWellFormattedListOfUsers(users));
+                return;
+            }
+            if (users.Count() != 2) {
+                await ReplyAsync("Format: `p*logidle [winner], [loser]`");
+                return;
+            }
+
+            List<Tuple<ulong, byte>> scorers = new List<Tuple<ulong, byte>>();
+            try {
+                scorers.Add(Tuple.Create(users[0].Id,
+                    Defs.HasUserHitDailyLimit(users[0].Id, "idlerpg") ? (byte)0 : IDLERPG_WINNER_POINT_VALUE));
+                scorers.Add(Tuple.Create(users[1].Id,
+                    Defs.HasUserHitDailyLimit(users[1].Id, "idlerpg") ? (byte)0 : IDLERPG_LOSER_POINT_VALUE));
+            } catch (Exception e) { throw e; }
+
+            try {
+                Task result = Bridge.LogGame("idlerpg", scorers, Context);
+                if (result.IsCompleted) {
+                    if (Games_1v1.SaveFileUpdate(scorers, "idlerpg")) {
+                        await ReplyAsync("Successfully logged the IdleRPG duel! <#537104363127046145>");
+                    } else {
+                        await ReplyAsync(":exlamation: Error in updating save files.");
+                    }
+                }
+            } catch (Exception e) {
+                await ReplyAsync(e.Message + "\n" + e.StackTrace);
+            }
+            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Logged Pokeduel for " + Context.User.Username);
+        }
+
+        [Command("logchess", RunMode = RunMode.Async)]
+        public async Task LogChess([Remainder] string args = null) {
+            GuildCache.IncrementCMD();
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+                await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
+                    "as it was designated for Point Managers in the Uno Server.");
+                return;
+            }
+            if (args == null) {
+                await ReplyAsync(":exclamation: Missing required field: `user(s)`.");
+                return;
+            }
+            List<SocketGuildUser> users = GuildCache.InterpretUserInput(args);
+            if (GuildCache.IsWellFormattedListOfUsers(users) != "") {
+                await ReplyAsync(GuildCache.IsWellFormattedListOfUsers(users));
+                return;
+            }
+            if (users.Count() != 2) {
+                await ReplyAsync("Format: `p*logchess [winner], [loser]`");
+                return;
+            }
+
+
+            List<Tuple<ulong, byte>> scorers = new List<Tuple<ulong, byte>>();
+            try {
+                scorers.Add(Tuple.Create(users[0].Id,
+                    Defs.HasUserHitDailyLimit(users[0].Id, "chess") ? (byte)0 : CHESS_WINNER_POINT_VALUE));
+                scorers.Add(Tuple.Create(users[1].Id,
+                    Defs.HasUserHitDailyLimit(users[1].Id, "chess") ? (byte)0 : CHESS_LOSER_POINT_VALUE));
+            } catch (Exception e) { throw e; }
+
+            try {
+                Task result = Bridge.LogGame("chess", scorers, Context);
+                if (result.IsCompleted) {
+                    if (Games_1v1.SaveFileUpdate(scorers, "chess")) {
+                        await ReplyAsync("Successfully logged the Chess game! <#537104363127046145>");
+                    } else {
+                        await ReplyAsync(":exlamation: Error in updating save files.");
+                    }
+                }
+            } catch (Exception e) {
+                await ReplyAsync(e.Message + "\n" + e.StackTrace);
+            }
+            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Logged Pokeduel for " + Context.User.Username);
+        }
+
         [Command("logbump", RunMode = RunMode.Async)]
         public async Task LogBump([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
@@ -570,6 +708,7 @@ namespace Primbot_v._2.Modules.Scoring {
                         affected.Add(new Tuple<ulong, byte>(userID, pointVal));
                         i++;
                     }
+                    
                     date = Int32.Parse(reversions[0].Substring(reversions[0].IndexOf(":") + 1, 6), NumberStyles.HexNumber);
                     Games_1v1.SaveFileUpdate(affected, gameName, true, date);
 
