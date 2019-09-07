@@ -114,11 +114,7 @@ namespace Primbot_v._2.Modules.Scoring {
             try {
                 var res = Bridge.GetDailyLimitEmbed(Context.User.Id);
                 await ReplyAsync("", false, res);
-<<<<<<< HEAD
-            }catch(Exception e) {
-=======
             } catch (Exception e) {
->>>>>>> games1v1
                 await ReplyAsync(e.Message);
             }
         }

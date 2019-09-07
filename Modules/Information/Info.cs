@@ -104,13 +104,6 @@ namespace Primbot_v._2.Modules.Just_For_Fun {
             await ReplyAsync("**Gaming,\nSports,\nScience,\nGeography,\nHistory,\nLanguage,\nEntertainment**");
         }
 
-	[Command("code", RunMode = RunMode.Async)]
-	public async Task Code([Remainder] string args = null){ await GetInfo(); }
-
-	[Command("github", RunMode = RunMode.Async)]
-	public async Task Coder([Remainder] string args = null){ await GetInfo(); }
-
-
         [Command("say", RunMode = RunMode.Async)]
         public async Task Say([Remainder] string args = null) {
             //await ReplyAsync("Disabled for Trivia Night.");

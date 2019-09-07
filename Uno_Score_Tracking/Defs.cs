@@ -8,10 +8,6 @@ using Discord;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
     public static class Defs {
-<<<<<<< HEAD
-	//change from MASTER to test merge
-=======
->>>>>>> games1v1
         /*** LOCAL SETTINGS - SHOULD BE LOCALLY MODIFIED ***/
         public static readonly int EST_OFFSET = 4; //UTC would fluctuate between 4 and 5 depending on DST, EST would always be 0
         public static readonly string DIR = "..\\..";
@@ -22,10 +18,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static byte FORTNIGHT_NUMBER = 25;
 
         /*** FILE DIRECTORIES ***/
-<<<<<<< HEAD
-
-=======
->>>>>>> games1v1
         public static readonly string UNO_SAVE_FILES_DIRECTORY = DIR + "\\Uno_Save_Files";
         public static readonly string LEADERBOARD_DIRECTORY = UNO_SAVE_FILES_DIRECTORY + "\\Leaderboards";
         public static readonly string SAVEFILE_GAMEITERATIONS = UNO_SAVE_FILES_DIRECTORY + "\\Game_Iterations.txt";
@@ -82,19 +74,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly byte SCORE_LENGTH = 2;
         public static readonly byte SEQUENCE_LENGTH = (byte)(GAME_ID_LENGTH + DATE_LENGTH + USER_ID_LENGTH
             + SCORE_LENGTH + 3);
-<<<<<<< HEAD
-
-        public static readonly byte MINESWEEPER_POINT_VALUE = 15;
-        public static readonly byte CHESS_POINT_VALUE = 30;
-        public static readonly byte IDLERPG_POINT_VALUE = 5;
-        public static readonly byte POKEDUEL_POINT_VALUE = 5;
-        public static readonly byte TOURNAMENT_POINT_VALUE = 200;
-        public static readonly byte BUMP_POINT_VALUE = 3;
-        public static readonly byte KNIGHTS_POINT_VALUE = 35;
-        public static readonly byte TRIVIA_POINT_VALUE = 10;
-        public static readonly short TETRIS_SCORE_FOR_ONE_POINT = 200;
-
-=======
 
         public static readonly byte MINESWEEPER_POINT_VALUE = 15;
         public static readonly byte BUMP_POINT_VALUE = 3;
@@ -112,20 +91,12 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly byte UNO1V1_LOSER_POINT_VALUE = 1;
 
         public static readonly byte TOURNAMENT_POINT_VALUE = 200;
->>>>>>> games1v1
         public static readonly byte MINESWEEPER_DAILY_LIMIT = 2;
         public static readonly byte TETRIS_DAILY_LIMIT = 2;
         public static readonly byte POKEDUEL_DAILY_LIMIT = 6;
         public static readonly byte IDLERPG_DAILY_LIMIT = 6;
         public static readonly byte KNIGHTS_DAILY_LIMIT = 2;
         public static readonly byte CHESS_DAILY_LIMIT = 2;
-<<<<<<< HEAD
-        public static readonly string[] GameIden = new string[] {
-            "non-standard", "uno", "cah", "minesweeper", "tetris", "pokeduel", "idlerpg",
-            "bingo", "chess", "bumps", "event", "casino", "tourney", "knights", "trivia",
-            "1v1uno"
-        };
-=======
         public static readonly byte UNO1V1_DAILY_LIMIT = 6;
         public static readonly string[] GameIden = new string[] {
             "non-standard", "uno", "cah", "minesweeper", "tetris", "pokeduel", "idlerpg",
@@ -158,7 +129,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                     return 0;
             }
         }
->>>>>>> games1v1
         //METADATA
         public static readonly Dictionary<string, string> DefaultSaveFields = new Dictionary<string, string> {
             {"LIT-CachedUsername","-"},
@@ -189,11 +159,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             {"POINTS-TOURNEY","0" }, {"ITER-TOURNEY","0" },
             {"POINTS-KNIGHTS","0" }, {"ITER-KNIGHTS","0" }, {"PLAYSTODAY-KNIGHTS","0"},
             {"POINTS-TRIVIA","0" }, {"ITER-TRIVIA","0"},
-<<<<<<< HEAD
-            {"POINTS-1V1UNO","0" }, {"FIRST-1V1UNO","0"}, {"ITER-1v1UNO","0"},
-=======
             {"POINTS-UNO1V1","0" }, {"FIRST-UNO1V1","0"}, {"ITER-UNO1V1","0"}, {"PLAYSTODAY-UNO1V1","0"}
->>>>>>> games1v1
         };
 
         public static readonly List<string> LEADERBOARD_TYPES = new List<string> {
@@ -205,11 +171,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             "ITER-MS",
             "ITER-TETRIS", "HIGH-TETRIS",
             "ITER-POKEDUEL", "ITER-IDLERPG", "ITER-CHESS", "ITER-BUMPS",
-<<<<<<< HEAD
-            "ITER-1V1UNO", "FIRST-1V1UNO"
-=======
             "ITER-UNO1V1", "FIRST-UNO1V1"
->>>>>>> games1v1
         };
 
         /*** MISCELLANEOUS ***/
@@ -220,8 +182,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static bool spawntrackalicia = true;
         public static bool spawntrackdom = true;
         public static bool pingme = true;
-<<<<<<< HEAD
-=======
 
         internal static TimeSpan TimeUntilMidnight() {
             DateTime now = DateTime.Now;
@@ -232,7 +192,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
 
         internal static bool HasUserHitDailyLimit(ulong id, string gameName) {
             int limit = GetDailyLimit(gameName);
-            if(limit == 0) { throw new Exception("Non-existing game sought for in Daily Limit search."); }
+            if (limit == 0) { throw new Exception("Non-existing game sought for in Daily Limit search."); }
 
             gameName = gameName.ToUpper().Trim();
             string playsTodayStr = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + id + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-" + gameName) ?? "";
@@ -244,6 +204,5 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             }
             return false;
         }
->>>>>>> games1v1
     }
 }
