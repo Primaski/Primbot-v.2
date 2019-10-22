@@ -10,6 +10,7 @@ using System.IO;
 using System.Globalization;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
+    //Regex - adaptable class
     public class GuildCache {
 
         public static List<SocketGuild> connectedGuilds = new List<SocketGuild>();
