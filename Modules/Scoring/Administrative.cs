@@ -147,6 +147,27 @@ namespace Primbot_v._2.Modules.Scoring {
                 }
             }
         }
+
+	[Command("setfn")]
+	public async Task SetFN([Remainder] string args = null) {
+	    if(Context.User.Id != MY_ID) {
+                return;
+            }
+	    if(args == null){ await ReplyAsync("is null"); return; }
+	    try{
+		byte fnNo = Byte.Parse(args);
+		Defs.FORTNIGHT_NUMBER = fnNo;
+	    }catch{ await ReplyAsync("needs to be an int"); return; }
+
+	}
+
+	[Command("getfn")]
+	public async Task SetFN() {
+	    if(Context.User.Id != MY_ID) {
+                return;
+            }
+	    await ReplyAsync(Defs.FORTNIGHT_NUMBER.ToString());
+	}
         //cache
         [Command("c")]
         public async Task Cache([Remainder] string args = null) {
@@ -638,21 +659,22 @@ namespace Primbot_v._2.Modules.Scoring {
         public async Task Mute([Remainder] string args = null) {
             if(args == null) {
                 await ReplyAsync("Parameter cannot be null. Mention or provide ID of user.");
+		return;
             }
             if(Context.Guild.Id != UNO_SERVER_ID) {
                 return;
             }
             if(!GuildCache.HasRole((SocketGuildUser)Context.User,"Human Resources") &&
                 !GuildCache.HasRole((SocketGuildUser)Context.User,"Team Leaders")) {
-                await ReplyAsync("Not meant for you.");
+                await ReplyAsync("Not meant for you."); return;
             }
             if (args == null) {
-                await ReplyAsync("Who should I mute?");
+                await ReplyAsync("Who should I mute?"); return;
             }
 
             SocketGuildUser user = GuildCache.InterpretUserInput(args.Trim())?[0] ?? null;
             if(user == null) {
-                await ReplyAsync("Not sure who you're referring to.");
+                await ReplyAsync("Not sure who you're referring to."); return;
             }
 
             await removerole(user.Id + " " + "Green Team");

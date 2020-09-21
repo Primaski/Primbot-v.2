@@ -13,9 +13,9 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly string DIR = "..\\..";
 
         /*** TIME SETTINGS ***/
-        public static readonly DateTime startDate = new DateTime(2019, 1, 1, 0, 0, 0);
-        public static readonly DateTime fnStartDate = new DateTime(2019, 8, 26, 0, 0, 0);
-        public static byte FORTNIGHT_NUMBER = 25;
+        public static readonly DateTime startDate = new DateTime(2019, 1, 1, 0, 0, 0); //DO NOT CHANGE
+        public static readonly DateTime fnStartDate = new DateTime(2020, 3, 10, 0, 0, 0);
+        public static byte FORTNIGHT_NUMBER = 39;
 
         /*** FILE DIRECTORIES ***/
         public static readonly string UNO_SAVE_FILES_DIRECTORY = DIR + "\\Uno_Save_Files";
@@ -46,7 +46,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly ulong YELLOW_TEAM_ID = 472614570096328714;
         public static readonly ulong RED_TEAM_ID = 472614539087577099;
         public static readonly ulong BLUE_TEAM_ID = 472614593110474752;
-        public static readonly ulong WILD_ID = 472613976161779722;
+        public static readonly ulong WILD_ID = 757477143553900574; /*472613976161779722;*/
         public static readonly ulong REPORT_CHANNEL_ID = 537104363127046145;
         public static readonly ulong TRIVIA_CHANNEL_ID = 578026926778613760;
         public static List<ulong> UNO_SERVER_TEAMS = new List<ulong> {
