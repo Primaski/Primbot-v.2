@@ -14,8 +14,8 @@ namespace Primbot_v._2.Uno_Score_Tracking {
 
         /*** TIME SETTINGS ***/
         public static readonly DateTime startDate = new DateTime(2019, 1, 1, 0, 0, 0); //DO NOT CHANGE
-        public static readonly DateTime fnStartDate = new DateTime(2020, 3, 10, 0, 0, 0);
-        public static byte FORTNIGHT_NUMBER = 39;
+        public static readonly DateTime fnStartDate = new DateTime(2020, 9, 21, 0, 0, 0);
+        public static byte FORTNIGHT_NUMBER = 53;
 
         /*** FILE DIRECTORIES ***/
         public static readonly string UNO_SAVE_FILES_DIRECTORY = DIR + "\\Uno_Save_Files";

@@ -159,10 +159,6 @@ namespace Primbot_v._2 {
                     var u = arg.DownloaderPromise;
                     GuildCache.InitializeMyServer(arg);
                     Console.WriteLine("Loaded Magilouvre.");
-                } else if (arg.Id == 597469488778182656) {
-                    var u = arg.DownloaderPromise;
-                    GuildCache.InitializePokeCollectors(arg);
-                    Console.WriteLine("Loaded PokeCollectors.");
                 }
             }
             return Task.CompletedTask;
