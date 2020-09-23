@@ -34,7 +34,7 @@ namespace Primbot_v._2 {
         Random rand = new Random();
 
         static void Main(string[] args) {
-            cmdExec();
+            //cmdExec();
             int iterations = 1;
             int sleepTime = 5000;
             while (true) {
@@ -250,9 +250,10 @@ namespace Primbot_v._2 {
         private async Task UnoPings(SocketUserMessage message) {
             string target = "";
             string rel = message.Embeds.ElementAt(0).Description;
+            Console.WriteLine(rel);
             if (rel.Contains("'s turn")) {
                 target = rel.Substring(0, rel.IndexOf("'s turn"));
-                target = target.Substring(target.IndexOf("now ") + 4);
+                target = target.Substring(target.IndexOf("It is now ") + 10);
                 target.Trim();
             }
             if (target == "") return;
@@ -262,7 +263,7 @@ namespace Primbot_v._2 {
             try {
                 bool requested = SaveFiles_Entries.EntryExists(UNO_PING_LOG, userID);
                 if (requested) {
-                    await message.Channel.SendMessageAsync(user.Mention + ", it's your turn! " +
+                    await message.Channel.SendMessageAsync("TEST BOT: " + user.Mention + ", it's your turn! " +
                         "If you'd like to opt out of Uno pings, just type `p*unodontping`. If you'd like to opt in, " +
                         "type `p*unoping`!");
                     return;
@@ -307,17 +308,10 @@ namespace Primbot_v._2 {
 
             int argPos = 0;
 
-            if (context.Guild.Id == UNO_SERVER_ID) {
-                //UNCOMMENT TOMORROW
-                //LuckySpawn(context);
-            }
-
             if ((context.Guild.Id == MAGI_SERVER_ID && message.HasStringPrefix(".catch", ref argPos))) {
                 Thread.Sleep(1000);
                 await message.DeleteAsync();
             }
-
-
 
             //if (GuildCache.SearchAwaitedMessage(context.Guild.Id, context.Channel.Id, context.User.Id, context.Message.Content) != -1) {}
 
@@ -334,179 +328,5 @@ namespace Primbot_v._2 {
         }
 
 
-        /*
-        private async void LuckySpawn(SocketCommandContext cxt) {
-            if (cxt.User.IsBot) {
-                return;
-            }
-            int LOW_BALL = 10;
-            int MID_BALL = 25;
-            int HIGH_BALL = 75;
-            int LEG_BALL = 150;
-
-
-            //spam suppression
-            char[] v = { 'a', 'e', 'i', 'o', 'u' };
-            if (cxt.Channel.Id == 496058002630246430) {
-                int temprand = new Random().Next(1, 4);
-                if (temprand != 3) {
-                    return;
-                }
-            }
-            if (cxt.Message.Content.Split(' ').Count() < 2
-                || cxt.Message.Content.Length < 7
-                || !v.Any(s => (cxt.Message.Content).Contains(s))) {
-                return;
-            }
-            //range 0, 1999
-            int messageSpawn = rand.Next(0, 2900);
-            //common - 1% - range of 20 in 2,000
-            //uncommon - 0.4% - range of 8 in 2,000
-            //rare - 0.1% - range of 2 in 2,000
-            //legendary - 0.05 - range of 1 in 2,000
-            EmbedBuilder emb = new EmbedBuilder().WithColor(Color.DarkPurple)
-                .WithCurrentTimestamp();
-
-            //await cxt.Channel.SendMessageAsync(messageSpawn.ToString());
-
-            //COMMON
-            Console.WriteLine(cxt.User.Username + " -> " + messageSpawn);
-            if (messageSpawn >= 700 && messageSpawn < 740) {
-                emb.WithTitle("Congratulations " + cxt.User.Username + ", you have found a " +
-                    "**Common Spawn**!")
-                    .WithDescription("This is a gift for a special one-day event to celebrate " +
-                    "Uno's birthday. The server points have been automatically added to your account" +
-                    " <#537104363127046145>." +
-                    " Keep chatting for more gifts, and rarer spawns!")
-                    .WithFooter("Rarity: 1 in 100 messages, Reward: 10 points")
-                    .WithImageUrl("https://i.ytimg.com/vi/F4ZjgDQz2SI/maxresdefault.jpg");
-                await cxt.Channel.SendMessageAsync(cxt.User.Mention, false, emb.Build());
-                Modules.Scoring.Log x = new Modules.Scoring.Log();
-                try {
-                    await x.LogEvent(LOW_BALL.ToString() + " " + cxt.User.Id);
-                } catch (Exception e) {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-                await cxt.Channel.SendMessageAsync("Successfully logged " + LOW_BALL + " points for " + cxt.User.Username);
-
-            }
-
-            //UNCOMMON
-            if (messageSpawn >= 1198 && messageSpawn < 1212) {
-                emb.WithTitle("Congratulations " + cxt.User.Username + ", you have found a " +
-                 "**Uncommon Spawn**!")
-                 .WithDescription("This is a gift for a special one-day event to celebrate " +
-                 "Uno's birthday. The server points have been automatically added to your account" +
-                 " <#537104363127046145>." +
-                " Keep chatting for more gifts, and rarer spawns!")
-                 .WithFooter("Rarity: 2 in 500 messages, Reward: 25 points")
-                 .WithImageUrl("https://i.ytimg.com/vi/qNF5DPHaHMg/maxresdefault.jpg");
-                await cxt.Channel.SendMessageAsync(cxt.User.Mention, false, emb.Build());
-                Modules.Scoring.Log x = new Modules.Scoring.Log();
-                try {
-                    await x.LogEvent(MID_BALL.ToString() + " " + cxt.User.Id);
-                } catch (Exception e) {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-                await cxt.Channel.SendMessageAsync("Successfully logged " + MID_BALL + " points for " + cxt.User.Username);
-
-
-            }
-
-            //RARE
-            if (messageSpawn >= 1850 && messageSpawn < 1852) {
-                emb.WithTitle("Congratulations " + cxt.User.Username + ", you have found a " +
-    "**Rare Spawn**!")
-    .WithDescription("This is a gift for a special one-day event to celebrate " +
-    "Uno's birthday. The server points have been automatically added to your account" +
-    " <#537104363127046145>." +
-    " Keep chatting for more gifts, and rarer spawns!")
-    .WithFooter("Rarity: 1 in 1,000 messages, Reward: 75 points")
-    .WithImageUrl("https://i.ytimg.com/vi/YS26SubnQNk/maxresdefault.jpg");
-                await cxt.Channel.SendMessageAsync(cxt.User.Mention, false, emb.Build());
-                Modules.Scoring.Log x = new Modules.Scoring.Log();
-                try {
-                    await x.LogEvent(HIGH_BALL.ToString() + " " + cxt.User.Id);
-                } catch (Exception e) {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-                await cxt.Channel.SendMessageAsync("Successfully logged " + HIGH_BALL + " points for " + cxt.User.Username);
-
-
-            }
-
-            //LEGENDARY
-            if (messageSpawn == 36) {
-                emb.WithTitle("Congratulations " + cxt.User.Username + ", you have found a " +
-    "**LEGENDARY Spawn**! This is the absolute rarest gift to receive!")
-    .WithDescription("This is a gift for a special one-day event to celebrate " +
-    "Uno's birthday. The server points have been automatically added to your account" +
-    " <#537104363127046145>." +
-    " Keep chatting for more gifts, and rarer spawns!")
-    .WithFooter("Rarity: 1 in 2,000 messages, Reward: 150 points")
-    .WithImageUrl("https://thumbs.gfycat.com/DismalGiftedEel-size_restricted.gif");
-                await cxt.Channel.SendMessageAsync(cxt.User.Mention, false, emb.Build());
-                Modules.Scoring.Log x = new Modules.Scoring.Log();
-                try {
-                    await x.LogEvent(LEG_BALL.ToString() + " " + cxt.User.Id);
-                } catch (Exception e) {
-                    Console.WriteLine(e.Message);
-                    return;
-                }
-                await cxt.Channel.SendMessageAsync("Successfully logged " + LEG_BALL + " points for " + cxt.User.Username);
-            }
-            
-        }
-
-        private void SpawnTrack(SocketUserMessage message) {
-            var channel = (SocketTextChannel)message.Channel;
-            bool wild = message.Embeds?.ElementAt(0).Title.Contains("A wild") ?? false;
-            if (wild && !(
-                message.Channel.Name.Contains("solo")
-                || message.Channel.Name.Contains("secret")
-                || message.Channel.Name.Contains("gym")
-                || message.Channel.Name.Contains("farm")
-                || message.Channel.Name.Contains("spam")
-                || message.Channel.Name.Contains("private")
-                )
-                ) {
-                var guild = channel.Guild;
-                if (spawntrack && guild.GetUser(MY_ID) != null) {
-                    GuildCache.Uno_Cache.GetUser(MY_ID).SendMessageAsync("Pokespawn in " + channel.Guild.Name + "! " + channel.Mention);
-                }
-                if (spawntrackalicia && guild.GetUser(332788739560701955) != null) {
-                    GuildCache.Uno_Cache.GetUser(332788739560701955).SendMessageAsync("Pokespawn in " + channel.Guild.Name + "! " + channel.Mention);
-                }
-                if (spawntrackdom && guild.GetUser(534194469302566922) != null) {
-                    GuildCache.Uno_Cache.GetUser(534194469302566922).SendMessageAsync("Pokespawn in " + channel.Guild.Name + "! " + channel.Mention);
-                }
-            }
-        }
-    }
-    */
-
-        /*private void LogUnoGame(IReadOnlyCollection<Attachment> jsonOutput) {
-           IEnumerator<Attachment> outputs = jsonOutput.GetEnumerator();
-           string desiredFileUrl = "";
-            try {
-                while(outputs.MoveNext()) {
-                    if (outputs.Current.Url.EndsWith("json")) {
-                        desiredFileUrl = outputs.Current.Url;
-                    }
-                }
-            }catch(Exception e) {
-                throw e;
-            }
-            if(desiredFileUrl != "") {
-                using(WebClient wc = new WebClient()) {
-                    wc.DownloadFile(desiredFileUrl, JSON_OUTPUT_PATH);
-                }
-            }
-            Games_Multiplayer.UnoLog(JSON_OUTPUT_PATH);
-            return;
-        }*/
     }
 }
