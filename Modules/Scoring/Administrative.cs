@@ -523,7 +523,7 @@ namespace Primbot_v._2.Modules.Scoring {
                         if(GuildCache.GetUserByID(userID,GuildCache.Uno_Cache) == null) {
                             //if file doesn't exist, then they're not in uno server -> keep
                             string fullDirName = subdir + "\\" + UNO_SAVE_FILE_NAME;
-                            //if (File.Exists(fullDirName)) {
+                            if (File.Exists(fullDirName)) {
                                 int val = Int32.Parse(SaveFiles_Mapped.SearchValue
                                     (fullDirName, "POINTS-UNO"));
                                 //if they have ever earned points -> keep
@@ -533,11 +533,14 @@ namespace Primbot_v._2.Modules.Scoring {
                                     counter++;
                                     records.Add(counter.ToString() + ": " + userID.ToString());
                                 } else {
-                                    Console.WriteLine(userID + " has points.");
+                                    Directory.Delete(subdir, true);
+                                    Console.WriteLine(userID + "=====> DELETING ");
+                                    counter++;
+                                    records.Add(counter.ToString() + ": " + userID.ToString());
                                 }
-                            //} else {
-                                //Console.WriteLine(userID + " has no Unoprofile.");
-                            //}
+                            } else {
+                                Console.WriteLine(userID + " has no Unoprofile.");
+                            }
                         } else {
                             Console.WriteLine(userID + " is still in server.");
                         }
