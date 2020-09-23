@@ -263,7 +263,7 @@ namespace Primbot_v._2 {
             try {
                 bool requested = SaveFiles_Entries.EntryExists(UNO_PING_LOG, userID);
                 if (requested) {
-                    await message.Channel.SendMessageAsync("TEST BOT: " + user.Mention + ", it's your turn! " +
+                    await message.Channel.SendMessageAsync(user.Mention + ", it's your turn! " +
                         "If you'd like to opt out of Uno pings, just type `p*unodontping`. If you'd like to opt in, " +
                         "type `p*unoping`!");
                     return;
