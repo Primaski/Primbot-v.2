@@ -16,7 +16,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static List<SocketGuild> connectedGuilds = new List<SocketGuild>();
         public static SocketGuild Uno_Cache { get; private set; } //make private later
         public static SocketGuild Magi_Cache { get; private set; }
-        public static SocketGuild Poke_Cache { get; private set; }
 
         public static int GREEN_TEAM_SCORE = 0;
         public static int YELLOW_TEAM_SCORE = 0;
@@ -155,12 +154,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 }
             }
             return result;
-        }
-
-        internal static void InitializePokeCollectors(SocketGuild guild) {
-            if (guild.Id == 597469488778182656) {
-                Poke_Cache = guild;
-            }
         }
 
         /// <summary>
