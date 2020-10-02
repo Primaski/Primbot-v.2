@@ -303,6 +303,21 @@ namespace Primbot_v._2 {
             return Task.CompletedTask;
         }
 
+        [Command("setcount")]
+        public async Task setcount([Remainder] string args = null) {
+            if (!Int32.TryParse(args, out int ignore)) {
+                await ReplyAsync("Not a number.");
+                return;
+            }
+            File.Delete(MAGI_COUNT);
+            File.Create(MAGI_COUNT);
+            using (var tw = new StreamWriter(MAGI_COUNT, true)) {
+                tw.WriteLine(args);
+                tw.Close();
+            }
+            await ReplyAsync("Set to " + args);
+            return;
+        }
 
         private async Task HandleCommandAsync(SocketMessage arg) {
             var message = (SocketUserMessage)arg;
@@ -321,7 +336,7 @@ namespace Primbot_v._2 {
             }
 
             if (context.Guild.Id == MAGI_SERVER_ID) {
-                if(message.Channel.Id == 515956792459657217) {
+                if(message.Channel.Id == ulong 515956792459657217) {
                     await CheckCount(message);
                 }
             }
