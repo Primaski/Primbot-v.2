@@ -303,6 +303,7 @@ namespace Primbot_v._2 {
             return Task.CompletedTask;
         }
 
+
         private async Task HandleCommandAsync(SocketMessage arg) {
             var message = (SocketUserMessage)arg;
             var context = new SocketCommandContext(CLIENT, message);

@@ -79,20 +79,20 @@ namespace Primbot_v._2.Modules.Scoring {
 
         [Command("addkeyvalue")]
         public async Task AddKeyVal([Remainder] string args = null) {
-            if(Context.User.Id != MY_ID) {
+            if (Context.User.Id != MY_ID) {
                 await ReplyAsync("Inappropriate perms");
                 return;
             }
-            if(args == null) {
+            if (args == null) {
                 await ReplyAsync("Format: `[userID/'all'] ['fn'/'def'/'all'] [FIELD] [DEFAULT VALUE]`");
                 return;
             }
             string[] argsSplits = args.Split(' ');
-            if(argsSplits.Count() != 4) {
+            if (argsSplits.Count() != 4) {
                 await ReplyAsync("Format: `[userID/\"all\"] ['fn'/'def'/'all'] [FIELD] [DEFAULT VALUE]`");
                 return;
             }
-            if(argsSplits[0] != "all") {
+            if (argsSplits[0] != "all") {
                 string pathExceptFile = USER_SAVE_DIRECTORY + "\\" + argsSplits[0] + "\\";
                 if (!File.Exists(pathExceptFile + UNO_SAVE_FILE_NAME)) {
                     await ReplyAsync("File does not exist.");
@@ -100,78 +100,78 @@ namespace Primbot_v._2.Modules.Scoring {
                 }
                 switch (argsSplits[1]) {
                     case "fn":
-                        await ReplyAsync("`In progress...`");
-                        SaveFiles_Mapped.AddLine(pathExceptFile + "FN" + FORTNIGHT_NUMBER + "_Unoprofile.txt", argsSplits[2], argsSplits[3]);
-                        await ReplyAsync("`Complete.`");
-                        return;
+                    await ReplyAsync("`In progress...`");
+                    SaveFiles_Mapped.AddLine(pathExceptFile + "FN" + FORTNIGHT_NUMBER + "_Unoprofile.txt", argsSplits[2], argsSplits[3]);
+                    await ReplyAsync("`Complete.`");
+                    return;
                     case "def":
-                        await ReplyAsync("`In progress...`");
-                        SaveFiles_Mapped.AddLine(pathExceptFile + UNO_SAVE_FILE_NAME, argsSplits[2], argsSplits[3]);
-                        await ReplyAsync("`Complete.`");
-                        return;
+                    await ReplyAsync("`In progress...`");
+                    SaveFiles_Mapped.AddLine(pathExceptFile + UNO_SAVE_FILE_NAME, argsSplits[2], argsSplits[3]);
+                    await ReplyAsync("`Complete.`");
+                    return;
                     case "all":
-                        await ReplyAsync("All wasn't programmed in");
-                        return;
+                    await ReplyAsync("All wasn't programmed in");
+                    return;
                     default:
-                        await ReplyAsync("Format: `[userID/\"all\"] ['fn'/'def'/'all'] [FIELD] [DEFAULT VALUE]`");
-                        return;
+                    await ReplyAsync("Format: `[userID/\"all\"] ['fn'/'def'/'all'] [FIELD] [DEFAULT VALUE]`");
+                    return;
                 }
             } else {
                 string[] allPaths = Directory.GetDirectories(USER_SAVE_DIRECTORY);
                 int i = 0;
                 switch (argsSplits[1]) {
                     case "fn":
-                        await ReplyAsync("`In progress...`");
-                        for (i = 0; i < allPaths.Count(); i++) {
-                            try {
-                                SaveFiles_Mapped.AddLine(allPaths[i] + "\\FN" + FORTNIGHT_NUMBER + "_Unoprofile.txt", argsSplits[2], argsSplits[3]);
-                            }catch {}
-                        }
-                        await ReplyAsync("`Complete.`");
-                        return;
+                    await ReplyAsync("`In progress...`");
+                    for (i = 0; i < allPaths.Count(); i++) {
+                        try {
+                            SaveFiles_Mapped.AddLine(allPaths[i] + "\\FN" + FORTNIGHT_NUMBER + "_Unoprofile.txt", argsSplits[2], argsSplits[3]);
+                        } catch { }
+                    }
+                    await ReplyAsync("`Complete.`");
+                    return;
                     case "def":
-                        await ReplyAsync("`In progress...`");
-                        for (i = 0; i < allPaths.Count(); i++) {
-                            try { 
+                    await ReplyAsync("`In progress...`");
+                    for (i = 0; i < allPaths.Count(); i++) {
+                        try {
                             SaveFiles_Mapped.AddLine(allPaths[i] + "\\" + UNO_SAVE_FILE_NAME, argsSplits[2], argsSplits[3]);
-                            } catch {}
-                        }
-                        await ReplyAsync("`Complete.`");
-                        return;
+                        } catch { }
+                    }
+                    await ReplyAsync("`Complete.`");
+                    return;
                     case "all":
-                        await ReplyAsync("All wasn't programmed in");
-                        return;
+                    await ReplyAsync("All wasn't programmed in");
+                    return;
                     default:
-                        await ReplyAsync("Format: `[userID/\"all\"] ['fn'/'def'/'all'] [FIELD] [DEFAULT VALUE]`");
-                        return;
+                    await ReplyAsync("Format: `[userID/\"all\"] ['fn'/'def'/'all'] [FIELD] [DEFAULT VALUE]`");
+                    return;
                 }
             }
         }
 
-	[Command("setfn")]
-	public async Task SetFN([Remainder] string args = null) {
-	    if(Context.User.Id != MY_ID) {
+        [Command("setfn")]
+        public async Task SetFN([Remainder] string args = null) {
+            if (Context.User.Id != MY_ID) {
                 return;
             }
-	    if(args == null){ await ReplyAsync("is null"); return; }
-	    try{
-		byte fnNo = Byte.Parse(args);
-		Defs.FORTNIGHT_NUMBER = fnNo;
-	    }catch{ await ReplyAsync("needs to be an int"); return; }
+            if (args == null) { await ReplyAsync("is null"); return; }
+            try {
+                byte fnNo = Byte.Parse(args);
+                Defs.FORTNIGHT_NUMBER = fnNo;
+            } catch { await ReplyAsync("needs to be an int"); return; }
 
-	}
+        }
 
-	[Command("getfn")]
-	public async Task SetFN() {
-	    if(Context.User.Id != MY_ID) {
+        [Command("getfn")]
+        public async Task SetFN() {
+            if (Context.User.Id != MY_ID) {
                 return;
             }
-	    await ReplyAsync(Defs.FORTNIGHT_NUMBER.ToString());
-	}
+            await ReplyAsync(Defs.FORTNIGHT_NUMBER.ToString());
+        }
         //cache
         [Command("c")]
         public async Task Cache([Remainder] string args = null) {
-            if(Context.User.Id != MY_ID) {
+            if (Context.User.Id != MY_ID) {
                 return;
             }
             try {
@@ -284,7 +284,7 @@ namespace Primbot_v._2.Modules.Scoring {
             string url = spoinkimages[randNo];
             if (Context.User.Id != MY_ID) {
                 return;
-            } else if(args.Split(' ').Count() != 2) {
+            } else if (args.Split(' ').Count() != 2) {
                 await ReplyAsync("Format: `[prev count] [new count]`."); return;
             }
             var argsSplits = args.Split(' ');
@@ -295,7 +295,7 @@ namespace Primbot_v._2.Modules.Scoring {
             int orig = Int32.Parse(argsSplits[0]);
             int update = Int32.Parse(argsSplits[1]);
             int diff = update - orig;
-            if(diff < 0) {
+            if (diff < 0) {
                 await ReplyAsync("New is smaller than old."); return;
             }
             Byte[] b = new Byte[3];
@@ -303,7 +303,7 @@ namespace Primbot_v._2.Modules.Scoring {
 
             Embed emb = new EmbedBuilder().WithTitle("Prim has collected **" + diff + " more Spoinks**!")
                 .WithDescription("Prim now has **" + update + " Spoinks**!")
-                .WithCurrentTimestamp().WithColor(b[0],b[1],b[2]).WithImageUrl(url).Build();
+                .WithCurrentTimestamp().WithColor(b[0], b[1], b[2]).WithImageUrl(url).Build();
             await ReplyAsync("", false, emb);
 
         }
@@ -347,11 +347,11 @@ namespace Primbot_v._2.Modules.Scoring {
             string[] argssplits = args.Split(' ');
             if (argssplits.Count() != 2) { await ReplyAsync("need 2 args"); return; }
             var user = GuildCache.InterpretUserInput(argssplits[0])[0];
-            if(user == null) { await ReplyAsync("user doesn't exist"); return; }
-            if(!Int32.TryParse(argssplits[1],out int ignore)) { await ReplyAsync("not an int"); return; }
+            if (user == null) { await ReplyAsync("user doesn't exist"); return; }
+            if (!Int32.TryParse(argssplits[1], out int ignore)) { await ReplyAsync("not an int"); return; }
             int pings = Int32.Parse(argssplits[1]);
 
-            for(int i = 1; i <= pings; ++i) {
+            for (int i = 1; i <= pings; ++i) {
                 await ReplyAsync(user.Mention + "(ping " + i + ")");
             }
             return;
@@ -359,8 +359,8 @@ namespace Primbot_v._2.Modules.Scoring {
 
         [Command("p")]
         public async Task Q([Remainder] string args = null) {
-            
-            
+
+
             string[] links = {
                 "https://i.imgur.com/TGKJgBm.png",
                 "https://i.imgur.com/wSbED79.png",
@@ -408,18 +408,18 @@ namespace Primbot_v._2.Modules.Scoring {
                 "https://i.imgur.com/V0EMAHY.png",
                 "https://i.imgur.com/OkiW8Oo.png"
             };*/
-            
+
             Random rand = new Random();
             string imageurl = links[rand.Next(0, links.Count())];
             if (args == "uno") {
                 await GuildCache.Uno_Cache.GetTextChannel(487825348310859777).SendMessageAsync("", false, new EmbedBuilder().WithTitle("A wild pokémon has appeared!"
-                ).WithColor(0,174,134).WithDescription("Guess the pokémon and type .catch <pokémon> to catch it!")
+                ).WithColor(0, 174, 134).WithDescription("Guess the pokémon and type .catch <pokémon> to catch it!")
                 .WithImageUrl(imageurl).Build());
             }
             await ReplyAsync("", false, new EmbedBuilder().WithTitle("A wild pokémon has appeared!"
-                ).WithColor(0,174,134).WithDescription("Guess the pokémon and type .catch <pokémon> to catch it!")
+                ).WithColor(0, 174, 134).WithDescription("Guess the pokémon and type .catch <pokémon> to catch it!")
                 .WithImageUrl(imageurl).Build());
-               
+
             await Context.Message.DeleteAsync();
             //await ReplyAsync(Context.User.Mention + " is a monster who tried spawning a fake Pokemon in this channel. Ridicule them.");
             return;
@@ -513,22 +513,22 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             int counter = 0;
             List<string> records = new List<string>();
-            await ReplyAsync("`Purging inactive accounts...`");
+            await ReplyAsync("`Purging inactive accounts (with fixed code this time)...`");
             if (Directory.Exists(USER_SAVE_DIRECTORY)) {
                 string[] foldersindirectory = Directory.GetDirectories(USER_SAVE_DIRECTORY);
                 foreach (string subdir in foldersindirectory) {
                     try {
                         ulong userID = UInt64.Parse(new DirectoryInfo(subdir).Name);
                         //if user is in server -> keep
-                        if(GuildCache.GetUserByID(userID,GuildCache.Uno_Cache) == null) {
+                        if (GuildCache.GetUserByID(userID, GuildCache.Uno_Cache) == null) {
                             //if file doesn't exist, then they haven't played a fn -> delete
                             string fullDirName = subdir + "\\" + UNO_SAVE_FILE_NAME;
                             if (File.Exists(fullDirName)) {
                                 int val = Int32.Parse(SaveFiles_Mapped.SearchValue
                                     (fullDirName, "POINTS-UNO"));
                                 //if they have ever earned points -> keep
-                                if(val == 0) {
-                                    Directory.Delete(subdir,true);
+                                if (val == 0) {
+                                    Directory.Delete(subdir, true);
                                     Console.WriteLine(userID + "=====> DELETING ");
                                     counter++;
                                     records.Add(counter.ToString() + ": " + userID.ToString());
@@ -544,18 +544,18 @@ namespace Primbot_v._2.Modules.Scoring {
                         } else {
                             Console.WriteLine(userID + " is still in server.");
                         }
-                    }catch(Exception e) {
+                    } catch (Exception e) {
                         Console.WriteLine(subdir + " ==>\n" + e.Message);
                     }
                 }
             }
-            if(records.Count() != 0) {
+            if (records.Count() != 0) {
                 await ReplyAsync("`Creating record of purged accounts...`");
                 File.WriteAllLines(PURGED_SAVE_FILES_DIRECTORY + "\\Purges_" + DateTime.Now.ToString("yyyy-MM-dd") + "-" +
                     DateTime.Now.ToString("HH-mm") + ".txt", records.ToArray());
                 await ReplyAsync("`Resetting leaderboard cache...`");
                 await ResetLBCache();
-                await ReplyAsync("`" + counter + "` account files purged. Purge log saved at: `" + 
+                await ReplyAsync("`" + counter + "` account files purged. Purge log saved at: `" +
                     PURGED_SAVE_FILES_DIRECTORY + "\\Purges_" + DateTime.Now.ToString("yyyy-MM-dd") +
                     DateTime.Now.ToString("HH-mm") + "`");
             } else {
@@ -651,7 +651,7 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             try {
                 await user.KickAsync();
-            }catch(Exception e) {
+            } catch (Exception e) {
                 await ReplyAsync(e.Message); return;
             }
             await ReplyAsync("Kicked " + user.Username + ".");
@@ -660,15 +660,15 @@ namespace Primbot_v._2.Modules.Scoring {
 
         [Command("mute")]
         public async Task Mute([Remainder] string args = null) {
-            if(args == null) {
+            if (args == null) {
                 await ReplyAsync("Parameter cannot be null. Mention or provide ID of user.");
-		return;
-            }
-            if(Context.Guild.Id != UNO_SERVER_ID) {
                 return;
             }
-            if(!GuildCache.HasRole((SocketGuildUser)Context.User,"Human Resources") &&
-                !GuildCache.HasRole((SocketGuildUser)Context.User,"Team Leaders")) {
+            if (Context.Guild.Id != UNO_SERVER_ID) {
+                return;
+            }
+            if (!GuildCache.HasRole((SocketGuildUser)Context.User, "Human Resources") &&
+                !GuildCache.HasRole((SocketGuildUser)Context.User, "Team Leaders")) {
                 await ReplyAsync("Not meant for you."); return;
             }
             if (args == null) {
@@ -676,7 +676,7 @@ namespace Primbot_v._2.Modules.Scoring {
             }
 
             SocketGuildUser user = GuildCache.InterpretUserInput(args.Trim())?[0] ?? null;
-            if(user == null) {
+            if (user == null) {
                 await ReplyAsync("Not sure who you're referring to."); return;
             }
 
@@ -720,20 +720,44 @@ namespace Primbot_v._2.Modules.Scoring {
             await ReplyAsync("`destroyHumanity` is set to `false`.");
         }
 
-        [Command("setcount")]
-        public async Task setcount([Remainder] string args = null) {
-            if (!Int32.TryParse(args, out int ignore)) {
-                await ReplyAsync("Not a number.");
+        [Command("poke")]
+        public async Task poke([Remainder] string args = null) {
+            int curr = -1;
+            char state = 'f';
+            switch (Context.User.Id) {
+                case 263733973711192064:
+                spawntrack = !spawntrack;
+                if (spawntrack) { state = 't'; }
+                curr = 0;
+                await ReplyAsync("Track `" + spawntrack.ToString() + "`");
+                break;
+                case 332788739560701955:
+                curr = 1;
+                spawntrackalicia = !spawntrackalicia;
+                if (spawntrackalicia) { state = 't'; }
+                await ReplyAsync("Track `" + spawntrackalicia.ToString() + "`");
+                break;
+                case 534194469302566922:
+                curr = 2;
+                spawntrackdom = !spawntrackdom;
+                if (spawntrackdom) { state = 't'; }
+                await ReplyAsync("Track `" + spawntrackdom.ToString() + "`");
+                break;
+                default:
                 return;
             }
-            File.Delete(MAGI_COUNT);
-            File.Create(MAGI_COUNT);
-            using (var tw = new StreamWriter(MAGI_COUNT, true)) {
-                tw.WriteLine(args);
-                tw.Close();
+            if (curr != -1) {
+                if (File.Exists(POKE)) {
+                    string[] sw = File.ReadAllLines(POKE);
+                    string line = sw[0];
+                    if ((line ?? "").Length < 3) {
+                        Console.WriteLine("error updating pokecord");
+                        return;
+                    }
+                    line = line.Substring(0, curr) + state + line.Substring(curr + 1);
+                    File.WriteAllLines(POKE, new string[] { line });
+                }
             }
-            await ReplyAsync("Set to " + args);
-            return;
         }
 
         [Command("foom")]
@@ -858,6 +882,23 @@ namespace Primbot_v._2.Modules.Scoring {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
             await ReplyAsync(FORTNIGHT_NUMBER.ToString());
         }
+
+        [Command("setcount")]
+        public async Task setcount([Remainder] string args = null) {
+            if (!Int32.TryParse(args, out int ignore)) {
+                await ReplyAsync("Not a number.");
+                return;
+            }
+            File.Delete(MAGI_COUNT);
+            File.Create(MAGI_COUNT);
+            using (var tw = new StreamWriter(MAGI_COUNT, true)) {
+                tw.WriteLine(args);
+                tw.Close();
+            }
+            await ReplyAsync("Set to " + args);
+            return;
+        }
+
 
         [Command("adminHelp")]
         public async Task AdminHelp([Remainder] string args = null) {
@@ -1022,51 +1063,59 @@ namespace Primbot_v._2.Modules.Scoring {
                 await ReplyAsync(err); return;
             }
             string[] argslines = args.Split('\n');
-            if(argslines.Count() < 1) {
+            if (argslines.Count() < 1) {
                 await ReplyAsync(err); return;
             }
             builder = WithColor(builder, "random");
             foreach (string line in argslines) {
                 try {
                     string key = line.Split(':')[0].ToLower();
-                    string val = line.Substring(line.IndexOf(":")+1);
+                    string val = line.Substring(line.IndexOf(":") + 1);
                     val = val.Trim();
                     switch (key) {
-                        case "header": case "title":
-                            builder = AddTitle(builder,val);
-                            break;
-                        case "description": case "main body": case "body":
-                            builder = AddDescription(builder, val);
-                            break;
+                        case "header":
+                        case "title":
+                        builder = AddTitle(builder, val);
+                        break;
+                        case "description":
+                        case "main body":
+                        case "body":
+                        builder = AddDescription(builder, val);
+                        break;
                         case "field":
-                            if (!val.Contains("|")) {
-                                await ReplyAsync("Field must contain `|`, format: `Field: [key] | [value]`"); return;
-                            }
-                            string[] splits = val.Split('|');
-                            builder = AddField(builder, splits[0],splits[1]);
-                            break;
+                        if (!val.Contains("|")) {
+                            await ReplyAsync("Field must contain `|`, format: `Field: [key] | [value]`"); return;
+                        }
+                        string[] splits = val.Split('|');
+                        builder = AddField(builder, splits[0], splits[1]);
+                        break;
                         case "author":
-                            if(val.ToLower() == "true") {
-                                SocketUser author = Context.User;
-                                builder = AddAuthor(builder, author);
-                            }
-                            break;
+                        if (val.ToLower() == "true") {
+                            SocketUser author = Context.User;
+                            builder = AddAuthor(builder, author);
+                        }
+                        break;
                         case "timestamp":
-                            if(val.ToLower() == "true") {
-                                builder.WithCurrentTimestamp();
-                            }
-                            break;
-                        case "image": case "imageurl": case "image url":
-                            builder = AddImageUrl(builder, val);
-                            break;
-                        case "thumbnail": case "thumb": case "thumbnailurl": case "thumburl":
-                            builder = AddThumbnailUrl(builder, val);
-                            break;
+                        if (val.ToLower() == "true") {
+                            builder.WithCurrentTimestamp();
+                        }
+                        break;
+                        case "image":
+                        case "imageurl":
+                        case "image url":
+                        builder = AddImageUrl(builder, val);
+                        break;
+                        case "thumbnail":
+                        case "thumb":
+                        case "thumbnailurl":
+                        case "thumburl":
+                        builder = AddThumbnailUrl(builder, val);
+                        break;
                         case "color":
-                            builder = WithColor(builder, val);
-                            break;
+                        builder = WithColor(builder, val);
+                        break;
                         default:
-                            break;
+                        break;
                     }
                 } catch {
                     await ReplyAsync("Line: `" + line + "` contains no delimiter `:`. Unable to parse.");
@@ -1082,45 +1131,45 @@ namespace Primbot_v._2.Modules.Scoring {
             v = v.ToLower();
             switch (v) {
                 case "random":
-                    Byte[] b = new Byte[3];
-                    new Random().NextBytes(b);
-                    builder.WithColor(b[0], b[1], b[2]);
-                    return builder;
+                Byte[] b = new Byte[3];
+                new Random().NextBytes(b);
+                builder.WithColor(b[0], b[1], b[2]);
+                return builder;
                 case "red":
-                    builder.WithColor(0xff, 0x00, 0x00); break;
+                builder.WithColor(0xff, 0x00, 0x00); break;
                 case "orange":
-                    builder.WithColor(0xff, 0xa5, 0x00); break;
+                builder.WithColor(0xff, 0xa5, 0x00); break;
                 case "yellow":
-                    builder.WithColor(0xff, 0xff, 0x00); break;
+                builder.WithColor(0xff, 0xff, 0x00); break;
                 case "green":
-                    builder.WithColor(0x00, 0xff, 0x00); break;
+                builder.WithColor(0x00, 0xff, 0x00); break;
                 case "blue":
-                    builder.WithColor(0x00, 0x00, 0xff); break;
+                builder.WithColor(0x00, 0x00, 0xff); break;
                 case "cyan":
-                    builder.WithColor(0x00, 0xff, 0xff); break;
+                builder.WithColor(0x00, 0xff, 0xff); break;
                 case "magenta":
-                    builder.WithColor(0xff, 0x00, 0xff); break;
+                builder.WithColor(0xff, 0x00, 0xff); break;
                 case "purple":
-                    builder.WithColor(0x80, 0x00, 0x80); break;
+                builder.WithColor(0x80, 0x00, 0x80); break;
                 case "black":
-                    builder.WithColor(0x01, 0x01, 0x01); break;
+                builder.WithColor(0x01, 0x01, 0x01); break;
                 case "white":
-                    builder.WithColor(0xfe, 0xfe, 0xfe); break;
+                builder.WithColor(0xfe, 0xfe, 0xfe); break;
                 case "gray":
                 case "grey":
-                    builder.WithColor(0x80, 0x80, 0x80); break;
+                builder.WithColor(0x80, 0x80, 0x80); break;
                 case "pokecord":
-                    builder.WithColor(0x00, 0xae, 0x86); break;
+                builder.WithColor(0x00, 0xae, 0x86); break;
                 default: break;
             }
             return builder;
         }
 
         public static EmbedBuilder AddField(EmbedBuilder before, string key, string value) {
-            if(key == "" || key == " ") {
+            if (key == "" || key == " ") {
                 key = "null";
             }
-            if(value == "" || value == " ") {
+            if (value == "" || value == " ") {
                 value = "null";
             }
             before.AddField(key, value);
@@ -1128,14 +1177,14 @@ namespace Primbot_v._2.Modules.Scoring {
         }
 
         public static EmbedBuilder AddAuthor(EmbedBuilder before, SocketUser user) {
-            if(user == null) { return before; }
-            before.WithAuthor(new EmbedAuthorBuilder().WithIconUrl(user.GetAvatarUrl()).WithName(user.Username + " (" 
-                + user.Id + ")" ));
+            if (user == null) { return before; }
+            before.WithAuthor(new EmbedAuthorBuilder().WithIconUrl(user.GetAvatarUrl()).WithName(user.Username + " ("
+                + user.Id + ")"));
             return before;
         }
 
         public static EmbedBuilder AddTitle(EmbedBuilder before, string header) {
-            if(header == "" || header == " ") { header = "null"; }
+            if (header == "" || header == " ") { header = "null"; }
             before.WithTitle(header);
             return before;
         }
@@ -1148,7 +1197,7 @@ namespace Primbot_v._2.Modules.Scoring {
 
         public static bool IsImage(string url) {
             string[] acceptableEndings = { ".png", ".jpg", ".jpeg", ".gif" };
-            foreach(string str in acceptableEndings) {
+            foreach (string str in acceptableEndings) {
                 if (url.EndsWith(str)) {
                     return true;
                 }
