@@ -29,6 +29,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly string COMMANDS_BY_DATE_DIRECTORY = DIR + "\\Server_Txt\\Cmdsused.txt";
         public static readonly string COMMANDS_TODAY_BACKUP_DIRECTORY = DIR + "\\Server_Txt\\Cmdexbackup.txt";
         public static readonly string MARRIAGE_FILE = DIR + "\\Server_Txt\\Marriages.txt";
+        public static readonly string MAGI_COUNT = DIR + "\\Server_Txt\\Magicount.txt";
         public static readonly string POKE = DIR + "\\Server_Txt\\Poke.txt";
         public static readonly string UNO_PING_LOG = DIR + "\\Server_Txt\\Unopinglog.txt";
         public static readonly string DEFAULT_SAVE_FILE_NAME = "Default.txt";

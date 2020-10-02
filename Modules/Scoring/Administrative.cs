@@ -720,44 +720,20 @@ namespace Primbot_v._2.Modules.Scoring {
             await ReplyAsync("`destroyHumanity` is set to `false`.");
         }
 
-        [Command("poke")]
-        public async Task poke([Remainder] string args = null) {
-            int curr = -1;
-            char state = 'f';
-            switch (Context.User.Id) {
-                case 263733973711192064:
-                spawntrack = !spawntrack;
-                    if (spawntrack) { state = 't'; } 
-                    curr = 0;
-                    await ReplyAsync("Track `" + spawntrack.ToString() + "`");
-                    break;
-                case 332788739560701955:
-                    curr = 1;
-                    spawntrackalicia = !spawntrackalicia;
-                    if (spawntrackalicia) { state = 't'; }
-                    await ReplyAsync("Track `" + spawntrackalicia.ToString() + "`");
-                    break;
-                case 534194469302566922:
-                    curr = 2;
-                    spawntrackdom = !spawntrackdom;
-                    if (spawntrackdom) { state = 't'; }
-                    await ReplyAsync("Track `" + spawntrackdom.ToString() + "`");
-                    break;
-                default:
-                    return;
+        [Command("setcount")]
+        public async Task setcount([Remainder] string args = null) {
+            if (!Int32.TryParse(args, out int ignore)) {
+                await ReplyAsync("Not a number.");
+                return;
             }
-            if(curr != -1) {
-                if (File.Exists(POKE)) {
-                    string[] sw = File.ReadAllLines(POKE);
-                    string line = sw[0];
-                    if((line ?? "").Length < 3) {
-                        Console.WriteLine("error updating pokecord");
-                        return;
-                    }
-                    line = line.Substring(0,curr) + state + line.Substring(curr+1);
-                    File.WriteAllLines(POKE, new string[] { line });
-                }
+            File.Delete(MAGI_COUNT);
+            File.Create(MAGI_COUNT);
+            using (var tw = new StreamWriter(MAGI_COUNT, true)) {
+                tw.WriteLine(args);
+                tw.Close();
             }
+            await ReplyAsync("Set to " + args);
+            return;
         }
 
         [Command("foom")]

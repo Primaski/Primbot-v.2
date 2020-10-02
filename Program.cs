@@ -270,7 +270,6 @@ namespace Primbot_v._2 {
             }
         }
 
-
         private async Task CahPings(SocketUserMessage message) {
             Console.WriteLine("cah bot");
             var channel = (SocketTextChannel)message.Channel;
@@ -280,7 +279,29 @@ namespace Primbot_v._2 {
                 Console.WriteLine("called");
             }
         }
-
+        private Task CheckCount(SocketUserMessage message) {
+            var channel = (SocketTextChannel)message.Channel;
+            string count = message.ToString().Split(' ')[0] ?? "notanumber";
+            if(!Int32.TryParse(count, out int ignore)) {
+                channel.SendMessageAsync(message.Author.Mention + ", please start your messages with a number.");
+                return Task.CompletedTask;
+            }
+            using (var tw = new StreamReader(MAGI_COUNT, true)) {
+                string buffer = tw.ReadLine();
+                tw.Close();
+                if (Int32.Parse(buffer) != Int32.Parse(count) - 1) {
+                    channel.SendMessageAsync(message.Author.Mention + ", you miscounted! The last number was " + buffer + "! Please try again.");
+                    return Task.CompletedTask;
+                }
+            }
+            File.Delete(MAGI_COUNT);
+            File.Create(MAGI_COUNT);
+            using (var tw = new StreamWriter(MAGI_COUNT, true)) {
+                tw.WriteLine(count);
+                tw.Close();
+            }
+            return Task.CompletedTask;
+        }
 
         private async Task HandleCommandAsync(SocketMessage arg) {
             var message = (SocketUserMessage)arg;
@@ -298,18 +319,17 @@ namespace Primbot_v._2 {
                 }
             }
 
+            if (context.Guild.Id == MAGI_SERVER_ID) {
+                if(message.Channel.Id == 515956792459657217) {
+                    await CheckCount(message);
+                }
+            }
+
             if (message == null || (message.Author.IsBot && message.Author.Id != 494274144159006731)) {
                 return;
             }
 
             int argPos = 0;
-
-            if ((context.Guild.Id == MAGI_SERVER_ID && message.HasStringPrefix(".catch", ref argPos))) {
-                Thread.Sleep(1000);
-                await message.DeleteAsync();
-            }
-
-            //if (GuildCache.SearchAwaitedMessage(context.Guild.Id, context.Channel.Id, context.User.Id, context.Message.Content) != -1) {}
 
             if ((message.HasStringPrefix("p*", ref argPos)) || (message.HasStringPrefix("P*", ref argPos)) ||
                 message.HasMentionPrefix(CLIENT.CurrentUser, ref argPos)) {
@@ -322,7 +342,5 @@ namespace Primbot_v._2 {
             }
             return;
         }
-
-
     }
 }
