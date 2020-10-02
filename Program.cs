@@ -279,6 +279,7 @@ namespace Primbot_v._2 {
                 Console.WriteLine("called");
             }
         }
+
         private Task CheckCount(SocketUserMessage message) {
             var channel = (SocketTextChannel)message.Channel;
             string count = message.ToString().Split(' ')[0] ?? "notanumber";
@@ -288,17 +289,14 @@ namespace Primbot_v._2 {
             }
             using (var tw = new StreamReader(MAGI_COUNT, true)) {
                 string buffer = tw.ReadLine();
-                tw.Close();
                 if (Int32.Parse(buffer) != Int32.Parse(count) - 1) {
                     channel.SendMessageAsync(message.Author.Mention + ", you miscounted! The last number was " + buffer + "! Please try again.");
                     return Task.CompletedTask;
                 }
             }
             File.Delete(MAGI_COUNT);
-            File.Create(MAGI_COUNT);
             using (var tw = new StreamWriter(MAGI_COUNT, true)) {
                 tw.WriteLine(count);
-                tw.Close();
             }
             return Task.CompletedTask;
         }
@@ -320,12 +318,6 @@ namespace Primbot_v._2 {
                 }
             }
 
-            if (context.Guild.Id == MAGI_SERVER_ID) {
-                if(message.Channel.Id == 515956792459657217) {
-                    await CheckCount(message);
-                }
-            }
-
             if (message == null || (message.Author.IsBot && message.Author.Id != 494274144159006731)) {
                 return;
             }
@@ -339,6 +331,13 @@ namespace Primbot_v._2 {
                 if (!result.IsSuccess) {
                     Console.WriteLine(result.ErrorReason);
                     await context.Channel.SendMessageAsync(":exclamation: **Error:** " + result.ErrorReason);
+                }
+                return;
+            }
+            if (context.Guild.Id == MAGI_SERVER_ID && !message.Author.IsBot && !message.HasStringPrefix("p*", ref argPos)) {
+                ulong magiid = 515956792459657217;
+                if (message.Channel.Id == magiid) {
+                    await CheckCount(message);
                 }
             }
             return;

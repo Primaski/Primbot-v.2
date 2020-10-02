@@ -885,17 +885,31 @@ namespace Primbot_v._2.Modules.Scoring {
 
         [Command("setcount")]
         public async Task setcount([Remainder] string args = null) {
+            if (Context.User.Id != MY_ID) {
+                return;
+            }
             if (!Int32.TryParse(args, out int ignore)) {
                 await ReplyAsync("Not a number.");
                 return;
             }
             File.Delete(MAGI_COUNT);
-            File.Create(MAGI_COUNT);
-            using (var tw = new StreamWriter(MAGI_COUNT, true)) {
-                tw.WriteLine(args);
-                tw.Close();
+            using(StreamWriter sw = File.AppendText(MAGI_COUNT)){
+                sw.WriteLine(args);                     
             }
             await ReplyAsync("Set to " + args);
+            return;
+        }
+
+        [Command("getcount")]
+        public async Task getcount() {
+            if (Context.User.Id != MY_ID) {
+                return;
+            }
+            string val = "";
+            using(StreamReader sr = new StreamReader(MAGI_COUNT)){
+                val = sr.ReadLine();                     
+            }
+            await ReplyAsync(val);
             return;
         }
 
