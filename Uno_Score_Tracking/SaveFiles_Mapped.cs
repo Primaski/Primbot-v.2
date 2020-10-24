@@ -37,7 +37,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             if (!acceptedFieldOps.Contains(operation)) {
                 throw new Exception(stdErrorMsg + "Invalid operation was provided.");
             }
-            Console.WriteLine(filepath);
+            //Console.WriteLine(filepath);
             if (File.Exists(filepath)) {
                 //Console.WriteLine("exists!");
                 int lineToEdit = -1;

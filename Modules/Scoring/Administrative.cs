@@ -150,7 +150,7 @@ namespace Primbot_v._2.Modules.Scoring {
 
         [Command("setfn")]
         public async Task SetFN([Remainder] string args = null) {
-            if (Context.User.Id != MY_ID) {
+            if (Context.User.Id != MY_ID && Context.User.Id != (ulong)(485120582866698242)) {
                 return;
             }
             if (args == null) { await ReplyAsync("is null"); return; }
@@ -163,7 +163,7 @@ namespace Primbot_v._2.Modules.Scoring {
 
         [Command("getfn")]
         public async Task SetFN() {
-            if (Context.User.Id != MY_ID) {
+            if (Context.User.Id != MY_ID && Context.User.Id != (ulong)(485120582866698242)) {
                 return;
             }
             await ReplyAsync(Defs.FORTNIGHT_NUMBER.ToString());
@@ -1205,6 +1205,7 @@ namespace Primbot_v._2.Modules.Scoring {
 
         public static EmbedBuilder AddDescription(EmbedBuilder before, string desc) {
             if (desc == "" || desc == " ") { desc = "null"; }
+            if (desc.Contains("\\n")) desc = desc.Replace("\\n", "\n");
             before.WithDescription(desc);
             return before;
         }
