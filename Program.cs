@@ -33,6 +33,10 @@ namespace Primbot_v._2 {
         static bool updateGuildCache = true;
         Random rand = new Random();
 
+        private static ulong INFINITE_GAME_CHANNEL_ID = 773975312940662814;
+        private static SocketUser whoToPing = null;
+        private static System.Threading.Timer pingTimer;
+
         static void Main(string[] args) {
             //cmdExec();
             int iterations = 1;
@@ -257,18 +261,40 @@ namespace Primbot_v._2 {
             if (user == null) return;
             string userID = user.Id.ToString();
             try {
-                bool requested = SaveFiles_Entries.EntryExists(UNO_PING_LOG, userID);
-                if (requested) {
-                    await message.Channel.SendMessageAsync(user.Mention + ", it's your turn! " +
-                        "If you'd like to opt out of Uno pings, just type `p*unodontping`. If you'd like to opt in, " +
-                        "type `p*unoping`!");
+                if(message.Channel.Id != INFINITE_GAME_CHANNEL_ID) {
+                    bool requested = SaveFiles_Entries.EntryExists(UNO_PING_LOG, userID);
+                    if (requested) {
+                        await message.Channel.SendMessageAsync(user.Mention + ", it's your turn! " +
+                            "If you'd like to opt out of Uno pings, just type `p*unodontping`. If you'd like to opt in, " +
+                            "type `p*unoping`!");
+                        return;
+                    }
                     return;
                 }
+                await message.Channel.SendMessageAsync(user.Mention + ", your turn has started. Please try to wait until the second time Primbot pings you!");
+                if(whoToPing != null) { //then they've already taken their turn since the timer never expired
+                    pingTimer.Dispose();
+                }
+                whoToPing = user;
+                TimeSpan timeLeft = new TimeSpan(0, 3, 0);
+                pingTimer = new System.Threading.Timer(x => {
+                    PingThem(message.Channel);
+                    Thread.Sleep(1000);
+                }, null, (int)timeLeft.TotalMilliseconds, Timeout.Infinite);
+                return;
             } catch (Exception e) {
                 Console.WriteLine(e);
                 return;
             }
         }
+
+        private async Task PingThem(ISocketMessageChannel channel) {
+            await channel.SendMessageAsync(whoToPing.Mention + ", 3 minutes have passed! Hurry! Do `unod` if you're late or can't focus.");
+            whoToPing = null;
+            pingTimer.Dispose();
+            return;
+        }
+
 
         private async Task CahPings(SocketUserMessage message) {
             Console.WriteLine("cah bot");

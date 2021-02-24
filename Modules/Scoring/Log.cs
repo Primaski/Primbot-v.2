@@ -20,10 +20,23 @@ namespace Primbot_v._2.Modules.Scoring {
             "whereby `X` is the type of game (like `ms` for Minesweeper), \n`[USER]` is their username, " +
             "ping, or ID, \nand `...` refers to any number of users <= 10";
 
+        List<ulong> pmID = new List<ulong> {
+            263733973711192064, //prim
+            328641116884959235, //lucky
+            494274144159006731, //ava
+            485120582866698242, //biggus
+            439187379547537418, //mihael
+            339095826183749632, //jenna
+            467381662582308864, //swinub
+            557320114110726204, //koro
+            770517667940794409, //tane
+        };
+
         [Command("logms", RunMode = RunMode.Async)]
         public async Task LogMineSweeper([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -79,7 +92,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logtetris", RunMode = RunMode.Async)]
         public async Task LogTetris([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -204,7 +218,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logpoke", RunMode = RunMode.Async)]
         public async Task LogPokeduel([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_I
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -252,7 +267,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logidle", RunMode = RunMode.Async)]
         public async Task LogIdleduel([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -300,7 +316,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logchess", RunMode = RunMode.Async)]
         public async Task LogChess([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -349,7 +366,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logpoke", RunMode = RunMode.Async)]
         public async Task LogPokeduel([Remainder] string args = null) {
             GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -395,7 +413,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logidle", RunMode = RunMode.Async)]
         public async Task LogIdleduel([Remainder] string args = null) {
             GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -440,7 +459,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logchess", RunMode = RunMode.Async)]
         public async Task LogChess([Remainder] string args = null) {
             GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -486,7 +506,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logbump", RunMode = RunMode.Async)]
         public async Task LogBump([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -530,7 +551,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logknights", RunMode = RunMode.Async)]
         public async Task LogKnights([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -580,7 +602,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logns", RunMode = RunMode.Async)]
         public async Task LogNonStandard([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -631,7 +654,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logtourney", RunMode = RunMode.Async)]
         public async Task LogTourney([Remainder] string args = null) {
             GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -669,7 +693,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("revert")]
         public async Task Revert([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -730,7 +755,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("loguno", RunMode = RunMode.Async)]
         public async Task LogUno([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -752,7 +778,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("forceloguno", RunMode = RunMode.Async)]
         public async Task ForceLogUno([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -774,7 +801,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("forceforceloguno", RunMode = RunMode.Async)]
         public async Task ForceForceLogUno([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -795,7 +823,8 @@ namespace Primbot_v._2.Modules.Scoring {
 
         [Command("logcah", RunMode = RunMode.Async)]
         public async Task LogCAH([Remainder] string args = null) {
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -819,7 +848,8 @@ namespace Primbot_v._2.Modules.Scoring {
         public async Task LogEvent([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
             if (Context != null) {
-                if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+                if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                     await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                         "as it was designated for Point Managers in the Uno Server.");
                     return;
@@ -875,7 +905,8 @@ namespace Primbot_v._2.Modules.Scoring {
         [Command("logtrivia", RunMode = RunMode.Async)]
         public async Task LogTrivia([Remainder] string args = null) {
             GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;

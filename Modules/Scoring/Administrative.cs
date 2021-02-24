@@ -77,6 +77,40 @@ namespace Primbot_v._2.Modules.Scoring {
             }
         }*/
 
+
+        [Command("getroles")]
+        public async Task roles([Remainder] string args = null) {
+            if (string.IsNullOrEmpty(args)) {
+                await ReplyAsync("Cannot be null");
+            }
+            if(Context.User.Id != Defs.MY_ID) { return; }
+            try {
+                ulong argsID = ulong.Parse(args);
+                var roles = GuildCache.GetUserByID(argsID).Roles;
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("According to the server cache, this user has...");
+                sb.AppendLine(roles.Count + " roles (this includes (@  everyone))");
+                sb.AppendLine("Role list ===>");
+                foreach(var role in roles) {
+                    if (role.Id != 469335072034652199) {
+                        sb.AppendLine(role.Name + "(" + role.Id + ")" + "\n");
+                    }
+                }
+                var altRoles = Context.Guild.GetUser(Context.User.Id).Roles;
+                sb.AppendLine("\nAccording to Context.Guild.GetUser(Context.User.Id), this user has...");
+                sb.AppendLine(altRoles.Count + " roles (this includes (@  everyone))");
+                sb.AppendLine("Role list ===>");
+                foreach (var rolex in altRoles) {
+                    if (rolex.Id != 469335072034652199) {
+                        sb.AppendLine(rolex.Name + "(" + rolex.Id + ")" + "\n");
+                    }
+                }
+                await ReplyAsync(sb.ToString());
+            } catch {
+                await ReplyAsync("ID not of right format");
+            }
+        }
+
         [Command("addkeyvalue")]
         public async Task AddKeyVal([Remainder] string args = null) {
             if (Context.User.Id != MY_ID) {
