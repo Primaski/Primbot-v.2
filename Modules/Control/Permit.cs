@@ -9,7 +9,6 @@ namespace Primbot_v._2.Modules.Control {
     /// Toggle modules on or off. All are on by default. Administration control.
     /// </summary>
     public class Permit {
-        ulong ownerID = 263733973711192064;
 
         //(command,roleID) - wild cards: everyone, nobody, owner
         Dictionary<string, string> Permissions = new Dictionary<string, string> {

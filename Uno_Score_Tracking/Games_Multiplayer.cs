@@ -35,6 +35,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             switch (gameType) {
                 case "uno": res = UnoSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "cah": res = CAHSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
+                case "onw": res = ONWSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
             }
             if (!res) {
                 return false;
@@ -51,6 +52,16 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             AddFieldValue("ITER-CAH", fortnightPath, iter);
             AddFieldValue("POINTS-CAH", overallPath, points);
             AddFieldValue("POINTS-CAH", fortnightPath, points);
+            return true;
+        }
+
+        private static bool ONWSaveFileUpdates(string overallPath, string fortnightPath, int pointValue, int iteration) {
+            string iter = iteration.ToString();
+            string points = pointValue.ToString();
+            AddFieldValue("ITER-ONW", overallPath, iter);
+            AddFieldValue("ITER-ONW", fortnightPath, iter);
+            AddFieldValue("POINTS-ONW", overallPath, points);
+            AddFieldValue("POINTS-ONW", fortnightPath, points);
             return true;
         }
 
@@ -133,6 +144,70 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                         "\\" + "FN" + FORTNIGHT_NUMBER + "_" + UNO_SAVE_FILE_NAME;
                     AddFieldValue("FIRST-CAH", saveDir, "1");
                     AddFieldValue("FIRST-CAH", FNsaveDir, "1");
+                }
+                q++;
+            }
+            return Task.CompletedTask;
+        }
+
+        public static Task ONWLog(string message, bool force = false) {
+            List<Tuple<SocketGuildUser, bool>> users;
+            try {
+                users = GuildCache.InterpretUserInputWithTies(message);
+            } catch (Exception e) { throw e; }
+            if (users.Where(x => x.Item1 == null).Count() >= 1) {
+                string list = "`";
+                foreach (var user in users) {
+                    list += (user.Item1?.Username ?? "NULL") + ", ";
+                }
+                list += "`";
+                throw new Exception(":exclamation: At least one user was invalid.\n " + list);
+            }
+
+            byte noOfPlayers = (byte)users.Count();
+
+            if (!force) {
+                string lastTeam = GuildCache.GetTeam(users[0].Item1);
+                bool qualifiable = false;
+                foreach (var keyvalue in users) {
+                    var player = keyvalue.Item1;
+                    if (GuildCache.GetTeam(player) != lastTeam) {
+                        qualifiable = true;
+                        break;
+                    }
+                }
+                if (!qualifiable) {
+                    throw new Exception("Game is not qualifiable for logging (one team).");
+                }
+            }
+            List<Tuple<ulong, byte>> orderedPairs = new List<Tuple<ulong, byte>>();
+
+            byte lastReward = noOfPlayers; //initially set to highReward value
+            byte lowReward = (byte)(noOfPlayers / 2);
+
+            for (int currIndex = 0; currIndex < users.Count(); currIndex++) {
+                var pair = users[currIndex];
+                if (pair.Item2 == false) {
+                    //not a tie, swap to low reward
+                    lastReward = lowReward;
+                    orderedPairs.Add(new Tuple<ulong, byte>(pair.Item1.Id, (byte)(lastReward)));
+                } else {
+                    //tie, use last reward
+                    orderedPairs.Add(new Tuple<ulong, byte>(pair.Item1.Id, (byte)(lastReward)));
+                }
+            }
+            //
+            Bridge.LogGame("onw", orderedPairs);
+            int q = 0;
+            foreach (var orderedPair in orderedPairs) {
+                SaveFileUpdate(orderedPair, "onw");
+                if (users[q].Item2 == true) {
+                    string saveDir = USER_SAVE_DIRECTORY + "\\" + orderedPair.Item1.ToString() +
+                        "\\" + UNO_SAVE_FILE_NAME;
+                    string FNsaveDir = USER_SAVE_DIRECTORY + "\\" + orderedPair.Item1.ToString() +
+                        "\\" + "FN" + FORTNIGHT_NUMBER + "_" + UNO_SAVE_FILE_NAME;
+                    AddFieldValue("FIRST-ONW", saveDir, "1");
+                    AddFieldValue("FIRST-ONW", FNsaveDir, "1");
                 }
                 q++;
             }
@@ -384,6 +459,5 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 }
             }
         }
-
     }
 }

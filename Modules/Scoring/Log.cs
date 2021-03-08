@@ -20,10 +20,24 @@ namespace Primbot_v._2.Modules.Scoring {
             "whereby `X` is the type of game (like `ms` for Minesweeper), \n`[USER]` is their username, " +
             "ping, or ID, \nand `...` refers to any number of users <= 10";
 
+        List<ulong> pmID = new List<ulong> {
+            263733973711192064, //prim
+            328641116884959235, //lucky
+            494274144159006731, //ava
+            485120582866698242, //biggus
+            439187379547537418, //mihael
+            339095826183749632, //jenna
+            467381662582308864, //swinub
+            557320114110726204, //koro
+            770517667940794409, //tane
+        };
+
         [Command("logms", RunMode = RunMode.Async)]
         public async Task LogMineSweeper([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+            
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID
+                && !pmID.Contains(Context.User.Id)) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
                 return;
@@ -815,6 +829,28 @@ namespace Primbot_v._2.Modules.Scoring {
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Logged Game for " + Context.User.Username);
         }
 
+        [Command("logonw", RunMode = RunMode.Async)]
+        public async Task LogONW([Remainder] string args = null) {
+            if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
+                await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
+                    "as it was designated for Point Managers in the Uno Server.");
+                return;
+            }
+            if (args == null) {
+                await ReplyAsync("Format: `p*logonw ([List of Winners]) ([List of Losers])`" +
+                    "\nexample: (Biggus, Jenna, TheLuckyRobot) (Primaski, swinub, Thembi)");
+                return;
+            }
+            try {
+                await Games_Multiplayer.ONWLog(args);
+            } catch (Exception e) {
+                await ReplyAsync(e.Message);
+                return;
+            }
+            await ReplyAsync("Successful manual log of the ONW game! <#537104363127046145>");
+            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Logged Game for " + Context.User.Username);
+        }
+
         [Command("logevent", RunMode = RunMode.Async)]
         public async Task LogEvent([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
@@ -909,6 +945,57 @@ namespace Primbot_v._2.Modules.Scoring {
             }
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Logged Trivia for " + Context.User.Username);
         }
+
+        [Command("daily", RunMode = RunMode.Async)]
+        public async Task LogDaily([Remainder] string args = null) {
+            Uno_Score_Tracking.GuildCache.IncrementCMD();
+            if (Context.Guild.Id != UNO_SERVER_ID) {
+                await ReplyAsync(":exclamation: You need to be in the Uno server to do this.");
+                return;
+            }
+            List<SocketGuildUser> users = Uno_Score_Tracking.GuildCache.InterpretUserInput(Context.User.Id.ToString());
+            if (GuildCache.IsWellFormattedListOfUsers(users) != "") {
+                await ReplyAsync(GuildCache.IsWellFormattedListOfUsers(users));
+                return;
+            }
+            //FROM HERE
+            List<Tuple<ulong, byte>> scorer;
+            foreach (SocketUser user in users) {
+                string playsTodayStr = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + user.Id.ToString() + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-DAILY") ?? "";
+                if (!Int32.TryParse(playsTodayStr, out int ignore)) {
+                    await ReplyAsync("Unknown error in determining how many games were played today.");
+                    continue;
+                }
+                int playsToday = Int32.Parse(playsTodayStr);
+                if (playsToday >= DAILY_DAILY_LIMIT) {
+                    await ReplyAsync(user.Mention + ", you've already claimed your daily today! You may claim again in " + TimeUntilMidnight().TotalHours + " hours and " + 
+                        TimeUntilMidnight().TotalMinutes + " minutes!");
+                    continue;
+                }
+                Tuple<ulong, byte> scorerTuple = Tuple.Create(user.Id, DAILY_POINT_VALUE);
+                scorer = new List<Tuple<ulong, byte>> { scorerTuple };
+                try {
+                    Task result = Uno_Score_Tracking.Bridge.LogGame("daily", scorer, Context);
+                    if (result.IsCompleted) {
+                        if (Uno_Score_Tracking.Games_Singleplayer.SaveFileUpdate(scorerTuple, "daily")) {
+                            Byte[] b = new Byte[3];
+                            random.NextBytes(b);
+                            await ReplyAsync("",false,new EmbedBuilder().WithColor(b[0],b[1],b[2]).WithThumbnailUrl(Context.User.GetAvatarUrl())
+                                .WithAuthor("Congratulations, " + Context.User.Mention + "!").WithDescription("You've earned " + scorerTuple.Item2.ToString() + " points! " +
+                                "Come back tomorrow for more.").Build());
+                            await ReplyAsync("Successfully logged " + user.Username + "'s Daily! <#537104363127046145>");
+                        } else {
+                            await ReplyAsync(":exlamation: Error in updating " + user.Username + "'s save file.");
+                        }
+                    }
+                } catch (Exception e) {
+                    await ReplyAsync(e.Message + "\n" + e.StackTrace);
+                    return;
+                }
+            }
+            Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Logged MS for " + Context.User.Username);
+        }
+
 
         public bool HasRole(string role, SocketGuildUser user, bool checkIfPartOfUnoServer = false) {
             if (checkIfPartOfUnoServer) {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Discord.WebSocket;
 using Discord;
+using Primbot_v._2.Server.Solitaire;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
     public static class Defs {
@@ -13,6 +14,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly string DIR = "..\\..";
 
         /*** TIME SETTINGS ***/
+        public static readonly Random random = new Random();
         public static readonly DateTime startDate = new DateTime(2019, 1, 1, 0, 0, 0); //DO NOT CHANGE
         public static readonly DateTime fnStartDate = new DateTime(2020, 9, 21, 0, 0, 0);
         public static byte FORTNIGHT_NUMBER = 53;
@@ -77,6 +79,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             + SCORE_LENGTH + 3);
 
         public static readonly byte MINESWEEPER_POINT_VALUE = 15;
+        public static readonly byte DAILY_POINT_VALUE = (byte)random.Next(5, 11);
         public static readonly byte BUMP_POINT_VALUE = 3;
         public static readonly byte KNIGHTS_POINT_VALUE = 35;
         public static readonly byte TRIVIA_POINT_VALUE = 10;
@@ -92,6 +95,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly byte UNO1V1_LOSER_POINT_VALUE = 1;
 
         public static readonly byte TOURNAMENT_POINT_VALUE = 200;
+        public static readonly byte DAILY_DAILY_LIMIT = 1;
         public static readonly byte MINESWEEPER_DAILY_LIMIT = 2;
         public static readonly byte TETRIS_DAILY_LIMIT = 2;
         public static readonly byte POKEDUEL_DAILY_LIMIT = 6;
@@ -102,32 +106,25 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static readonly string[] GameIden = new string[] {
             "non-standard", "uno", "cah", "minesweeper", "tetris", "pokeduel", "idlerpg",
             "bingo", "chess", "bumps", "event", "casino", "tourney", "knights", "trivia",
-            "uno1v1"
+            "uno1v1", "daily", "onw"
         };
         public static int GetDailyLimit(string gameName) {
             switch (gameName) {
                 case "ms":
-                case "minesweeper":
-                    return MINESWEEPER_DAILY_LIMIT;
+                case "minesweeper": return MINESWEEPER_DAILY_LIMIT;
                 case "kn":
-                case "knights":
-                    return KNIGHTS_DAILY_LIMIT;
+                case "knights": return KNIGHTS_DAILY_LIMIT;
                 case "tet":
-                case "tetris":
-                    return TETRIS_DAILY_LIMIT;
+                case "tetris": return TETRIS_DAILY_LIMIT;
                 case "chs":
-                case "chess":
-                    return CHESS_DAILY_LIMIT;
+                case "chess": return CHESS_DAILY_LIMIT;
                 case "idle":
-                case "idlerpg":
-                    return IDLERPG_DAILY_LIMIT;
+                case "idlerpg": return IDLERPG_DAILY_LIMIT;
                 case "poke":
-                case "pokeduel":
-                    return POKEDUEL_DAILY_LIMIT;
-                case "uno1v1":
-                    return UNO1V1_DAILY_LIMIT;
-                default:
-                    return 0;
+                case "pokeduel": return POKEDUEL_DAILY_LIMIT;
+                case "uno1v1": return UNO1V1_DAILY_LIMIT;
+                case "daily": return DAILY_DAILY_LIMIT;
+                default: return 0;
             }
         }
         //METADATA
@@ -160,7 +157,9 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             {"POINTS-TOURNEY","0" }, {"ITER-TOURNEY","0" },
             {"POINTS-KNIGHTS","0" }, {"ITER-KNIGHTS","0" }, {"PLAYSTODAY-KNIGHTS","0"},
             {"POINTS-TRIVIA","0" }, {"ITER-TRIVIA","0"},
-            {"POINTS-UNO1V1","0" }, {"FIRST-UNO1V1","0"}, {"ITER-UNO1V1","0"}, {"PLAYSTODAY-UNO1V1","0"}
+            {"POINTS-UNO1V1","0" }, {"FIRST-UNO1V1","0"}, {"ITER-UNO1V1","0"}, {"PLAYSTODAY-UNO1V1","0"},
+            {"POINTS-DAILY", "0" }, {"ITER-DAILY","0"}, {"PLAYSTODAY-DAILY","0"},
+            {"POINTS-ONW", "0" }, {"FIRST-ONW","0"}, {"ITER-ONW","0"}
         };
 
         public static readonly List<string> LEADERBOARD_TYPES = new List<string> {
@@ -172,18 +171,17 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             "ITER-MS",
             "ITER-TETRIS", "HIGH-TETRIS",
             "ITER-POKEDUEL", "ITER-IDLERPG", "ITER-CHESS", "ITER-BUMPS",
-            "ITER-UNO1V1", "FIRST-UNO1V1"
+            "ITER-UNO1V1", "FIRST-UNO1V1",
+            "ITER-DAILY",
+            "ITER-ONW", "FIRST-ONW"
         };
 
         /*** MISCELLANEOUS ***/
         public static int cmdEx = 0;
         public static bool disableBananaBoy = false;
         public static bool cahtrack = false;
-        public static bool spawntrack = true;
-        public static bool spawntrackalicia = true;
-        public static bool spawntrackdom = true;
         public static bool pingme = true;
-
+        
         internal static TimeSpan TimeUntilMidnight() {
             DateTime now = DateTime.Now;
             DateTime midnight = DateTime.Today.AddDays(1).AddHours(EST_OFFSET).AddTicks(-1);
@@ -194,7 +192,6 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         internal static bool HasUserHitDailyLimit(ulong id, string gameName) {
             int limit = GetDailyLimit(gameName);
             if (limit == 0) { throw new Exception("Non-existing game sought for in Daily Limit search."); }
-
             gameName = gameName.ToUpper().Trim();
             string playsTodayStr = SaveFiles_Mapped.SearchValue(USER_SAVE_DIRECTORY + "\\" + id + "\\" + UNO_SAVE_FILE_NAME, "PLAYSTODAY-" + gameName) ?? "";
             if (!Int32.TryParse(playsTodayStr, out int ignore)) { throw new Exception("Daily limiit string was not a number"); }

@@ -17,6 +17,7 @@ using System.Collections.Immutable;
 using static System.Net.Mime.MediaTypeNames;
 using System.Reflection;
 using System.Net;
+using Primbot_v._2.Server.Solitaire;
 
 namespace Primbot_v._2.Modules.Scoring {
     //commands of this class should not be ASYNC.
@@ -76,6 +77,73 @@ namespace Primbot_v._2.Modules.Scoring {
                 }
             }
         }*/
+
+        [Command("getroles")]
+        public async Task roles([Remainder] string args = null) {
+            if (string.IsNullOrEmpty(args)) {
+                await ReplyAsync("Cannot be null");
+            }
+            if(Context.User.Id != Defs.MY_ID) { return; }
+            try {
+                ulong argsID = ulong.Parse(args);
+                var roles = GuildCache.GetUserByID(argsID).Roles;
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("According to the server cache, this user has...");
+                sb.AppendLine(roles.Count + " roles (this includes (@everyone))");
+                sb.AppendLine("Role list ===>");
+                foreach(var role in roles) {
+                    if (role.Id != 469335072034652199) {
+                        sb.AppendLine(role.Name + "(" + role.Id + ")" + "\n");
+                    }
+                }
+                var altRoles = Context.Guild.GetUser(Context.User.Id).Roles;
+                sb.AppendLine("\nAccording to Context.Guild.GetUser(Context.User.Id), this user has...");
+                sb.AppendLine(altRoles.Count + " roles (this includes (@everyone))");
+                sb.AppendLine("Role list ===>");
+                foreach (var rolex in altRoles) {
+                    if (rolex.Id != 469335072034652199) {
+                        sb.AppendLine(rolex.Name + "(" + rolex.Id + ")" + "\n");
+                    }
+                }
+                await ReplyAsync(sb.ToString());
+            } catch {
+                await ReplyAsync("ID not of right format");
+            }
+        }
+
+        [Command("sol")]
+        public async Task Solitaire([Remainder] string args = null) {
+            /*
+            SolitaireGame sol = GuildCache.GetSolitaireGame(Context.User.Id);
+            if (GuildCache.GetSolitaireGame(Context.User.Id) == null) {
+                sol = new SolitaireGame();
+                sol.CreateGame(Context.User.Id);
+                GuildCache.SOLITAIRE_GAMES.Add(sol);
+                await ReplyAsync("Power Card: " + sol.DisplayPowerCard() + "\n");
+                await ReplyAsync(sol.DisplayTable());
+            } else {
+                switch (args) {
+                    case null: 
+                    case "table":
+                        await ReplyAsync("Power Card: " + sol.DisplayPowerCard() + "\n");
+                        await ReplyAsync(sol.DisplayTable()); return;
+                    case "deck": 
+                        await ReplyAsync(sol.DeckToString(true)); return;
+                    case "reveal":
+                        sol.RevealTableCards();
+                        await ReplyAsync(sol.DisplayTable()); return;
+                    case "help":
+                        await ReplyAsync("`table, deck, reveal, help`"); return;
+                }
+                try {
+                    sol.MakeMove(args);
+                } catch (Exception e) {
+                    Console.WriteLine(e);
+                }
+            }
+            return;
+            */
+        }
 
         [Command("addkeyvalue")]
         public async Task AddKeyVal([Remainder] string args = null) {
@@ -336,25 +404,6 @@ namespace Primbot_v._2.Modules.Scoring {
                 .WithCurrentTimestamp().WithColor(b[0], b[1], b[2]).WithImageUrl("https://pm1.narvii.com/6001/cb263f6e86fe18a90914f27bb7ac2130b6fd0f88_hq.jpg").Build();
             await ReplyAsync("", false, emb);
 
-        }
-
-        [Command("massping", RunMode = RunMode.Async)]
-        public async Task Pinger([Remainder] string args = null) {
-            if (Context.User.Id != MY_ID) {
-                return;
-            }
-            if (args == null) { await ReplyAsync("args is null"); return; }
-            string[] argssplits = args.Split(' ');
-            if (argssplits.Count() != 2) { await ReplyAsync("need 2 args"); return; }
-            var user = GuildCache.InterpretUserInput(argssplits[0])[0];
-            if (user == null) { await ReplyAsync("user doesn't exist"); return; }
-            if (!Int32.TryParse(argssplits[1], out int ignore)) { await ReplyAsync("not an int"); return; }
-            int pings = Int32.Parse(argssplits[1]);
-
-            for (int i = 1; i <= pings; ++i) {
-                await ReplyAsync(user.Mention + "(ping " + i + ")");
-            }
-            return;
         }
 
         [Command("p")]
@@ -628,67 +677,6 @@ namespace Primbot_v._2.Modules.Scoring {
             return;
         }
 
-        [Command("kick", RunMode = RunMode.Async)]
-        public async Task kick([Remainder] string args = null) {
-            Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (args == null || Context.User.Id != MY_ID) {
-                await ReplyAsync("failed"); return;
-            }
-            string[] argos = args.Split();
-            if (argos.Count() < 1) {
-                await ReplyAsync("failed"); return;
-            }
-            ulong ID;
-            try {
-                ID = UInt64.Parse(argos[0]);
-            } catch (Exception e) {
-                await ReplyAsync(e.Message); return;
-            }
-            await Context.Guild.DownloadUsersAsync();
-            IGuildUser user = Context.Guild.GetUser(ID);
-            if (user == null) {
-                await ReplyAsync("failed");
-            }
-            try {
-                await user.KickAsync();
-            } catch (Exception e) {
-                await ReplyAsync(e.Message); return;
-            }
-            await ReplyAsync("Kicked " + user.Username + ".");
-            return;
-        }
-
-        [Command("mute")]
-        public async Task Mute([Remainder] string args = null) {
-            if (args == null) {
-                await ReplyAsync("Parameter cannot be null. Mention or provide ID of user.");
-                return;
-            }
-            if (Context.Guild.Id != UNO_SERVER_ID) {
-                return;
-            }
-            if (!GuildCache.HasRole((SocketGuildUser)Context.User, "Human Resources") &&
-                !GuildCache.HasRole((SocketGuildUser)Context.User, "Team Leaders")) {
-                await ReplyAsync("Not meant for you."); return;
-            }
-            if (args == null) {
-                await ReplyAsync("Who should I mute?"); return;
-            }
-
-            SocketGuildUser user = GuildCache.InterpretUserInput(args.Trim())?[0] ?? null;
-            if (user == null) {
-                await ReplyAsync("Not sure who you're referring to."); return;
-            }
-
-            await removerole(user.Id + " " + "Green Team");
-            await removerole(user.Id + " " + "Yellow Team");
-            await removerole(user.Id + " " + "Red Team");
-            await removerole(user.Id + " " + "Blue Team");
-            await addrole(user.Id + " " + "Skipped");
-
-            await ReplyAsync("Muted " + user.Mention);
-        }
-
         [Command("killswitch")]
         public async Task Killswitchactivate([Remainder] string args = null) {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
@@ -714,52 +702,6 @@ namespace Primbot_v._2.Modules.Scoring {
             return;
         }
 
-        [Command("get")]
-        public async Task get([Remainder] string args = null) {
-            Uno_Score_Tracking.GuildCache.IncrementCMD();
-            await ReplyAsync("`destroyHumanity` is set to `false`.");
-        }
-
-        [Command("poke")]
-        public async Task poke([Remainder] string args = null) {
-            int curr = -1;
-            char state = 'f';
-            switch (Context.User.Id) {
-                case 263733973711192064:
-                spawntrack = !spawntrack;
-                if (spawntrack) { state = 't'; }
-                curr = 0;
-                await ReplyAsync("Track `" + spawntrack.ToString() + "`");
-                break;
-                case 332788739560701955:
-                curr = 1;
-                spawntrackalicia = !spawntrackalicia;
-                if (spawntrackalicia) { state = 't'; }
-                await ReplyAsync("Track `" + spawntrackalicia.ToString() + "`");
-                break;
-                case 534194469302566922:
-                curr = 2;
-                spawntrackdom = !spawntrackdom;
-                if (spawntrackdom) { state = 't'; }
-                await ReplyAsync("Track `" + spawntrackdom.ToString() + "`");
-                break;
-                default:
-                return;
-            }
-            if (curr != -1) {
-                if (File.Exists(POKE)) {
-                    string[] sw = File.ReadAllLines(POKE);
-                    string line = sw[0];
-                    if ((line ?? "").Length < 3) {
-                        Console.WriteLine("error updating pokecord");
-                        return;
-                    }
-                    line = line.Substring(0, curr) + state + line.Substring(curr + 1);
-                    File.WriteAllLines(POKE, new string[] { line });
-                }
-            }
-        }
-
         [Command("foom")]
         public async Task foom() {
             Uno_Score_Tracking.GuildCache.IncrementCMD();
@@ -783,30 +725,6 @@ namespace Primbot_v._2.Modules.Scoring {
                 }
             }
             await ReplyAsync("Complete.");
-        }
-
-        [Command("ang")]
-        public async Task ang() {
-            Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (Context.User.Id != MY_ID) {
-                return;
-            }
-            //await Context.Guild.GetTextChannel(486364420847697932).SendMessageAsync("Question! Which insect do you think has the best vision (according to scientists)? Shout out your answers - and I'll tell you if you're correct.");
-            await Context.Guild.GetTextChannel(472821708319883265).SendMessageAsync("Question! Which insect do you think has the best vision (according to scientists)? Shout out your answers - and I'll tell you if you're correct.");
-        }
-
-
-        [Command("usernameandid")]
-        public async Task UsernameAndID() {
-            Uno_Score_Tracking.GuildCache.IncrementCMD();
-            if (GuildCache.ExtractRoleSubsetFromUser((SocketGuildUser)Context.User, new List<string> { "490398065761583104" }, true).Count() == 0) {
-                await ReplyAsync("This role was intended for Point Managers for the Uno Server, and you lack the appropriate permissions."); return;
-            }
-            var users = GuildCache.Uno_Cache.Users;
-            var orderedUsers = users.OrderBy(x => x.Username);
-            foreach (var user in orderedUsers) {
-                Console.WriteLine(user.Username + "==>" + user.Id);
-            }
         }
 
         [Command("nd")]
@@ -876,11 +794,6 @@ namespace Primbot_v._2.Modules.Scoring {
             //await NewDay(true);
             await ReplyAsync("`Complete.`");
             Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> Started new FN for " + Context.User.Username);
-        }
-        [Command("qqqq")]
-        public async Task qqqq() {
-            Uno_Score_Tracking.GuildCache.IncrementCMD();
-            await ReplyAsync(FORTNIGHT_NUMBER.ToString());
         }
 
         [Command("setcount")]
@@ -1058,28 +971,43 @@ namespace Primbot_v._2.Modules.Scoring {
             return;
         }
 
-        [Command("embed")]
-        public async Task Embed([Remainder] string args = null) {
-            Context.Message.DeleteAsync();
-            string err = "Confused on how it works? Here's an example:\n`p*embed\n" +
-                    "title: hello there\n" +
-                    "description: i bet you're wondering who i am\n" +
-                    "field: i certainly am | i can't even answer that\n" +
-                    "field: isn't that scary | i think it is\n" +
-                    "thumb: [some url]\n" +
-                    "image: [some url]\n" +
-                    "timestamp: true\n" +
-                    "author: true\n" +
-                    "color: cyan`\n\n" +
-                    "(You can use as many or as few of these fields as you want.)";
-            EmbedBuilder builder = new EmbedBuilder();
-            if (args == null) {
-                await ReplyAsync(err); return;
+        [Command("pumpDM")]
+        public async Task PumpDM([Remainder] string args = null) {
+            if(args == null) {
+                Console.WriteLine("format: `p*pumpDM [embed contents see:p*embed]`. this is hardcoded in, and recipients will need to be manually changed.");
+            } else {
+                Embed desiredDM = GetEmbed(args);
+                List<ulong> recipients = new List<ulong>{
+                    263733973711192064, //prim
+                    234589233837244416, //gen
+                    284724385649262592, //splash
+                    317395479019257862, //david
+                    321062612412399616, //safiya
+                    339095826183749632, //jenna
+                    365788692129906689, //suffer
+                    391317323266392065, //joe
+                    403884721152458754, //alicuu
+                    439187379547537418, //mihael
+                    443929510971310081, //avix
+                    479448650842505216, //table
+                    480132661998780418, //floppa
+                    508757026948644888, //mika
+                    565076842151673886, //divine
+                    617350919230586896, //doggo
+                    685886579985612821, //dubstep
+                };
+
+                for (int i = 0; i < recipients.Count(); i++) {
+                    await Context.Guild.GetUser(recipients[i]).SendMessageAsync("", false, desiredDM);
+                    Console.WriteLine("sent to" + Context.Guild.GetUser(recipients[i]).Username + "( " + recipients[i] + " )");
+                }
+                await ReplyAsync("Sent the below embed to hardcoded recipients!", false, desiredDM);
             }
+        }
+
+        public Embed GetEmbed(string args) {
             string[] argslines = args.Split('\n');
-            if (argslines.Count() < 1) {
-                await ReplyAsync(err); return;
-            }
+            EmbedBuilder builder = new EmbedBuilder();
             builder = WithColor(builder, "random");
             foreach (string line in argslines) {
                 try {
@@ -1098,7 +1026,7 @@ namespace Primbot_v._2.Modules.Scoring {
                         break;
                         case "field":
                         if (!val.Contains("|")) {
-                            await ReplyAsync("Field must contain `|`, format: `Field: [key] | [value]`"); return;
+                            return (new EmbedBuilder().WithAuthor("Field must contain `|`, format: `Field: [key] | [value]`").Build());
                         }
                         string[] splits = val.Split('|');
                         builder = AddField(builder, splits[0], splits[1]);
@@ -1132,13 +1060,35 @@ namespace Primbot_v._2.Modules.Scoring {
                         break;
                     }
                 } catch {
-                    await ReplyAsync("Line: `" + line + "` contains no delimiter `:`. Unable to parse.");
-                    return;
+                    return (new EmbedBuilder().WithAuthor("Line: `" + line + "` contains no delimiter `:`. Unable to parse.").Build());
                 }
             }
 
-            await ReplyAsync("", false, builder.Build());
+            return builder.Build();
+        }
 
+        [Command("embed")]
+        public async Task EmbedCmd([Remainder] string args = null) {
+            Context.Message.DeleteAsync();
+            string err = "Confused on how it works? Here's an example:\n`p*embed\n" +
+                    "title: hello there\n" +
+                    "description: i bet you're wondering who i am\n" +
+                    "field: i certainly am | i can't even answer that\n" +
+                    "field: isn't that scary | i think it is\n" +
+                    "thumb: [some url]\n" +
+                    "image: [some url]\n" +
+                    "timestamp: true\n" +
+                    "author: true\n" +
+                    "color: cyan`\n\n" +
+                    "(You can use as many or as few of these fields as you want.)";
+            if (args == null) {
+                await ReplyAsync(err); return;
+            }
+            string[] argslines = args.Split('\n');
+            if (argslines.Count() < 1) {
+                await ReplyAsync(err); return;
+            }
+            await ReplyAsync("", false, GetEmbed(args));
         }
 
         private EmbedBuilder WithColor(EmbedBuilder builder, string v) {
@@ -1192,7 +1142,7 @@ namespace Primbot_v._2.Modules.Scoring {
 
         public static EmbedBuilder AddAuthor(EmbedBuilder before, SocketUser user) {
             if (user == null) { return before; }
-            before.WithAuthor(new EmbedAuthorBuilder().WithIconUrl(user.GetAvatarUrl()).WithName(user.Username + " ("
+            before = before.WithAuthor(new EmbedAuthorBuilder().WithIconUrl(user.GetAvatarUrl()).WithName(user.Username + " ("
                 + user.Id + ")"));
             return before;
         }
@@ -1205,6 +1155,7 @@ namespace Primbot_v._2.Modules.Scoring {
 
         public static EmbedBuilder AddDescription(EmbedBuilder before, string desc) {
             if (desc == "" || desc == " ") { desc = "null"; }
+            if (desc.Contains("\\n")) desc = desc.Replace("\\n", "\n");
             before.WithDescription(desc);
             return before;
         }
@@ -1245,6 +1196,83 @@ namespace Primbot_v._2.Modules.Scoring {
             return before;
         }
 
+        /*[Command("kick", RunMode = RunMode.Async)]
+        public async Task kick([Remainder] string args = null) {
+            Uno_Score_Tracking.GuildCache.IncrementCMD();
+            if (args == null || Context.User.Id != MY_ID) {
+                await ReplyAsync("failed"); return;
+            }
+            string[] argos = args.Split();
+            if (argos.Count() < 1) {
+                await ReplyAsync("failed"); return;
+            }
+            ulong ID;
+            try {
+                ID = UInt64.Parse(argos[0]);
+            } catch (Exception e) {
+                await ReplyAsync(e.Message); return;
+            }
+            await Context.Guild.DownloadUsersAsync();
+            IGuildUser user = Context.Guild.GetUser(ID);
+            if (user == null) {
+                await ReplyAsync("failed");
+            }
+            try {
+                await user.KickAsync();
+            } catch (Exception e) {
+                await ReplyAsync(e.Message); return;
+            }
+            await ReplyAsync("Kicked " + user.Username + ".");
+            return;
+        }
 
+        [Command("mute")]
+        public async Task Mute([Remainder] string args = null) {
+            if (args == null) {
+                await ReplyAsync("Parameter cannot be null. Mention or provide ID of user.");
+                return;
+            }
+            if (Context.Guild.Id != UNO_SERVER_ID) {
+                return;
+            }
+            if (!GuildCache.HasRole((SocketGuildUser)Context.User, "Human Resources") &&
+                !GuildCache.HasRole((SocketGuildUser)Context.User, "Team Leaders")) {
+                await ReplyAsync("Not meant for you."); return;
+            }
+            if (args == null) {
+                await ReplyAsync("Who should I mute?"); return;
+            }
+
+            SocketGuildUser user = GuildCache.InterpretUserInput(args.Trim())?[0] ?? null;
+            if (user == null) {
+                await ReplyAsync("Not sure who you're referring to."); return;
+            }
+
+            await removerole(user.Id + " " + "Green Team");
+            await removerole(user.Id + " " + "Yellow Team");
+            await removerole(user.Id + " " + "Red Team");
+            await removerole(user.Id + " " + "Blue Team");
+            await addrole(user.Id + " " + "Skipped");
+
+            await ReplyAsync("Muted " + user.Mention);
+        }
+        [Command("massping", RunMode = RunMode.Async)]
+        public async Task Pinger([Remainder] string args = null) {
+            if (Context.User.Id != MY_ID) {
+                return;
+            }
+            if (args == null) { await ReplyAsync("args is null"); return; }
+            string[] argssplits = args.Split(' ');
+            if (argssplits.Count() != 2) { await ReplyAsync("need 2 args"); return; }
+            var user = GuildCache.InterpretUserInput(argssplits[0])[0];
+            if (user == null) { await ReplyAsync("user doesn't exist"); return; }
+            if (!Int32.TryParse(argssplits[1], out int ignore)) { await ReplyAsync("not an int"); return; }
+            int pings = Int32.Parse(argssplits[1]);
+
+            for (int i = 1; i <= pings; ++i) {
+                await ReplyAsync(user.Mention + "(ping " + i + ")");
+            }
+            return;
+            */
     }
 }

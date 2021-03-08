@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using static Primbot_v._2.Uno_Score_Tracking.Defs;
 using System.IO;
 using System.Globalization;
+using Primbot_v._2.Server.Solitaire;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
     //Regex - adaptable class
@@ -17,6 +18,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         public static SocketGuild Uno_Cache { get; private set; } //make private later
         public static SocketGuild Magi_Cache { get; private set; }
 
+        public static List<SolitaireGame> SOLITAIRE_GAMES = new List<SolitaireGame>();
         public static int GREEN_TEAM_SCORE = 0;
         public static int YELLOW_TEAM_SCORE = 0;
         public static int RED_TEAM_SCORE = 0;
@@ -456,6 +458,13 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 }
             }
             return result;
+        }
+
+        public static SolitaireGame GetSolitaireGame(ulong userID) {
+            foreach (SolitaireGame sol in SOLITAIRE_GAMES) {
+                if (sol.playerID == userID) return sol;
+            }
+            return null;
         }
     }
 

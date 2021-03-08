@@ -9,6 +9,19 @@ using static Primbot_v._2.Uno_Score_Tracking.SaveFiles_Mapped;
 using static Primbot_v._2.Uno_Score_Tracking.Defs;
 
 namespace Primbot_v._2.Uno_Score_Tracking {
+
+    /*
+     * STEPS TO ADD A NEW SINGLE PLAYER GAME:
+     * 0. In Defs, update POINT_VALUE byte, DAILY_LIMIT byte, GameIden string <ONLY APPEND TO END>, and add to the GetDailyLimit method. Add to the UnoSaveFields and create applicable LB Save types.
+     * 1. Create method in this class called [GameName]SaveFileUpdates(string overallPath, string fortnightPath, int pointValue = 0, int iteration = 1)
+     *   1a. Convert and store iteration and point values as a string
+     *   1b. AddFieldValue(x,y,z) where y alternates between the FN and overall path, z is the point value or iteration, and x is "ITER-"/"POINTS-" or for limited events "PLAYSTODAY-"
+     * 2. Add to the switch case in this class `case "name of game": res = MethodName(params); break;"
+     * 3. In Modules/Scoring/Log.cs, set up the instructions on how to log the game
+     *   3a. Check that is Point Manager, InterpretUserInput, IsWellFormattedListOfUsers, create a list of Tuples for each scorer - 
+            first value as ulong ID, second as score. Ensure before sending to the Bridge that the play limit was not hit if exists.
+            Send it to Bridge.LogGame, and if this is successful, send it to Games_SinglePlayer for save file updates. Report back to the user whether the operation was a success.
+     */
     public static class Games_Singleplayer {
 
         public static bool SaveFileUpdate(Tuple<ulong, byte> x, string gameType, bool revert = false, int dateHex = -1) {
@@ -26,6 +39,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 pointVal *= -1;
             }
             bool res = false;
+
             switch (gameType) {
                 case "non-standard": res = NonStandardSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "minesweeper": res = MinesweeperSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
@@ -36,6 +50,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 case "tourney": res = TourneySaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "knights": res = KnightsSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 case "trivia": res = TriviaSaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
+                case "daily": res = DailySaveFileUpdates(overallPath, fortnightPath, pointVal, iter); break;
                 default: break;
             }
             if (!res) {
@@ -59,6 +74,16 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             AddFieldValue("POINTS-MS", overallPath, points);
             AddFieldValue("POINTS-MS", fortnightPath, points);
             AddFieldValue("PLAYSTODAY-MS", overallPath, iter);
+            return true;
+        }
+        private static bool DailySaveFileUpdates(string overallPath, string fortnightPath, int pointValue = 0, int iteration = 1) {
+            string iter = iteration.ToString();
+            string points = pointValue.ToString();
+            AddFieldValue("ITER-DAILY", overallPath, iter);
+            AddFieldValue("ITER-DAILY", fortnightPath, iter);
+            AddFieldValue("POINTS-DAILY", overallPath, points);
+            AddFieldValue("POINTS-DAILY", fortnightPath, points);
+            AddFieldValue("PLAYSTODAY-DAILY", overallPath, iter);
             return true;
         }
 

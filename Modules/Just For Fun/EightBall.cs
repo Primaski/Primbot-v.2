@@ -21,7 +21,8 @@ namespace Primbot_v._2.Modules.Copypastas {
         "I'm 99% sure the answer is no.",
         "Why would you even ask such a thing?",
         "Hell yeah, my dude.",
-        "Hell no, my dude."};
+        "Hell no, my dude.",
+        };
 
         [Command("8ball", RunMode = RunMode.Async)]
         public async Task TaskAsync([Remainder] string args = null) {
