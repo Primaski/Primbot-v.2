@@ -207,9 +207,9 @@ namespace Primbot_v._2.Uno_Score_Tracking {
                 default: nameOfKey += " Points"; break;
             }
             if (FORTNIGHT_NO != -1) {
-                stringres.AppendLine("**Fortnight " + FORTNIGHT_NO.ToString() + " " + nameOfKey + "**:");
+                stringres.AppendLine("**<:pumpkin:761459153851777036> Fortnight " + FORTNIGHT_NO.ToString() + " " + nameOfKey + "** <:pumpkin:761459153851777036>:");
             } else {
-                stringres.AppendLine("**Overall " + nameOfKey + "**:");
+                stringres.AppendLine("**<:pumpkin:761459153851777036> Overall " + nameOfKey + "** <:pumpkin:761459153851777036>:");
             }
             int lastScore = 0;
             int lastIndex = 0;
@@ -242,7 +242,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             if (FORTNIGHT_NO != -1) {
                 stringres.AppendLine("Showing " + (startingIndex + 1).ToString() + " to " + (startingIndex + noToShow).ToString() + ". " +
                     "Type `p*lb [type] page" + (((startingIndex + 1) / 10) + 2).ToString() + "` for more. Wanted to see overall " +
-                    "scores instead of Fortnight scores? Try typing `p*lb [type] overall`!");
+                    "scores instead of Fortnight scores? Try typing `p*lb [type] overall`! Something tells me this leaderboard is possessed...");
             } else {
                 stringres.AppendLine("Showing " + (startingIndex + 1).ToString() + " to " + (startingIndex + noToShow).ToString() + ". " +
                     "Type `p*lb [type] page" + (((startingIndex + 1) / 10) + 2).ToString() + "` for more. Wanted to see this fortnight's " +

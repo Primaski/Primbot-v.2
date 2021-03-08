@@ -89,7 +89,7 @@ namespace Primbot_v._2.Modules.Scoring {
                 var roles = GuildCache.GetUserByID(argsID).Roles;
                 StringBuilder sb = new StringBuilder();
                 sb.AppendLine("According to the server cache, this user has...");
-                sb.AppendLine(roles.Count + " roles (this includes (@everyone))");
+                sb.AppendLine(roles.Count + " roles (this includes (@  everyone))");
                 sb.AppendLine("Role list ===>");
                 foreach(var role in roles) {
                     if (role.Id != 469335072034652199) {
@@ -98,7 +98,7 @@ namespace Primbot_v._2.Modules.Scoring {
                 }
                 var altRoles = Context.Guild.GetUser(Context.User.Id).Roles;
                 sb.AppendLine("\nAccording to Context.Guild.GetUser(Context.User.Id), this user has...");
-                sb.AppendLine(altRoles.Count + " roles (this includes (@everyone))");
+                sb.AppendLine(altRoles.Count + " roles (this includes (@  everyone))");
                 sb.AppendLine("Role list ===>");
                 foreach (var rolex in altRoles) {
                     if (rolex.Id != 469335072034652199) {
@@ -218,7 +218,7 @@ namespace Primbot_v._2.Modules.Scoring {
 
         [Command("setfn")]
         public async Task SetFN([Remainder] string args = null) {
-            if (Context.User.Id != MY_ID) {
+            if (Context.User.Id != MY_ID && Context.User.Id != (ulong)(485120582866698242)) {
                 return;
             }
             if (args == null) { await ReplyAsync("is null"); return; }
@@ -231,7 +231,7 @@ namespace Primbot_v._2.Modules.Scoring {
 
         [Command("getfn")]
         public async Task SetFN() {
-            if (Context.User.Id != MY_ID) {
+            if (Context.User.Id != MY_ID && Context.User.Id != (ulong)(485120582866698242)) {
                 return;
             }
             await ReplyAsync(Defs.FORTNIGHT_NUMBER.ToString());

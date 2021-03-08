@@ -262,13 +262,27 @@ namespace Primbot_v._2 {
             if (user == null) return;
             string userID = user.Id.ToString();
             try {
-                bool requested = SaveFiles_Entries.EntryExists(UNO_PING_LOG, userID);
-                if (requested) {
-                    await message.Channel.SendMessageAsync(user.Mention + ", it's your turn! " +
-                        "If you'd like to opt out of Uno pings, just type `p*unodontping`. If you'd like to opt in, " +
-                        "type `p*unoping`!");
+                if(message.Channel.Id != INFINITE_GAME_CHANNEL_ID) {
+                    bool requested = SaveFiles_Entries.EntryExists(UNO_PING_LOG, userID);
+                    if (requested) {
+                        await message.Channel.SendMessageAsync(user.Mention + ", it's your turn! " +
+                            "If you'd like to opt out of Uno pings, just type `p*unodontping`. If you'd like to opt in, " +
+                            "type `p*unoping`!");
+                        return;
+                    }
                     return;
                 }
+                await message.Channel.SendMessageAsync(user.Mention + ", your turn has started. Please try to wait until the second time Primbot pings you!");
+                if(whoToPing != null) { //then they've already taken their turn since the timer never expired
+                    pingTimer.Dispose();
+                }
+                whoToPing = user;
+                TimeSpan timeLeft = new TimeSpan(0, 3, 0);
+                pingTimer = new System.Threading.Timer(x => {
+                    PingThem(message.Channel);
+                    Thread.Sleep(1000);
+                }, null, (int)timeLeft.TotalMilliseconds, Timeout.Infinite);
+                return;
             } catch (Exception e) {
                 Console.WriteLine(e);
                 return;
@@ -319,7 +333,6 @@ namespace Primbot_v._2 {
             pingTimer.Dispose();
             return;
         }
-
 
         private async Task CahPings(SocketUserMessage message) {
             Console.WriteLine("cah bot");

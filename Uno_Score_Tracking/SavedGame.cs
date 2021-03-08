@@ -124,7 +124,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
             x.Add("Game", gameName[0].ToString().ToUpper() + gameName.Substring(1));
             //x.Add("Iteration", gameIteration.ToString());
             x.Add("Game ID", gameID);
-            x.Add("Time", playedTime.AddHours(-Defs.EST_OFFSET).ToString("yyyy MMMM dd") + ", " + playedTime.ToString("HH:mm") + " UTC");
+            x.Add("Time", playedTime.AddHours(-Defs.EST_OFFSET).ToString("yyyy MMMM dd") + ", " + playedTime.AddHours(-Defs.EST_OFFSET).ToString("HH:mm") + " EST");
             int i = 1;
             foreach(var player in Players) {
                 if (getUsername) {

@@ -10,14 +10,14 @@ using Primbot_v._2.Server.Solitaire;
 namespace Primbot_v._2.Uno_Score_Tracking {
     public static class Defs {
         /*** LOCAL SETTINGS - SHOULD BE LOCALLY MODIFIED ***/
-        public static readonly int EST_OFFSET = 4; //UTC would fluctuate between 4 and 5 depending on DST, EST would always be 0
+        public static readonly int EST_OFFSET = 5; //UTC would fluctuate between 4 and 5 depending on DST, EST would always be 0
         public static readonly string DIR = "..\\..";
 
         /*** TIME SETTINGS ***/
         public static readonly Random random = new Random();
         public static readonly DateTime startDate = new DateTime(2019, 1, 1, 0, 0, 0); //DO NOT CHANGE
-        public static readonly DateTime fnStartDate = new DateTime(2020, 9, 21, 0, 0, 0);
-        public static byte FORTNIGHT_NUMBER = 53;
+        public static readonly DateTime fnStartDate = new DateTime(2020, 12, 13, 0, 0, 0);
+        public static byte FORTNIGHT_NUMBER = 59;
 
         /*** FILE DIRECTORIES ***/
         public static readonly string UNO_SAVE_FILES_DIRECTORY = DIR + "\\Uno_Save_Files";
@@ -57,11 +57,11 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         };
         public static readonly ulong UNO_SERVER_ID = 469335072034652199;
         public static readonly ulong MAGI_SERVER_ID = 486364420847697930;
-        public static readonly string RED_CARD_EMOJI = "<:ghostred:761446445286948885>"; /*"<:UnoGreen:472812420952358922>";*/
-        public static readonly string GREEN_CARD_EMOJI = "<:ghostgreen:761446445550927882>"; /*"<:UnoRed:472812408986009600>";*/
-        public static readonly string BLACK_CARD_EMOJI = "<:ghostblack:761456720093904920>"; /*"<:UnoADMIN:540770331426816001>";*/
-        public static readonly string YELLOW_CARD_EMOJI = "<:ghostyellow:761446445450133514>"; /*"<:UnoBlue:472812434059427850>";*/
-        public static readonly string BLUE_CARD_EMOJI = "<:ghostblue:761446445042761740>"; /*"<:UnoYellow:472812390421889044> ";*/
+        public static readonly string RED_CARD_EMOJI = "<:UnoGreen:472812420952358922>";
+        public static readonly string GREEN_CARD_EMOJI = "<:UnoRed:472812408986009600>";
+        public static readonly string BLACK_CARD_EMOJI = "<:UnoADMIN:540770331426816001>";
+        public static readonly string YELLOW_CARD_EMOJI = "<:UnoBlue:472812434059427850>";
+        public static readonly string BLUE_CARD_EMOJI = "<:UnoYellow:472812390421889044> ";
         public static readonly string PASTEL_CARD_EMOJI = "<:UnoPastel:540518689821294603>";
         public static readonly string NEON_CARD_EMOJI = "<:UnoNeon:540518626730704906>";
         public static readonly string PASTEL_HEART = "<:pastelheart:540452749586989056>";
