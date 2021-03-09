@@ -846,6 +846,12 @@ namespace Primbot_v._2.Modules.Scoring {
 
         [Command("logonw", RunMode = RunMode.Async)]
         public async Task LogONW([Remainder] string args = null) {
+            /*** Untested: 
+             * Do not attempt to run this command until the appropriate key/pair values have been added to users' Fortnight and overall save files respectively.
+             * Those key/pair values being:
+             * POINTS, ITER, FIRST
+             * ***/
+            return Task.CompletedTask; //safeguard
             if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
