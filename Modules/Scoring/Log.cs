@@ -851,7 +851,7 @@ namespace Primbot_v._2.Modules.Scoring {
              * Those key/pair values being:
              * POINTS, ITER, FIRST
              * ***/
-            return Task.CompletedTask; //safeguard
+            return; //safeguard
             if (!HasRole("Point Manager", (SocketGuildUser)Context.User, true) && Context.User.Id != MY_ID) {
                 await ReplyAsync(":exclamation: You do not have appropriate permissions to log this game, " +
                     "as it was designated for Point Managers in the Uno Server.");
