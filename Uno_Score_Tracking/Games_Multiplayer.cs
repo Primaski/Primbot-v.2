@@ -151,6 +151,7 @@ namespace Primbot_v._2.Uno_Score_Tracking {
         }
 
         public static Task ONWLog(string message, bool force = false) {
+            /* Yet to be tested on main release */
             List<Tuple<SocketGuildUser, bool>> users;
             try {
                 users = GuildCache.InterpretUserInputWithTies(message);
