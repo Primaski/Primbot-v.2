@@ -107,7 +107,7 @@ namespace Primbot_v._2 {
             TimeSpan timeLeft = TimeUntilMidnight();
             Console.WriteLine("Minutes until midnight... " + timeLeft.TotalMinutes);
             midnightTimer = new System.Threading.Timer(x => {
-                Console.WriteLine(DateTime.Now.ToString("HH:mm:ss") + " --> New day called");
+                Console.WriteLine(DateTime.Now.ToString("MM-dd, HH:mm:ss") + " --> New day called");
                 NewDay();
                 Thread.Sleep(1000);
                 MidnightTimer();
@@ -340,7 +340,6 @@ namespace Primbot_v._2 {
             string v = message.Embeds.FirstOrDefault().Description.ToString();
             if (v.Contains(">!")) {
                 await channel.SendMessageAsync(v);
-                Console.WriteLine("called");
             }
         }
 
